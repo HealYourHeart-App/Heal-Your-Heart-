@@ -1,0 +1,139 @@
+/* =========================================================
+   สไตล์เฉพาะสำหรับหน้า แบบประเมินพลังใจ RQ (rq-test.css)
+========================================================= */
+
+.quiz-main { 
+    width: 100%; 
+    max-width: 1000px; 
+    margin: 20px auto; 
+    padding-bottom: 40px; 
+    background: transparent; 
+}
+
+.quiz-section {
+    background-color: #fff; 
+    border: 2px solid #FFC6D3; 
+    border-radius: 20px;
+    padding: 40px; 
+    box-shadow: 0 10px 30px rgba(216, 75, 107, 0.1);
+}
+
+.quiz-title { 
+    text-align: center; 
+    color: #D84B6B; 
+    font-size: 26px; 
+    font-weight: 700; 
+    margin-bottom: 25px; 
+}
+
+.instruction-box {
+    background-color: #FFF0F3; 
+    color: #4A3338; 
+    padding: 20px; 
+    text-align: center;
+    border-radius: 12px; 
+    font-size: 18px; 
+    font-weight: 500;
+    margin-bottom: 40px; 
+    border: 1px dashed #FFC6D3; 
+    line-height: 1.6;
+}
+
+.question-row {
+    margin-bottom: 35px; 
+    padding-bottom: 25px; 
+    border-bottom: 1px dashed #FFC6D3;
+}
+
+.q-text { 
+    font-size: 18px; 
+    font-weight: 600; 
+    color: #4A3338; 
+    margin-bottom: 15px; 
+}
+
+/* ตกแต่งปุ่ม 1-10 ของ RQ */
+.rq-scale { 
+    display: flex; 
+    gap: 8px; 
+    flex-wrap: wrap; 
+}
+.rq-radio { 
+    display: none; 
+}
+.rq-lbl {
+    width: 45px; 
+    height: 45px; 
+    border-radius: 50%; 
+    display: flex;
+    align-items: center; 
+    justify-content: center; 
+    font-weight: 700; 
+    font-size: 18px;
+    color: #0f172a; 
+    cursor: pointer; 
+    transition: all 0.2s; 
+    border: 2px solid transparent;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/* ไล่สีฟ้า-น้ำเงิน ตามต้นฉบับกรมสุขภาพจิต แต่อยู่ในธีมที่ดูละมุนขึ้น */
+.c-1 { background-color: #e0f2fe; } 
+.c-2 { background-color: #bae6fd; }
+.c-3 { background-color: #7dd3fc; } 
+.c-4 { background-color: #38bdf8; color: #fff; }
+.c-5 { background-color: #0ea5e9; color: #fff; } 
+.c-6 { background-color: #0284c7; color: #fff; }
+.c-7 { background-color: #0369a1; color: #fff; } 
+.c-8 { background-color: #075985; color: #fff; }
+.c-9 { background-color: #0c4a6e; color: #fff; } 
+.c-10 { background-color: #1e3a8a; color: #fff; }
+
+.rq-radio:checked + .rq-lbl {
+    transform: scale(1.15);
+    border: 3px solid #D84B6B;
+    box-shadow: 0 5px 15px rgba(216, 75, 107, 0.4);
+}
+
+.bottom-actions { 
+    display: flex; 
+    justify-content: center; 
+    gap: 20px; 
+    flex-wrap: wrap; 
+    margin-top: 30px; 
+}
+.back-prev-btn {
+    background-color: #fff; 
+    color: #D84B6B; 
+    border: 2px solid #D84B6B;
+    padding: 15px 40px; 
+    border-radius: 50px; 
+    font-size: 18px; 
+    font-weight: 700;
+    text-decoration: none; 
+    transition: 0.3s;
+}
+.back-prev-btn:hover { 
+    background-color: #FFF0F3; 
+    transform: translateY(-3px); 
+}
+.submit-next-btn {
+    background-color: #D84B6B; 
+    color: #fff; 
+    border: none;
+    padding: 15px 50px; 
+    border-radius: 50px; 
+    font-size: 18px; 
+    font-weight: 700;
+    cursor: pointer; 
+    box-shadow: 0 5px 15px rgba(216, 75, 107, 0.3); 
+    transition: 0.3s;
+}
+.submit-next-btn:hover { 
+    background-color: #A3334E; 
+    transform: translateY(-3px); 
+}
+
+@media (max-width: 600px) { 
+    .rq-lbl { width: 38px; height: 38px; font-size: 16px; } 
+}

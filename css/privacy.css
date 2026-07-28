@@ -1,0 +1,160 @@
+/* ================= สไตล์พื้นฐาน & Glassmorphism ================= */
+body {
+    background-image: url('../photo/bg-nature.jpg'); /* ปรับ Path รูปภาพพื้นหลัง */
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    font-family: 'Prompt', sans-serif;
+    margin: 0; 
+    padding: 0; 
+    min-height: 100vh;
+}
+
+/* ================= เนื้อหาหลัก (Privacy) ================= */
+.privacy-main { 
+    max-width: 900px; 
+    margin: 40px auto; 
+    padding: 0 20px; 
+}
+
+.privacy-card {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 20px;
+    padding: 40px; 
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+}
+
+.privacy-title { 
+    color: #D84B6B; 
+    font-size: 26px; 
+    font-weight: 700; 
+    margin-bottom: 30px; 
+    text-align: center; 
+}
+
+.privacy-section { 
+    margin-bottom: 25px; 
+}
+
+.privacy-section h3 { 
+    color: #A3334E; 
+    font-size: 18px; 
+    margin-bottom: 10px; 
+}
+
+.privacy-section p { 
+    color: #444; 
+    font-size: 16px; 
+    line-height: 1.7; 
+    margin: 0; 
+}
+
+/* ================= ส่วน Header & Nav ================= */
+.header-section {
+    padding: 20px;
+    text-align: center;
+}
+
+.header-content h1 {
+    color: #d84b6b;
+    font-size: 22px;
+    margin-bottom: 25px;
+    font-weight: 600;
+}
+
+.top-nav {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.nav-btn {
+    display: inline-block;
+    background-color: #ffffff;
+    color: #d84b6b;
+    border: 2px solid #d84b6b;
+    border-radius: 50px;
+    padding: 10px 25px;
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.nav-btn.active {
+    background-color: #d84b6b;
+    color: #ffffff;
+}
+
+.nav-btn:hover:not(.active) {
+    background-color: #FFF0F3;
+    transform: translateY(-2px);
+}
+
+/* ================= ส่วน Footer ================= */
+.footer-section { 
+    text-align: center; 
+    padding: 40px 20px; 
+    margin-top: 20px; 
+}
+
+.hotline-wrapper { 
+    margin-bottom: 25px; 
+}
+
+.hotline-btn {
+    display: inline-flex; 
+    align-items: center; 
+    justify-content: center;
+    background-color: #ffffff; 
+    color: #d84b6b; 
+    border: 2px solid #d84b6b;
+    border-radius: 50px; 
+    padding: 12px 35px; 
+    font-size: 20px; 
+    font-weight: 700;
+    text-decoration: none; 
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08); 
+    transition: all 0.3s;
+}
+
+.hotline-btn:hover { 
+    background-color: #FFF0F3; 
+    transform: translateY(-2px); 
+}
+
+.bottom-nav { 
+    display: flex; 
+    justify-content: center; 
+    flex-wrap: wrap; 
+    gap: 15px; 
+}
+
+.footer-btn {
+    display: inline-block; 
+    background-color: #ffffff; 
+    color: #d84b6b;
+    border: 2px solid #d84b6b; 
+    border-radius: 50px; 
+    padding: 10px 25px;
+    font-size: 16px; 
+    font-weight: 600; 
+    text-decoration: none;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05); 
+    transition: all 0.3s;
+}
+
+.footer-btn.active {
+    background-color: #d84b6b;
+    color: #ffffff;
+}
+
+.footer-btn:hover:not(.active) { 
+    background-color: #FFF0F3; 
+    transform: translateY(-2px); 
+}

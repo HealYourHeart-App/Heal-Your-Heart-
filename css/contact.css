@@ -1,0 +1,83 @@
+/* ========================================================
+   CSS เฉพาะสำหรับหน้า ติดต่อเรา (Contact Us)
+======================================================== */
+
+.contact-main { 
+    width: 100%; 
+    max-width: 900px; 
+    margin: 20px auto 40px auto; 
+}
+
+.contact-card {
+    background-color: rgba(255, 255, 255, 0.9); 
+    border: 2px solid #FFC6D3;
+    border-radius: 20px; 
+    padding: 40px; 
+    box-shadow: 0 10px 30px rgba(216, 75, 107, 0.1);
+    text-align: center;
+}
+
+.contact-title { 
+    color: #D84B6B; 
+    font-size: 28px; 
+    font-weight: 700; 
+    margin-bottom: 30px; 
+}
+
+.contact-grid {
+    display: grid; 
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 30px; 
+    margin-top: 30px;
+}
+
+.contact-box {
+    background-color: #FFF0F3; 
+    border: 2px dashed #FFC6D3; 
+    border-radius: 15px;
+    padding: 30px 20px; 
+    transition: transform 0.3s;
+}
+
+.contact-box:hover { 
+    transform: translateY(-5px); 
+    box-shadow: 0 8px 20px rgba(216, 75, 107, 0.15); 
+}
+
+.contact-icon { 
+    font-size: 50px; 
+    margin-bottom: 15px; 
+}
+
+.contact-box h3 { 
+    color: #D84B6B; 
+    font-size: 20px; 
+    margin-bottom: 10px; 
+    font-weight: 700; 
+}
+
+.contact-box p { 
+    color: #4A3338; 
+    font-size: 16px; 
+    line-height: 1.6; 
+}
+
+.contact-link {
+    display: inline-block; 
+    margin-top: 15px; 
+    background-color: #D84B6B;
+    color: #fff; 
+    padding: 10px 25px; 
+    border-radius: 30px; 
+    text-decoration: none; 
+    font-weight: 600;
+}
+
+.contact-link:hover { 
+    background-color: #A3334E; 
+}
+
+/* ================= Responsive สำหรับมือถือ ================= */
+@media (max-width: 768px) { 
+    .contact-grid { grid-template-columns: 1fr; } 
+}

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heal Your Heart - แบบประเมินภาวะหมดไฟ</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- ดึงไฟล์ CSS มาใช้งาน -->
+    <link rel="stylesheet" href="css/home.css">
+    <link rel="stylesheet" href="css/quiz.css"> <!-- ใช้ไฟล์นี้ควบคุมหน้าคำถามทั้งหมด -->
+    
+</head>
+<body>
+    <div class="home-container">
+        
+        <!-- Header -->
+        <header class="header-section">
+            <div class="logo"><img src="photo/logo01.png" alt="Logo" class="logo-img"></div>
+            <div class="header-content">
+                <h1>“ เว็บแอปพลิเคชันสำหรับการประเมินความเครียดและสุขภาวะทางอารมณ์ ”</h1>
+                <nav class="top-nav">
+                    <a href="home.html" class="nav-btn">หน้าแรก</a>
+                    <a href="assessment.html" class="nav-btn active">แบบประเมิน</a>
+                </nav>
+            </div>
+        </header>
+
+        <!-- เนื้อหาแบบประเมิน -->
+        <main class="quiz-main">
+            <div class="quiz-section">
+                <h2 class="quiz-title">🔋 แบบประเมินภาวะเหนื่อยล้าหมดไฟ (Burnout)</h2>
+                
+                <div class="instruction-box">
+                    ท่านเคยมีความรู้สึกเช่นนี้กับการทำงานหรือไม่ ?<br>
+                    <span style="font-size: 15px; color: #D84B6B;">( โปรดเลือกคำตอบที่ตรงกับความรู้สึกของท่านมากที่สุด )</span>
+                </div>
+
+                <form id="burnoutForm">
+                    
+                    <!-- ข้อที่ 1 -->
+                    <div class="question-row">
+                        <div class="q-text">1.) ท่านรู้สึกขาดแรงใจ/ความกระตือรือร้น</div>
+                        <div class="q-options">
+                            <label><input type="radio" name="b1" value="1" class="hidden-radio" required><span class="opt-btn btn-green">แทบไม่มี</span></label>
+                            <label><input type="radio" name="b1" value="2" class="hidden-radio"><span class="opt-btn btn-blue">เป็นบางครั้ง</span></label>
+                            <label><input type="radio" name="b1" value="3" class="hidden-radio"><span class="opt-btn btn-yellow">บ่อยครั้ง</span></label>
+                            <label><input type="radio" name="b1" value="4" class="hidden-radio"><span class="opt-btn btn-red">เป็นประจำ</span></label>
+                        </div>
+                    </div>
+
+                    <!-- ข้อที่ 2 -->
+                    <div class="question-row">
+                        <div class="q-text">2.) ท่านรู้สึกไม่อยากสนใจคนรอบข้าง</div>
+                        <div class="q-options">
+                            <label><input type="radio" name="b2" value="1" class="hidden-radio" required><span class="opt-btn btn-green">แทบไม่มี</span></label>
+                            <label><input type="radio" name="b2" value="2" class="hidden-radio"><span class="opt-btn btn-blue">เป็นบางครั้ง</span></label>
+                            <label><input type="radio" name="b2" value="3" class="hidden-radio"><span class="opt-btn btn-yellow">บ่อยครั้ง</span></label>
+                            <label><input type="radio" name="b2" value="4" class="hidden-radio"><span class="opt-btn btn-red">เป็นประจำ</span></label>
+                        </div>
+                    </div>
+
+                    <!-- ข้อที่ 3 -->
+                    <div class="question-row" style="border-bottom: none;">
+                        <div class="q-text">3.) ท่านรู้สึกไม่ประสบความสำเร็จเท่าที่ควร</div>
+                        <div class="q-options">
+                            <label><input type="radio" name="b3" value="1" class="hidden-radio" required><span class="opt-btn btn-green">แทบไม่มี</span></label>
+                            <label><input type="radio" name="b3" value="2" class="hidden-radio"><span class="opt-btn btn-blue">เป็นบางครั้ง</span></label>
+                            <label><input type="radio" name="b3" value="3" class="hidden-radio"><span class="opt-btn btn-yellow">บ่อยครั้ง</span></label>
+                            <label><input type="radio" name="b3" value="4" class="hidden-radio"><span class="opt-btn btn-red">เป็นประจำ</span></label>
+                        </div>
+                    </div>
+
+                    <div class="bottom-actions">
+                        <a href="assessment.html" class="back-prev-btn">← กลับ</a>
+                        <button type="submit" class="submit-next-btn">บันทึกและดูผลลัพธ์ »</button>
+                    </div>
+
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <!-- ดึงไฟล์ JS ของหน้านี้มาใช้งาน -->
+    <script src="js/burnout.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heal Your Heart - แบบประเมินพลังใจ (RQ)</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/home.css">
+    
+    <!-- ลิงก์ไปไฟล์ CSS ที่แยกออกมา -->
+    <link rel="stylesheet" href="css/rq-test.css">
+</head>
+<body>
+    <div class="home-container">
+        
+        <!-- Header -->
+        <header class="header-section">
+            <div class="logo"><img src="photo/logo01.png" alt="Logo" class="logo-img"></div>
+            <div class="header-content">
+                <h1>“ เว็บแอปพลิเคชันสำหรับการประเมินความเครียดและสุขภาวะทางอารมณ์ ”</h1>
+                <nav class="top-nav">
+                    <a href="home.html" class="nav-btn">หน้าแรก</a>
+                    <a href="assessment.html" class="nav-btn active">แบบประเมิน</a>
+                </nav>
+            </div>
+        </header>
+
+        <main class="quiz-main">
+            <div class="quiz-section">
+                <h2 class="quiz-title">💖 แบบประเมินพลังใจ (RQ)</h2>
+                
+                <div class="instruction-box">
+                    ในช่วง 2 สัปดาห์ที่ผ่านมา ท่านมีความเชื่อมั่นในประเด็นต่างๆ ต่อไปนี้เพียงใด?<br>
+                    <span style="font-size: 15px; color: #D84B6B;">( 1 หมายถึง น้อยที่สุด และ 10 หมายถึง มากที่สุด )</span>
+                </div>
+
+                <form id="rqForm">
+                    
+                    <!-- ข้อที่ 1 -->
+                    <div class="question-row">
+                        <div class="q-text">1.) ความยากลำบากทำให้ฉันแกร่งขึ้น</div>
+                        <div class="rq-scale" id="scale-q1"></div>
+                    </div>
+
+                    <!-- ข้อที่ 2 -->
+                    <div class="question-row">
+                        <div class="q-text">2.) ฉันมีกำลังใจและได้รับการสนับสนุนจากคนรอบข้าง</div>
+                        <div class="rq-scale" id="scale-q2"></div>
+                    </div>
+
+                    <!-- ข้อที่ 3 -->
+                    <div class="question-row" style="border-bottom: none;">
+                        <div class="q-text">3.) การแก้ไขปัญหาทำให้ฉันมีประสบการณ์มากขึ้น</div>
+                        <div class="rq-scale" id="scale-q3"></div>
+                    </div>
+
+                    <div class="bottom-actions">
+                        <a href="assessment.html" class="back-prev-btn">← กลับ</a>
+                        <button type="submit" class="submit-next-btn">บันทึกและดูผลลัพธ์ »</button>
+                    </div>
+
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <!-- ดึงไฟล์ JS ที่แยกออกมาใช้งาน -->
+    <script src="js/rq-test.js"></script>
+</body>
+</html>

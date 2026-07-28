@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heal Your Heart - แบบประเมินสุขภาพใจ</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- ดึง CSS มาใช้งาน -->
+    <link rel="stylesheet" href="css/home.css">
+    <link rel="stylesheet" href="css/assessment.css">
+</head>
+<body>
+
+    <div class="home-container">
+        
+        <header class="header-section">
+            <div class="logo">
+                <img src="photo/logo01.png" alt="Heal Your Heart Logo" class="logo-img">
+            </div>
+            
+            <div class="header-content">
+                <h1>“ เว็บแอปพลิเคชันสำหรับการประเมินความเครียดและสุขภาวะทางอารมณ์ พร้อมคำแนะนำเบื้องต้น ”</h1>
+                
+                <nav class="top-nav">
+                    <a href="home.html" class="nav-btn">หน้าแรก</a>
+                    <a href="about.html" class="nav-btn">เกี่ยวกับเรา</a>
+                    <a href="assessment.html" class="nav-btn active">แบบประเมิน</a>
+                    <a href="knowledge.html" class="nav-btn">สาระความรู้เกี่ยวกับสุขภาพจิต</a>
+                    <a href="relax.html" class="nav-btn">แนะนำกิจกรรมผ่อนคลายและพัฒนาตนเอง</a>
+                </nav>
+            </div>
+        </header>
+
+        <main class="assessment-main">
+            
+            <div class="top-actions">
+                <a href="home.html" class="back-btn">← กลับหน้าแรก</a>
+            </div>
+
+            <div class="assessment-header-title">
+                <p class="tools-info">การประเมินชุดหลักประกอบด้วย: ความเครียด (ST-5), ภาวะซึมเศร้า (2Q) และ โรคซึมเศร้า (9Q)</p>
+                <a href="questionnaire-st5.html" class="main-title-btn">เริ่มทำแบบประเมินชุดหลัก</a>
+            </div>
+
+            <div class="assessment-intro-box">
+                <h3>ตรวจสุขภาพใจ MENTAL HEALTH CHECK IN คือ ?</h3>
+                <p>เครื่องมือสำหรับประเมินสุขภาพจิตเบื้องต้น และคัดกรองความเสี่ยงต่อปัญหาสุขภาพจิตของประชาชน พัฒนาขึ้นเพื่อสนับสนุนการดูแลสุขภาพจิตในระดับชุมชน โดยมุ่งเน้นให้สามารถเข้าถึงการประเมินได้อย่างสะดวก รวดเร็ว และมีประสิทธิภาพ</p>
+                <p><strong>การประเมินในระบบประกอบด้วยเครื่องมือสำคัญ ได้แก่</strong></p>
+                <ul>
+                    <li><strong>SBSD</strong> (Stress, Burnout, Suicide, Depression) สำหรับคัดกรองความเครียด ภาวะหมดไฟ ความเสี่ยงต่อการฆ่าตัวตาย และภาวะซึมเศร้า</li>
+                    <li><strong>RQ</strong> (Resilience Quotient) สำหรับประเมินความสามารถในการฟื้นตัวทางจิตใจ (ความยืดหยุ่นทางอารมณ์)</li>
+                </ul>
+            </div>
+
+            <section class="assessment-section">
+                
+                <h2 class="assessment-section-title">แบบประเมินความสุขและพลังใจ</h2>
+                
+                <div class="assessment-grid">
+
+                    <a href="happiness-test.html" class="topic-card">
+                        <div class="topic-icon-area">
+                            <span class="emoji">😊</span>
+                        </div>
+                        <div class="topic-title-area">
+                            <h3>ความสุข (Happiness)</h3>
+                            <div class="topic-underline line-pink"></div>
+                        </div>
+                    </a>
+
+                    <a href="rq-test.html" class="topic-card">
+                        <div class="topic-icon-area">
+                            <span class="emoji">💖</span>
+                        </div>
+                        <div class="topic-title-area">
+                            <h3>พลังใจ (RQ)</h3>
+                            <div class="topic-underline line-orange"></div>
+                        </div>
+                    </a>
+
+                    <a href="burnout-test.html" class="topic-card">
+                        <div class="topic-icon-area">
+                            <span class="emoji">🔋</span>
+                        </div>
+                        <div class="topic-title-area">
+                            <h3>ภาวะหมดไฟ (Burnout)</h3>
+                            <div class="topic-underline line-green"></div>
+                        </div>
+                    </a>
+
+                    <a href="#" class="topic-card" onclick="openSuicideModal(event)">
+                        <div class="topic-icon-area">
+                            <span class="emoji">🚨</span>
+                        </div>
+                        <div class="topic-title-area">
+                            <h3 style="color: #ef4444;">ภาวะเสี่ยง (Suicide)</h3>
+                            <div class="topic-underline line-red"></div>
+                        </div>
+                    </a>
+
+                </div>
+            </section>
+
+        </main>
+
+        <footer class="footer-section">
+            <div class="hotline-wrapper">
+                <a href="tel:1323" class="hotline-btn">📞 สายด่วนสุขภาพจิต 1323 (โทรฟรี 24 ชม.)</a>
+            </div>
+
+            <nav class="bottom-nav">
+                <a href="contact.html" class="nav-btn">ติดต่อเรา</a>
+                <a href="reference.html" class="nav-btn">ข้อมูลและที่มาของแบบประเมิน</a>
+                <a href="privacy.html" class="nav-btn">นโยบายความเป็นส่วนตัว</a>
+                <a href="stats.html" class="nav-btn">สถิติผู้มาเข้าใช้บริการ</a>
+            </nav>
+        </footer>
+
+    </div>
+
+    <!-- ป๊อปอัป (Modal) -->
+    <div class="modal-overlay" id="suicideModal">
+        <div class="modal-box">
+            <div class="modal-icon">🚨</div>
+            <h3 class="modal-title">ต้องการความช่วยเหลือด่วน?</h3>
+            <p class="modal-desc">หากคุณกำลังรู้สึกท้อแท้ สิ้นหวัง หรือมีความคิดอยากทำร้ายตัวเอง โปรดอย่าลังเลที่จะติดต่อผู้เชี่ยวชาญเพื่อรับคำปรึกษาทันที เพราะคุณไม่ได้อยู่คนเดียว</p>
+            <a href="tel:1323" class="modal-btn-call">📞 โทร 1323 สายด่วนสุขภาพจิต</a>
+            <div class="modal-close" onclick="closeSuicideModal()">ปิดหน้าต่างนี้</div>
+        </div>
+    </div>
+
+    <!-- ดึงไฟล์ JS ของหน้านี้มาใช้งาน -->
+    <script src="js/assessment.js"></script>
+
+</body>
+</html>

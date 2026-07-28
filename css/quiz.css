@@ -1,0 +1,55 @@
+/* ========================================================
+   CSS สำหรับกลุ่มหน้า ทำแบบประเมิน (Quiz / Questionnaire)
+======================================================== */
+
+.quiz-main { width: 100%; max-width: 1000px; margin: 20px auto; padding-bottom: 40px; background: transparent; }
+.quiz-section {
+    background-color: #fff; border: 2px solid #FFC6D3; border-radius: 20px;
+    padding: 40px; box-shadow: 0 10px 30px rgba(216, 75, 107, 0.1);
+}
+.quiz-title { text-align: center; color: #D84B6B; font-size: 26px; font-weight: 700; margin-bottom: 25px; }
+.instruction-box {
+    background-color: #FFF0F3; color: #4A3338; padding: 20px; text-align: center;
+    border-radius: 12px; font-size: 18px; font-weight: 500;
+    margin-bottom: 40px; border: 1px dashed #FFC6D3; line-height: 1.6;
+}
+
+.question-row {
+    display: flex; flex-direction: column; margin-bottom: 35px;
+    padding-bottom: 25px; border-bottom: 1px dashed #FFC6D3;
+}
+.q-text { font-size: 18px; font-weight: 600; color: #4A3338; margin-bottom: 15px; }
+
+.q-options { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; }
+
+/* ซ่อนปุ่ม Radio จริง แล้วตกแต่ง Label แทน */
+.hidden-radio { display: none; }
+.opt-btn {
+    display: block; text-align: center; padding: 12px; border-radius: 8px;
+    font-size: 16px; font-weight: 600; cursor: pointer; background-color: #fff;
+    transition: all 0.3s; box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+/* ตกแต่งปุ่มตัวเลือก 4 ระดับ */
+.btn-green { border: 2px solid #10b981; color: #10b981; }
+.hidden-radio:checked + .btn-green { background-color: #10b981; color: #fff; transform: translateY(-3px); box-shadow: 0 6px 15px rgba(16, 185, 129, 0.3); }
+
+.btn-blue { border: 2px solid #3b82f6; color: #3b82f6; }
+.hidden-radio:checked + .btn-blue { background-color: #3b82f6; color: #fff; transform: translateY(-3px); box-shadow: 0 6px 15px rgba(59, 130, 246, 0.3); }
+
+.btn-yellow { border: 2px solid #f59e0b; color: #f59e0b; }
+.hidden-radio:checked + .btn-yellow { background-color: #f59e0b; color: #fff; transform: translateY(-3px); box-shadow: 0 6px 15px rgba(245, 158, 11, 0.3); }
+
+.btn-red { border: 2px solid #ef4444; color: #ef4444; }
+.hidden-radio:checked + .btn-red { background-color: #ef4444; color: #fff; transform: translateY(-3px); box-shadow: 0 6px 15px rgba(239, 68, 68, 0.3); }
+
+/* ปุ่มด้านล่าง (กลับ / บันทึก) */
+.bottom-actions { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-top: 30px; }
+.back-prev-btn { background-color: #fff; color: #D84B6B; border: 2px solid #D84B6B; padding: 15px 40px; border-radius: 50px; font-size: 18px; font-weight: 700; text-decoration: none; transition: 0.3s; }
+.back-prev-btn:hover { background-color: #FFF0F3; transform: translateY(-3px); }
+.submit-next-btn { background-color: #D84B6B; color: #fff; border: none; padding: 15px 50px; border-radius: 50px; font-size: 18px; font-weight: 700; cursor: pointer; box-shadow: 0 5px 15px rgba(216, 75, 107, 0.3); transition: 0.3s; }
+.submit-next-btn:hover { background-color: #A3334E; transform: translateY(-3px); }
+
+/* Responsive สำหรับมือถือ */
+@media (max-width: 768px) { .q-options { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 480px) { .q-options { grid-template-columns: 1fr; } }

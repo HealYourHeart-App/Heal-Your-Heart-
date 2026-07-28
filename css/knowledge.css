@@ -1,0 +1,150 @@
+/* ========================================================
+   ตัวแปรสี (อิงตามธีมหลัก)
+======================================================== */
+:root {
+    --bg-light: #ffffff;
+    --primary-color: #D84B6B;
+    --secondary-color: #FFC6D3;
+    --text-main: #4A3338;
+    --text-muted: #777777;
+}
+
+/* ========================================================
+   CSS หลักสำหรับหน้า สาระความรู้ (Knowledge)
+======================================================== */
+.knowledge-content { 
+    display: flex; flex-direction: column; align-items: center; 
+    width: 100%; gap: 40px; background: transparent !important; 
+    padding: 0 0 40px 0;
+}
+
+.content-section { 
+    width: 100%; max-width: 1000px; display: flex; flex-direction: column; 
+    align-items: center; margin: 0 auto; background: transparent !important; 
+}
+
+.section-title { 
+    display: inline-block; background-color: #FFF0F3 !important; 
+    color: var(--primary-color) !important; 
+    border: 2px solid var(--secondary-color) !important; 
+    border-radius: 12px; padding: 15px 40px; font-size: 24px; font-weight: 700; 
+    margin: 0 auto 40px auto; text-align: center; box-shadow: 0 5px 15px rgba(216, 75, 107, 0.1); 
+}
+
+/* ================= การ์ดเนื้อหา (ดีไซน์ใหม่) ================= */
+.content-row { 
+    display: flex; flex-direction: row; align-items: stretch; width: 100%; 
+    position: relative; background-color: var(--bg-light) !important; 
+    border: 2px solid var(--secondary-color) !important; border-radius: 20px; 
+    padding: 30px 30px 30px 45px; gap: 30px; margin-bottom: 35px; 
+    box-shadow: 0 6px 20px rgba(216, 75, 107, 0.08); 
+    transition: transform 0.3s ease, box-shadow 0.3s ease; 
+}
+.content-row:hover { 
+    transform: translateY(-5px); box-shadow: 0 10px 25px rgba(216, 75, 107, 0.15); 
+}
+
+/* วงกลมตัวเลข (ลอยทับขอบซ้าย) */
+.number-badge { 
+    position: absolute; top: 20px; left: -25px; width: 55px !important; height: 55px !important; 
+    background-color: var(--primary-color) !important; color: #fff; 
+    border-radius: 50%; display: flex; align-items: center; justify-content: center; 
+    font-size: 26px; font-weight: 700; box-shadow: 0 5px 15px rgba(216, 75, 107, 0.3); z-index: 5; 
+}
+.number-badge::after { display: none !important; }
+
+/* ฝั่งซ้าย: รูปภาพ */
+.image-box { 
+    width: 320px; flex: 0 0 320px; min-height: 200px; 
+    background-color: #FFDDE4 !important; border-radius: 15px; display: flex; 
+    align-items: center; justify-content: center; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.1); 
+}
+.image-box img { 
+    width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s ease; cursor: pointer;
+}
+.content-row:hover .image-box img { transform: scale(1.05); }
+
+/* ฝั่งขวา: ข้อความ */
+.info-box { 
+    flex: 1; background: transparent !important; border: none !important; 
+    box-shadow: none !important; padding: 0 !important; text-align: left; 
+    display: flex; flex-direction: column; justify-content: center; 
+}
+
+.content-title {
+    font-size: 20px;
+    color: #C83B53;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.info-box p { 
+    color: var(--text-main) !important; font-size: 16px; margin-bottom: 8px; line-height: 1.6; 
+}
+.info-box .reference { 
+    font-size: 15px; color: var(--text-muted) !important; margin-top: 15px; font-weight: 500; 
+}
+
+/* ปรับแต่ง Label สีแดงสำหรับคำนำหน้า ให้กลับมาใช้งานได้ */
+.label-red { 
+    color: #D84B6B !important; 
+    font-weight: 700; 
+    margin-right: 5px; 
+}
+
+.read-more-link { 
+    display: inline-block; align-self: flex-end; color: #C83B53 !important; 
+    font-weight: 700; text-decoration: none; margin-top: auto; padding-top: 15px; 
+    font-size: 18px; transition: color 0.3s; 
+}
+.read-more-link span { 
+    font-size: 22px; vertical-align: middle; margin-left: 5px; 
+}
+.read-more-link:hover { 
+    color: #A02B3E !important; text-decoration: underline !important; 
+}
+
+@media (max-width: 768px) { 
+    .content-row { flex-direction: column; align-items: center; text-align: center; padding: 40px 20px 25px 20px; } 
+    .number-badge { top: -25px; left: 50%; transform: translateX(-50%); } 
+    .image-box { width: 100%; max-width: 350px; height: 220px; } 
+    .read-more-link { align-self: center; } 
+}
+
+/* ================= สไตล์ระบบซูมรูปภาพ (Modal) ================= */
+.image-modal {
+    display: none; position: fixed; z-index: 9999; 
+    padding-top: 60px; left: 0; top: 0; 
+    width: 100%; height: 100%; 
+    background-color: rgba(0,0,0,0.85); 
+    backdrop-filter: blur(5px);
+    overflow: auto; 
+}
+
+.modal-content {
+    margin: auto; display: block;
+    max-width: 90%; max-height: 80vh;
+    border-radius: 12px;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.5);
+    animation: zoomIn 0.3s ease;
+    transition: transform 0.3s ease;
+    cursor: zoom-in;
+}
+
+.modal-content.zoomed {
+    transform: scale(1.8);
+    cursor: zoom-out;
+}
+
+@keyframes zoomIn {
+    from {transform:scale(0.8); opacity: 0;} 
+    to {transform:scale(1); opacity: 1;}
+}
+
+.close-modal {
+    position: fixed; top: 20px; right: 35px;
+    color: #f1f1f1; font-size: 40px; font-weight: bold;
+    cursor: pointer; transition: 0.3s; z-index: 10000;
+}
+
+.close-modal:hover, .close-modal:focus { color: #d84b6b; text-decoration: none; }

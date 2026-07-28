@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heal Your Heart - แบบคัดกรองโรคซึมเศร้า (9Q)</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/home.css">
+    <link rel="stylesheet" href="css/questionnaire.css">
+</head>
+<body>
+
+    <div class="home-container">
+        
+        <!-- Header -->
+        <header class="header-section">
+            <div class="logo"><img src="photo/logo01.png" alt="Logo" class="logo-img"></div>
+            <div class="header-content">
+                <h1>“ เว็บแอปพลิเคชันสำหรับการประเมินความเครียดและสุขภาวะทางอารมณ์ ”</h1>
+                <nav class="top-nav">
+                    <a href="home.html" class="nav-btn">หน้าแรก</a>
+                    <a href="assessment.html" class="nav-btn active">แบบประเมิน</a>
+                </nav>
+            </div>
+        </header>
+
+        <main class="quiz-main">
+            
+            <!-- แถบความคืบหน้า -->
+            <div class="progress-section">
+                <div class="progress-text">
+                    <span>ส่วนที่ 3: แบบคัดกรองโรคซึมเศร้า (9Q)</span>
+                    <span>3/3 หน้า</span>
+                </div>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" style="width: 100%;"></div>
+                </div>
+            </div>
+
+            <!-- กล่องคำถาม -->
+            <div class="quiz-section">
+                <h2 class="quiz-title">🌧️ แบบคัดกรองโรคซึมเศร้าด้วย 9 คำถาม (9Q)</h2>
+                
+                <div class="instruction-box">
+                    ในช่วง 2 สัปดาห์ที่ผ่านมารวมทั้งวันนี้ ท่านมีอาการเหล่านี้ บ่อยแค่ไหน ?<br>
+                    <span style="font-size: 15px; color: #D84B6B;">( โปรดเลือกคำตอบที่ตรงกับความรู้สึกของท่านมากที่สุด )</span>
+                </div>
+
+                <form id="q9Form">
+                    
+                    <!-- ข้อ 1-9 เขียนย่อด้วย JavaScript เพื่อง่ายต่อการอ่านและประมวลผล -->
+                    <div id="questionsContainer"></div>
+
+                    <div class="bottom-actions">
+                        <a href="questionnaire-2q.html" class="back-prev-btn">← ย้อนกลับ</a>
+                        <!-- กดแล้วจะพาไปหน้าสรุปผล -->
+                        <button type="submit" class="submit-next-btn" style="background-color: #10b981; box-shadow: 0 5px 15px rgba(16,185,129,0.3);">บันทึกและดูผลประเมินทั้งหมด »</button>
+                    </div>
+
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <!-- ปุ่มเลื่อนขึ้นบนสุด -->
+    <a href="#" class="floating-top-btn">↑</a>
+
+    <!-- ดึงไฟล์ JS มาใช้งาน -->
+    <script src="js/questionnaire-9q.js"></script>
+
+</body>
+</html>

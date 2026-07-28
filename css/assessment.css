@@ -1,0 +1,228 @@
+/* ========================================================
+   CSS เฉพาะสำหรับหน้า แบบประเมิน (Assessment)
+======================================================== */
+.assessment-main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 10px 0 60px 0;
+    border-bottom: 2px solid var(--secondary-color);
+    margin-bottom: 40px;
+}
+
+.top-actions {
+    width: 100%;
+    max-width: 1100px;
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 30px;
+}
+
+.back-btn {
+    display: inline-flex;
+    align-items: center;
+    background-color: #fff;
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+    padding: 8px 25px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 15px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(216, 75, 107, 0.1);
+}
+
+.back-btn:hover {
+    background-color: var(--primary-color);
+    color: #fff;
+    transform: translateX(-5px); 
+    box-shadow: 0 6px 15px rgba(216, 75, 107, 0.3);
+}
+
+.assessment-header-title {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.tools-info {
+    color: #8C6A6F; 
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 15px;
+}
+
+.main-title-btn {
+    display: inline-block;
+    background-color: var(--primary-color); 
+    color: #fff; 
+    font-size: 24px;
+    font-weight: 700;
+    text-decoration: none;
+    padding: 12px 50px;
+    border-radius: 50px; 
+    box-shadow: 0 5px 15px rgba(216, 75, 107, 0.3); 
+    transition: all 0.3s ease;
+}
+
+.main-title-btn:hover {
+    background-color: #A3334E; 
+    transform: translateY(-3px); 
+    box-shadow: 0 8px 20px rgba(216, 75, 107, 0.4);
+}
+
+/* ================= กล่องคำอธิบาย ================= */
+.assessment-intro-box {
+    width: 100%;
+    max-width: 1100px;
+    background-color: #FFF;
+    border: 1px solid var(--secondary-color);
+    border-radius: 20px;
+    padding: 30px 40px;
+    margin-bottom: 20px;
+    box-shadow: 0 10px 25px rgba(216, 75, 107, 0.08);
+}
+
+.assessment-intro-box h3 {
+    color: var(--primary-color);
+    font-size: 22px;
+    margin-bottom: 15px;
+    font-weight: 700;
+}
+
+.assessment-intro-box p, .assessment-intro-box ul {
+    color: var(--text-main);
+    font-size: 16px;
+    line-height: 1.8;
+    margin-bottom: 15px;
+}
+
+.assessment-intro-box ul {
+    list-style-type: disc;
+    padding-left: 30px;
+}
+
+/* ================= โซนที่ 2: เมนูแยกทำแบบประเมินเฉพาะด้าน ================= */
+.assessment-section {
+    width: 100%;
+    margin: 40px auto 0 auto;
+    text-align: center;
+}
+
+.assessment-section-title {
+    color: #888;
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 25px;
+}
+
+.assessment-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 25px;
+    max-width: 1100px;
+}
+
+/* สไตล์การ์ด */
+.topic-card {
+    background-color: #ffffff;
+    border-radius: 20px;
+    overflow: hidden;
+    text-decoration: none;
+    border: 1px solid #fbcfe8;
+    box-shadow: 0 4px 15px rgba(216, 75, 107, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.topic-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 25px rgba(216, 75, 107, 0.15);
+}
+
+/* ส่วนครึ่งบน (ไอคอน) */
+.topic-icon-area {
+    background-color: #ffe4e8;
+    padding: 35px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+.topic-icon-area .emoji {
+    font-size: 55px;
+    line-height: 1;
+}
+
+/* ส่วนครึ่งล่าง (ชื่อหัวข้อ) */
+.topic-title-area {
+    background-color: #ffffff;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.topic-title-area h3 {
+    color: #d84b6b;
+    font-size: 17px;
+    font-weight: 700;
+    margin: 0 0 10px 0;
+}
+
+.topic-underline {
+    width: 35px;
+    height: 3px;
+    border-radius: 5px;
+}
+
+/* สีขีดเส้นใต้แต่ละกล่อง */
+.line-pink { background-color: #fca5a5; }
+.line-orange { background-color: #fb923c; }
+.line-green { background-color: #34d399; }
+.line-red { background-color: #ef4444; }
+
+/* ================= ป๊อปอัป (Modal) แจ้งเตือนสายด่วน ================= */
+.modal-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); backdrop-filter: blur(5px);
+    display: flex; justify-content: center; align-items: center; z-index: 9999;
+    opacity: 0; pointer-events: none; transition: 0.3s ease;
+}
+.modal-overlay.active { opacity: 1; pointer-events: auto; }
+.modal-box {
+    background-color: #fff; width: 90%; max-width: 480px;
+    border-radius: 20px; padding: 40px 30px; text-align: center;
+    border: 4px solid #ef4444; transform: scale(0.8); transition: 0.3s ease;
+    box-shadow: 0 15px 40px rgba(220, 38, 38, 0.3);
+}
+.modal-overlay.active .modal-box { transform: scale(1); }
+.modal-icon { font-size: 70px; margin-bottom: 15px; animation: pulse 1.5s infinite; }
+@keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
+.modal-title { color: #ef4444; font-size: 24px; font-weight: 700; margin-bottom: 15px; }
+.modal-desc { color: #4A3338; font-size: 16px; margin-bottom: 25px; line-height: 1.6; }
+.modal-btn-call {
+    display: block; background-color: #ef4444; color: #fff;
+    padding: 15px 30px; border-radius: 30px; font-size: 20px; font-weight: 700;
+    text-decoration: none; box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+    margin-bottom: 15px; width: 100%; transition: 0.3s;
+}
+.modal-btn-call:hover { background-color: #b91c1c; transform: translateY(-3px); }
+.modal-close { display: block; color: #8C6A6F; cursor: pointer; text-decoration: underline; font-weight: 600; font-size: 15px; }
+
+/* ================= Responsive ================= */
+@media (max-width: 900px) {
+    .assessment-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 600px) {
+    .assessment-grid { grid-template-columns: 1fr; }
+    .assessment-intro-box { padding: 25px 20px; }
+    .main-title-btn { font-size: 20px; padding: 10px 35px; }
+    .top-actions { justify-content: center; }
+}

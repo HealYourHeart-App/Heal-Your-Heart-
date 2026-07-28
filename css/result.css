@@ -1,0 +1,128 @@
+/* =========================================================
+   สไตล์เฉพาะสำหรับหน้า ผลการประเมิน (result.css)
+========================================================= */
+
+.result-main {
+    width: 100%; max-width: 1100px;
+    margin: 0 auto; padding-bottom: 40px;
+    background: transparent !important;
+    animation: fadeIn 0.8s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ================= สไตล์สำหรับคำแนะนำและข้อความ ================= */
+.advice-content p { 
+    margin-bottom: 10px; 
+    line-height: 1.6; 
+}
+.unified-severe { 
+    color: #dc2626; 
+    font-weight: 600; 
+}
+
+/* ================= 1. กล่องข้อมูลเบื้องต้น ================= */
+.user-info-box {
+    background-color: #FFF0F3 !important;
+    border: 2px solid #FFC6D3 !important;
+    border-radius: 15px; padding: 25px;
+    text-align: center; margin-bottom: 30px;
+    box-shadow: 0 4px 15px rgba(216, 75, 107, 0.05);
+}
+.user-info-box h3 { color: #D84B6B; font-size: 20px; margin-bottom: 10px; font-weight: 700; }
+.user-info-box p { color: #4A3338; font-size: 16px; font-weight: 500; margin: 5px 0;}
+.user-info-box span { color: #A3334E; font-weight: 700; }
+
+/* ================= 2. สุขภาพจิตโดยรวม (กล่องใหญ่) ================= */
+.overall-box {
+    background-color: rgba(255, 255, 255, 0.8) !important;
+    border: 2px solid #FFC6D3 !important;
+    border-radius: 20px; padding: 40px 30px;
+    text-align: center; margin-bottom: 40px;
+    box-shadow: 0 8px 25px rgba(216, 75, 107, 0.1);
+}
+.overall-box h2 { color: #D84B6B; font-size: 26px; font-weight: 700; margin-bottom: 15px; }
+.overall-icon { font-size: 80px; line-height: 1; margin-bottom: 15px; filter: drop-shadow(0 5px 10px rgba(216, 75, 107, 0.3)); }
+.overall-status { font-size: 32px; font-weight: 800; line-height: 1.4; margin-bottom: 15px; }
+.overall-desc { color: #4A3338; font-size: 16px; line-height: 1.6; max-width: 800px; margin: 0 auto; }
+
+/* ================= 3. กริดคะแนนแต่ละด้าน (3 คอลัมน์ 2 แถว) ================= */
+.result-grid-new {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; margin-bottom: 40px;
+}
+.score-card {
+    background-color: #fff; border-radius: 15px; padding: 25px 20px; text-align: center;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.05); border: 2px solid #FFC6D3;
+    display: flex; flex-direction: column; align-items: center; transition: all 0.3s ease;
+    justify-content: flex-start; /* [แก้ไข] จัดเนื้อหาให้เริ่มจากด้านบนเสมอ ป้องกันปุ่มตก */
+}
+.score-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(216, 75, 107, 0.15); }
+
+/* สีขอบเน้นด้านซ้ายของแต่ละกล่อง */
+.border-blue { border-left: 8px solid #60a5fa !important; }
+.border-lightblue { border-left: 8px solid #38bdf8 !important; }
+.border-purple { border-left: 8px solid #a78bfa !important; }
+.border-pink { border-left: 8px solid #f472b6 !important; }
+.border-orange { border-left: 8px solid #fb923c !important; }
+.border-green { border-left: 8px solid #34d399 !important; }
+
+.card-title { font-size: 18px; color: #D84B6B; font-weight: 700; margin-bottom: 15px; }
+.card-icon { font-size: 50px; margin-bottom: 10px; }
+.card-score { font-size: 45px; font-weight: 800; line-height: 1; margin-bottom: 5px; color: #A3334E; }
+.card-label { font-size: 15px; color: #8C6A6F; font-weight: 500; margin-bottom: 15px; }
+.card-status { font-size: 20px; font-weight: 700; padding: 5px 15px; border-radius: 20px; margin-bottom: 15px;}
+
+/* สีสถานะ */
+.status-green { color: #059669; } .bg-status-green { background-color: #d1fae5; color: #059669; }
+.status-yellow { color: #d97706; } .bg-status-yellow { background-color: #fef3c7; color: #d97706; }
+.status-orange { color: #ea580c; } .bg-status-orange { background-color: #ffedd5; color: #ea580c; }
+.status-red { color: #dc2626; } .bg-status-red { background-color: #fee2e2; color: #dc2626; }
+.status-gray { color: #64748b; } .bg-status-gray { background-color: #f1f5f9; color: #64748b; }
+
+/* ปุ่มคำแนะนำ Dropdown */
+.advice-dropdown {
+    width: 100%; background-color: #fff; border: 2px solid #FFC6D3; color: #D84B6B;
+    padding: 10px 15px; font-size: 15px; font-weight: 600; display: flex;
+    justify-content: space-between; align-items: center; cursor: pointer;
+    border-radius: 8px; font-family: 'Prompt', sans-serif; transition: 0.3s;
+    margin-top: 15px; /* [แก้ไข] เปลี่ยนเป็น 15px แทน auto เพื่อให้ปุ่มต่อจากข้อความพอดี */
+}
+.advice-dropdown:hover { background-color: #FFF0F3; }
+.advice-content {
+    width: 100%; margin-top: 15px; padding: 15px; background-color: #fff;
+    border: 1px dashed #FFC6D3; border-radius: 8px; font-size: 14px;
+    color: #4A3338; text-align: left; line-height: 1.6; display: none;
+}
+.advice-content.show { display: block; animation: slideDown 0.3s ease; }
+@keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ================= 4. ป๊อปอัปแจ้งเตือน ================= */
+.modal-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); backdrop-filter: blur(5px);
+    display: flex; justify-content: center; align-items: center;
+    z-index: 9999; opacity: 1; transition: 0.3s ease;
+}
+.modal-overlay.hidden { opacity: 0; pointer-events: none; }
+.modal-content {
+    background-color: #fff; width: 90%; max-width: 550px;
+    border-radius: 20px; padding: 40px 30px; text-align: center;
+    border: 4px solid #ef4444; transform: scale(1); transition: 0.3s ease;
+    box-shadow: 0 15px 40px rgba(220, 38, 38, 0.3);
+    position: relative;
+}
+.modal-close-x {
+    position: absolute; top: 15px; right: 20px; font-size: 24px; font-weight: bold; color: #999; cursor: pointer;
+}
+.modal-close-x:hover { color: #ef4444; }
+.modal-icon-top { font-size: 70px; margin-bottom: 15px; color: #ef4444; animation: pulse 1.5s infinite; }
+@keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
+.modal-title-red { color: #ef4444; font-size: 26px; font-weight: 700; margin-bottom: 15px; }
+.modal-btn { display: inline-block; background-color: #ef4444; color: white; border: none; padding: 12px 40px; border-radius: 30px; font-size: 18px; font-weight: 700; cursor: pointer; transition: 0.2s; width: 100%; margin-top: 20px; }
+.modal-btn:hover { background-color: #b91c1c; }
+
+@media (max-width: 900px) { .result-grid-new { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 600px) { .result-grid-new { grid-template-columns: 1fr; } }

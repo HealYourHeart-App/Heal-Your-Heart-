@@ -1,0 +1,165 @@
+/* ========================================================
+   CSS เฉพาะสำหรับหน้า วิธีการใช้งาน (How To)
+======================================================== */
+
+.howto-main {
+    width: 100%;
+    padding-bottom: 40px;
+}
+
+.content-wrapper { 
+    max-width: 1000px; 
+    margin: 0 auto; 
+    background: rgba(255, 255, 255, 0.9); 
+    padding: 50px 40px; 
+    border-radius: 20px; 
+    border: 2px solid #FFC6D3; 
+    line-height: 1.8; 
+    color: #4A3338; 
+    box-shadow: 0 10px 30px rgba(216, 75, 107, 0.1); 
+}
+
+.content-wrapper h1 { 
+    text-align: center; 
+    color: #D84B6B; 
+    margin-bottom: 30px; 
+    font-size: 30px; 
+    font-weight: 700; 
+}
+
+.content-wrapper h2 { 
+    color: #D84B6B; 
+    margin-top: 40px; 
+    margin-bottom: 20px; 
+    border-bottom: 2px dashed #FFC6D3; 
+    padding-bottom: 15px; 
+    font-size: 22px; 
+    font-weight: 700; 
+}
+
+.content-wrapper h3 { 
+    color: #A3334E; 
+    margin-top: 25px; 
+    margin-bottom: 10px; 
+    font-size: 18px; 
+    font-weight: 600; 
+}
+
+.pink-text { 
+    color: #D84B6B; 
+    font-weight: 700; 
+}
+
+/* ================= การตกแต่งตาราง ================= */
+.content-wrapper table { 
+    width: 100%; 
+    border-collapse: collapse; 
+    margin: 30px 0; 
+    background: #fff; 
+    border-radius: 10px; 
+    overflow: hidden; 
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05); 
+}
+
+.content-wrapper th, .content-wrapper td { 
+    border: 1px solid #FFC6D3; 
+    padding: 15px 20px; 
+    text-align: left; 
+}
+
+.content-wrapper th { 
+    background-color: #FFF0F3; 
+    color: #D84B6B; 
+    font-weight: 700; 
+    font-size: 16px;
+}
+
+.content-wrapper td { 
+    font-size: 15px; 
+}
+
+/* ================= การตกแต่งลิสต์ขั้นตอน (1, 2, 3...) ================= */
+.step-list { 
+    list-style: none; 
+    padding: 0; 
+    counter-reset: my-counter; 
+    margin-top: 20px;
+}
+
+.step-list li { 
+    position: relative; 
+    padding-left: 55px; 
+    margin-bottom: 25px; 
+    font-size: 16px; 
+    background: #FFF0F3;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-right: 20px;
+    border-radius: 12px;
+    border: 1px solid #FFC6D3;
+}
+
+.step-list li::before { 
+    content: counter(my-counter); 
+    counter-increment: my-counter; 
+    position: absolute; 
+    left: -15px; 
+    top: 50%; 
+    transform: translateY(-50%);
+    width: 45px; 
+    height: 45px; 
+    background-color: #D84B6B; 
+    color: #fff; 
+    border-radius: 50%; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    font-weight: bold; 
+    font-size: 20px; 
+    box-shadow: 0 4px 10px rgba(216,75,107,0.3); 
+    border: 4px solid #fff;
+}
+
+/* ================= กล่องคำเตือนและกล่องพิเศษ ================= */
+.warning-note { 
+    background-color: #fef2f2; 
+    border-left: 6px solid #ef4444; 
+    padding: 20px 25px; 
+    margin: 35px 0; 
+    border-radius: 8px; 
+    color: #b91c1c; 
+    font-weight: 500; 
+    box-shadow: 0 4px 10px rgba(239, 68, 68, 0.1);
+}
+
+.special-section { 
+    color: #D84B6B; 
+    text-align: center; 
+    margin-top: 40px; 
+    padding: 35px; 
+    background: #FFF0F3; 
+    border-radius: 15px; 
+    border: 2px dashed #FFC6D3; 
+    font-size: 18px; 
+}
+
+.footer-note { 
+    text-align: center; 
+    font-weight: 700; 
+    margin-top: 40px; 
+    color: #D84B6B; 
+    font-size: 20px; 
+}
+
+.top-actions {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto 20px auto;
+}
+
+/* ================= Responsive ================= */
+@media (max-width: 768px) {
+    .content-wrapper { padding: 30px 20px; }
+    .step-list li { padding-left: 45px; }
+    .step-list li::before { width: 35px; height: 35px; font-size: 16px; left: -10px; }
+}

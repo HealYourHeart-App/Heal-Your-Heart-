@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heal Your Heart - ผลการประเมิน</title>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/home.css">
+    
+    <!-- ดึงไฟล์ CSS เฉพาะของหน้านี้ -->
+    <link rel="stylesheet" href="css/result.css">
+</head>
+<body>
+    <div class="home-container">
+        
+        <header class="header-section">
+            <div class="logo"><img src="photo/logo01.png" alt="Logo" class="logo-img"></div>
+            <div class="header-content">
+                <h1>“ เว็บแอปพลิเคชันสำหรับการประเมินความเครียดและสุขภาวะทางอารมณ์ พร้อมคำแนะนำเบื้องต้น ”</h1>
+                <nav class="top-nav">
+                    <a href="home.html" class="nav-btn">หน้าแรก</a>
+                    <a href="about.html" class="nav-btn">เกี่ยวกับเรา</a>
+                    <a href="knowledge.html" class="nav-btn">สาระความรู้เกี่ยวกับสุขภาพจิต</a>
+                    <a href="relax.html" class="nav-btn">แนะนำกิจกรรมผ่อนคลายและพัฒนาตนเอง</a>
+                </nav>
+            </div>
+        </header>
+
+        <main class="result-main">
+
+            <div class="user-info-box">
+                <h3>ข้อมูลเบื้องต้นของคุณ</h3>
+                <p>
+                    เพศ: <span id="display-gender">-</span> | 
+                    อายุ: <span id="display-age">-</span> | 
+                    อาชีพ: <span id="display-occ">-</span>
+                </p>
+            </div>
+
+            <div class="overall-box">
+                <h2>สุขภาพจิตโดยรวม</h2>
+                <div class="overall-icon" id="overall-icon">💖</div>
+                <div class="overall-status" id="overall-status">ประมวลผล...</div>
+                <div style="margin-top: 15px; font-size: 16px; color: #475569; text-align: left; padding: 0 20px;" id="overall-advice-text"></div>
+            </div>
+
+            <div class="result-grid-new">
+                <!-- ความเครียด(ST-5) -->
+                <div class="score-card border-blue">
+                    <h3 class="card-title">ความเครียด(ST-5)</h3>
+                    <div class="card-icon" id="icon-st5">😫</div>
+                    <div class="card-score" id="score-st5">0</div>
+                    <div class="card-label">คะแนนเต็ม 15</div>
+                    <div class="card-status status-gray" id="status-st5">ยังไม่ได้ประเมิน</div>
+                    <button class="advice-dropdown" onclick="toggleAdvice('advice-st5')">
+                        <span>📄 คำแนะนำของคุณ</span> <span id="arrow-st5">⌄</span>
+                    </button>
+                    <div id="advice-st5" class="advice-content">คุณยังไม่ได้ทำแบบประเมินในหัวข้อนี้</div>
+                </div>
+
+                <!-- ภาวะซึมเศร้า(2Q+) -->
+                <div class="score-card border-lightblue">
+                    <h3 class="card-title">ภาวะซึมเศร้า(2Q+)</h3>
+                    <div class="card-icon" id="icon-2q">😰</div>
+                    <div class="card-score" id="score-2q">0</div>
+                    <div class="card-label">คะแนนเต็ม 2</div>
+                    <div class="card-status status-gray" id="status-2q">ยังไม่ได้ประเมิน</div>
+                    <button class="advice-dropdown" onclick="toggleAdvice('advice-2q')">
+                        <span>📄 คำแนะนำของคุณ</span> <span id="arrow-2q">⌄</span>
+                    </button>
+                    <div id="advice-2q" class="advice-content">คุณยังไม่ได้ทำแบบประเมินในหัวข้อนี้</div>
+                </div>
+
+                <!-- โรคซึมเศร้า(9Q) -->
+                <div class="score-card border-purple">
+                    <h3 class="card-title">โรคซึมเศร้า(9Q)</h3>
+                    <div class="card-icon" id="icon-9q">🌧️</div>
+                    <div class="card-score" id="score-9q">0</div>
+                    <div class="card-label">คะแนนเต็ม 27</div>
+                    <div class="card-status status-gray" id="status-9q">ยังไม่ได้ประเมิน</div>
+                    <button class="advice-dropdown" onclick="toggleAdvice('advice-9q')">
+                        <span>📄 คำแนะนำของคุณ</span> <span id="arrow-9q">⌄</span>
+                    </button>
+                    <div id="advice-9q" class="advice-content">คุณยังไม่ได้ทำแบบประเมินในหัวข้อนี้</div>
+                </div>
+
+                <!-- ความสุข (Happiness) -->
+                <div class="score-card border-pink">
+                    <h3 class="card-title">ความสุข (Happiness)</h3>
+                    <div class="card-icon" id="icon-hap">😊</div>
+                    <div class="card-score" id="score-hap">-</div>
+                    <div class="card-label">คะแนนเต็ม 10</div>
+                    <div class="card-status status-gray" id="status-hap">ยังไม่ได้ประเมิน</div>
+                    <button class="advice-dropdown" onclick="toggleAdvice('advice-hap')">
+                        <span>📄 คำแนะนำของคุณ</span> <span>⌄</span>
+                    </button>
+                    <div id="advice-hap" class="advice-content">คุณยังไม่ได้ทำแบบประเมินในหัวข้อนี้</div>
+                </div>
+
+                <!-- พลังใจ (RQ) -->
+                <div class="score-card border-orange">
+                    <h3 class="card-title">พลังใจ (RQ)</h3>
+                    <div class="card-icon" id="icon-rq">💖</div>
+                    <div class="card-score" id="score-rq">-</div>
+                    <div class="card-label">คะแนนเต็ม 30</div>
+                    <div class="card-status status-gray" id="status-rq">ยังไม่ได้ประเมิน</div>
+                    <button class="advice-dropdown" onclick="toggleAdvice('advice-rq')">
+                        <span>📄 คำแนะนำของคุณ</span> <span>⌄</span>
+                    </button>
+                    <div id="advice-rq" class="advice-content">คุณยังไม่ได้ทำแบบประเมินในหัวข้อนี้</div>
+                </div>
+
+                <!-- ภาวะหมดไฟ (Burnout) -->
+                <div class="score-card border-green">
+                    <h3 class="card-title">ภาวะหมดไฟ (Burnout)</h3>
+                    <div class="card-icon" id="icon-bo">🔋</div>
+                    <div class="card-score" id="score-bo">-</div>
+                    <div class="card-label">คะแนนเต็ม 12</div>
+                    <div class="card-status status-gray" id="status-bo">ยังไม่ได้ประเมิน</div>
+                    <button class="advice-dropdown" onclick="toggleAdvice('advice-bo')">
+                        <span>📄 คำแนะนำของคุณ</span> <span>⌄</span>
+                    </button>
+                    <div id="advice-bo" class="advice-content">คุณยังไม่ได้ทำแบบประเมินในหัวข้อนี้</div>
+                </div>
+            </div>
+
+            <div class="bottom-actions" style="margin-bottom: 50px; text-align: center;">
+                <a href="assessment.html" class="nav-btn" style="background: #fff; padding: 15px 40px; font-size: 18px; color: #D84B6B; border: 2px solid #D84B6B; border-radius: 30px; text-decoration: none; font-weight: bold; display: inline-block;">← กลับไปเลือกทำแบบประเมินอื่นๆ</a>
+                <a href="home.html" class="nav-btn" style="background: #D84B6B; padding: 15px 40px; font-size: 18px; color: #fff; border: 2px solid #D84B6B; border-radius: 30px; text-decoration: none; font-weight: bold; display: inline-block; margin-left: 10px;">กลับหน้าแรก</a>
+            </div>
+        </main>
+
+        <footer class="footer-section">
+            <div class="hotline-wrapper">
+                <a href="tel:1323" class="hotline-btn" style="background: #fff; color: #D84B6B; border: 2px solid #D84B6B; padding: 15px 40px; border-radius: 30px; text-decoration: none; font-weight: bold; display: inline-block;">📞 สายด่วนสุขภาพจิต 1323 (โทรฟรี 24 ชม.)</a>
+            </div>
+            <nav class="bottom-nav" style="margin-top: 20px; display: flex; justify-content: center; gap: 15px;">
+                <a href="contact.html" class="nav-btn">ติดต่อเรา</a>
+                <a href="reference.html" class="nav-btn">ข้อมูลและที่มาของแบบประเมิน</a>
+                <a href="privacy.html" class="nav-btn">นโยบายความเป็นส่วนตัว</a>
+                <a href="stats.html" class="nav-btn">สถิติผู้มาเข้าใช้บริการ</a>
+            </nav>
+        </footer>
+    </div>
+
+    <!-- Modal แจ้งเตือนความเสี่ยงสูง -->
+    <div id="riskModal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <span class="modal-close-x" id="closeModalX">&times;</span>
+            
+            <div class="modal-icon-top">🚨</div>
+            <h2 class="modal-title-red">ผลประเมินอยู่ในเกณฑ์เสี่ยงสูงมาก</h2>
+            
+            <div class="modal-body-scroll" id="modal-summary-content"></div>
+            
+            <button id="closeModalBtn" class="modal-btn">รับทราบและปิดหน้าต่าง</button>
+        </div>
+    </div>
+
+    <!-- ดึงไฟล์ JS มาใช้งาน -->
+    <script src="js/result.js"></script>
+</body>
+</html>

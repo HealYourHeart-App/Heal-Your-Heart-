@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heal Your Heart - แบบประเมินความเครียด (ST-5)</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/home.css">
+    <link rel="stylesheet" href="css/questionnaire.css">
+</head>
+<body>
+
+    <div class="home-container">
+        
+        <!-- Header -->
+        <header class="header-section">
+            <div class="logo"><img src="photo/logo01.png" alt="Logo" class="logo-img"></div>
+            <div class="header-content">
+                <h1>“ เว็บแอปพลิเคชันสำหรับการประเมินความเครียดและสุขภาวะทางอารมณ์ ”</h1>
+                <nav class="top-nav">
+                    <a href="home.html" class="nav-btn">หน้าแรก</a>
+                    <a href="assessment.html" class="nav-btn active">แบบประเมิน</a>
+                </nav>
+            </div>
+        </header>
+
+        <main class="quiz-main">
+            
+            <!-- แถบความคืบหน้า -->
+            <div class="progress-section">
+                <div class="progress-text">
+                    <span>ส่วนที่ 1: แบบประเมินความเครียด (ST-5)</span>
+                    <span>1/3 หน้า</span>
+                </div>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" style="width: 33%;"></div>
+                </div>
+            </div>
+
+            <!-- กล่องคำถาม -->
+            <div class="quiz-section">
+                <h2 class="quiz-title">😫 แบบประเมินความเครียด (ST-5)</h2>
+                
+                <div class="instruction-box">
+                    ใน 2 สัปดาห์ที่ผ่านมา รวมวันนี้ ท่านรู้สึกอย่างไร ?<br>
+                    <span style="font-size: 15px; color: #D84B6B;">( โปรดเลือกคำตอบที่ตรงกับความรู้สึกของท่านมากที่สุด )</span>
+                </div>
+
+                <form id="st5Form">
+                    
+                    <!-- ข้อที่ 1 -->
+                    <div class="question-row">
+                        <div class="q-text">1.) มีปัญหาการนอน นอนไม่หลับหรือนอนมาก</div>
+                        <div class="q-options opts-4">
+                            <label><input type="radio" name="q1" value="0" class="hidden-radio" required><span class="opt-btn btn-green">แทบไม่มี</span></label>
+                            <label><input type="radio" name="q1" value="1" class="hidden-radio"><span class="opt-btn btn-blue">เป็นบางครั้ง</span></label>
+                            <label><input type="radio" name="q1" value="2" class="hidden-radio"><span class="opt-btn btn-yellow">บ่อยครั้ง</span></label>
+                            <label><input type="radio" name="q1" value="3" class="hidden-radio"><span class="opt-btn btn-red">เป็นประจำ</span></label>
+                        </div>
+                    </div>
+
+                    <!-- ข้อที่ 2 -->
+                    <div class="question-row">
+                        <div class="q-text">2.) มีสมาธิน้อยลง</div>
+                        <div class="q-options opts-4">
+                            <label><input type="radio" name="q2" value="0" class="hidden-radio" required><span class="opt-btn btn-green">แทบไม่มี</span></label>
+                            <label><input type="radio" name="q2" value="1" class="hidden-radio"><span class="opt-btn btn-blue">เป็นบางครั้ง</span></label>
+                            <label><input type="radio" name="q2" value="2" class="hidden-radio"><span class="opt-btn btn-yellow">บ่อยครั้ง</span></label>
+                            <label><input type="radio" name="q2" value="3" class="hidden-radio"><span class="opt-btn btn-red">เป็นประจำ</span></label>
+                        </div>
+                    </div>
+
+                    <!-- ข้อที่ 3 -->
+                    <div class="question-row">
+                        <div class="q-text">3.) หงุดหงิด / กระวนกระวาย / ว้าวุ่นใจ</div>
+                        <div class="q-options opts-4">
+                            <label><input type="radio" name="q3" value="0" class="hidden-radio" required><span class="opt-btn btn-green">แทบไม่มี</span></label>
+                            <label><input type="radio" name="q3" value="1" class="hidden-radio"><span class="opt-btn btn-blue">เป็นบางครั้ง</span></label>
+                            <label><input type="radio" name="q3" value="2" class="hidden-radio"><span class="opt-btn btn-yellow">บ่อยครั้ง</span></label>
+                            <label><input type="radio" name="q3" value="3" class="hidden-radio"><span class="opt-btn btn-red">เป็นประจำ</span></label>
+                        </div>
+                    </div>
+
+                    <!-- ข้อที่ 4 -->
+                    <div class="question-row">
+                        <div class="q-text">4.) รู้สึกเบื่อ เซ็ง</div>
+                        <div class="q-options opts-4">
+                            <label><input type="radio" name="q4" value="0" class="hidden-radio" required><span class="opt-btn btn-green">แทบไม่มี</span></label>
+                            <label><input type="radio" name="q4" value="1" class="hidden-radio"><span class="opt-btn btn-blue">เป็นบางครั้ง</span></label>
+                            <label><input type="radio" name="q4" value="2" class="hidden-radio"><span class="opt-btn btn-yellow">บ่อยครั้ง</span></label>
+                            <label><input type="radio" name="q4" value="3" class="hidden-radio"><span class="opt-btn btn-red">เป็นประจำ</span></label>
+                        </div>
+                    </div>
+
+                    <!-- ข้อที่ 5 -->
+                    <div class="question-row" style="border-bottom: none;">
+                        <div class="q-text">5.) ไม่อยากพบปะผู้คน</div>
+                        <div class="q-options opts-4">
+                            <label><input type="radio" name="q5" value="0" class="hidden-radio" required><span class="opt-btn btn-green">แทบไม่มี</span></label>
+                            <label><input type="radio" name="q5" value="1" class="hidden-radio"><span class="opt-btn btn-blue">เป็นบางครั้ง</span></label>
+                            <label><input type="radio" name="q5" value="2" class="hidden-radio"><span class="opt-btn btn-yellow">บ่อยครั้ง</span></label>
+                            <label><input type="radio" name="q5" value="3" class="hidden-radio"><span class="opt-btn btn-red">เป็นประจำ</span></label>
+                        </div>
+                    </div>
+
+                    <div class="bottom-actions">
+                        <a href="assessment.html" class="back-prev-btn">← ยกเลิก</a>
+                        <!-- ไปต่อที่แบบประเมิน 2Q -->
+                        <button type="submit" class="submit-next-btn">ถัดไป (ส่วนที่ 2/3) »</button>
+                    </div>
+
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <!-- ปุ่มเลื่อนขึ้นบนสุด -->
+    <a href="#" class="floating-top-btn">↑</a>
+
+    <!-- ดึงไฟล์ JS มาใช้งาน -->
+    <script src="js/questionnaire-st5.js"></script>
+
+</body>
+</html>

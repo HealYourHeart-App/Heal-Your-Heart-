@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heal Your Heart - เข้าสู่ระบบ</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- ลิงก์ไปไฟล์ CSS เฉพาะของหน้า Login -->
+    <link rel="stylesheet" href="css/login.css">
+</head>
+<body>
+
+    <div class="container">
+        
+        <div class="logo-section">
+            <img src="photo/logo01.png" alt="Heal Your Heart Logo" class="logo-img">
+        </div>
+
+        <div class="card">
+            
+            <div class="welcome-box">
+                ยินดีต้อนรับสู่ Heal Your Heart 💖<br>พื้นที่ปลอดภัยสำหรับหัวใจของคุณ
+            </div>
+
+            <div class="form-box">
+                <h3>กรอกข้อมูลเบื้องต้นเพื่อเข้าสู่ระบบ</h3>
+                
+                <form id="loginForm">
+                    <div class="form-group">
+                        <select id="gender" required>
+                            <option value="" disabled selected>-- กรุณาเลือกเพศ --</option>
+                            <option value="male">ชาย (Male)</option>
+                            <option value="female">หญิง (Female)</option>
+                            <option value="lgbtq">เพศทางเลือก (LGBTQ+)</option>
+                            <option value="not_specified">ไม่ระบุ</option>
+                        </select>
+                        
+                        <select id="age" required>
+                            <option value="" disabled selected>-- กรุณาเลือกช่วงอายุ --</option>
+                            <option value="under18">ต่ำกว่า 18 ปี</option>
+                            <option value="18-24">18 - 24 ปี</option>
+                            <option value="25-34">25 - 34 ปี</option>
+                            <option value="35-44">35 - 44 ปี</option>
+                            <option value="45up">45 ปีขึ้นไป</option>
+                        </select>
+
+                        <select id="occupation" required>
+                            <option value="" disabled selected>-- กรุณาเลือกอาชีพ --</option>
+                            <option value="student">นักเรียน / นักศึกษา</option>
+                            <option value="employee">พนักงานบริษัท / ลูกจ้าง</option>
+                            <option value="government">ข้าราชการ / รัฐวิสาหกิจ</option>
+                            <option value="freelance">ธุรกิจส่วนตัว / ฟรีแลนซ์</option>
+                            <option value="unemployed">ว่างงาน</option>
+                            <option value="other">อื่นๆ</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="submit-btn">เข้าสู่ระบบ »</button>
+                </form>
+
+                <div class="note-box">
+                    <u>หมายเหตุ:</u> ข้อมูลของท่านจะถูกเก็บเป็นความลับและใช้เพื่อการประมวลผลคำแนะนำที่เหมาะสมกับช่วงวัยเท่านั้น ไม่มีการระบุตัวตนบุคคล
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ดึงไฟล์ JS มาใช้งาน -->
+    <script src="js/login.js"></script>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heal Your Heart - สถิติผู้เข้าใช้บริการ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="css/home.css">
+    <!-- ลิงก์ไปไฟล์ CSS เฉพาะหน้านี้ -->
+    <link rel="stylesheet" href="css/stats.css">
+    
+    <!-- เรียกใช้ Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <div class="home-container">
+        <header class="header-section">
+            <div class="logo">
+                <img src="photo/logo01.png" alt="Heal Your Heart Logo" class="logo-img">
+            </div>
+            <div class="header-content">
+                <h1>“ เว็บแอปพลิเคชันสำหรับการประเมินความเครียดและสุขภาวะทางอารมณ์ พร้อมคำแนะนำเบื้องต้น ”</h1>
+                <nav class="top-nav">
+                    <a href="home.html" class="nav-btn">หน้าแรก</a>
+                    <a href="about.html" class="nav-btn">เกี่ยวกับเรา</a>
+                    <a href="knowledge.html" class="nav-btn">สาระความรู้เกี่ยวกับสุขภาพจิต</a>
+                    <a href="relax.html" class="nav-btn">แนะนำกิจกรรมผ่อนคลายและพัฒนาตนเอง</a>
+                </nav>
+            </div>
+        </header>
+
+        <main class="stats-main">
+            
+            <div class="stats-header">
+                <h2>📊 สถิติผู้เข้าใช้บริการ</h2>
+                <p>ข้อมูลสถิติภาพรวมของผู้ใช้งานเว็บแอปพลิเคชัน Heal Your Heart</p>
+            </div>
+
+            <div class="summary-cards">
+                <div class="summary-card">
+                    <h3>จำนวนผู้ใช้งานทั้งหมด</h3>
+                    <div class="number" id="totalUsers">0</div>
+                </div>
+                <div class="summary-card">
+                    <h3>ช่วงวัยที่ใช้งานมากที่สุด</h3>
+                    <div class="number" id="topAgeGroup" style="font-size: 24px; margin-top: 15px;">-</div>
+                </div>
+            </div>
+
+            <div class="charts-grid">
+                
+                <div class="chart-box">
+                    <h3 class="chart-title">สัดส่วนผู้ใช้งานแบ่งตาม "ช่วงอายุ"</h3>
+                    <canvas id="ageChart"></canvas>
+                </div>
+
+                <div class="chart-box">
+                    <h3 class="chart-title">สัดส่วนผู้ใช้งานแบ่งตาม "เพศ"</h3>
+                    <canvas id="genderChart"></canvas>
+                </div>
+
+                <div class="chart-box full-width">
+                    <h3 class="chart-title">สัดส่วนผู้ใช้งานแบ่งตาม "อาชีพ"</h3>
+                    <canvas id="occupationChart" style="max-height: 300px;"></canvas>
+                </div>
+
+            </div>
+
+        </main>
+
+        <footer class="footer-section">
+            <div class="hotline-wrapper">
+                <a href="tel:1323" class="hotline-btn">สายด่วนสุขภาพจิต 1323 (โทรฟรี 24 ชม.)</a>
+            </div>
+            <nav class="bottom-nav">
+                <a href="contact.html" class="nav-btn">ติดต่อเรา</a>
+                <a href="reference.html" class="nav-btn">ข้อมูลและที่มาของแบบประเมิน</a>
+                <a href="privacy.html" class="nav-btn">นโยบายความเป็นส่วนตัว</a>
+                <a href="stats.html" class="nav-btn active">สถิติผู้มาเข้าใช้บริการ</a>
+            </nav>
+        </footer>
+    </div>
+
+    <!-- ดึงไฟล์ JS ที่แยกออกมาใช้งาน -->
+    <script src="js/stats.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,41 @@
+/* ========================================================
+   CSS เฉพาะสำหรับหน้า แบบประเมินความสุข (ปุ่ม 1-10)
+======================================================== */
+
+.scale-container {
+    display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-bottom: 30px;
+}
+
+.scale-btn {
+    width: 55px; height: 55px; border-radius: 50%; border: none; font-size: 22px;
+    font-weight: 700; color: #fff; cursor: pointer; transition: all 0.3s;
+    opacity: 0.5; transform: scale(0.9); box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.scale-btn.active {
+    opacity: 1; transform: scale(1.2); box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    border: 3px solid #fff; outline: 3px solid #D84B6B;
+}
+
+.scale-btn:hover:not(.active) { 
+    opacity: 0.8; transform: scale(1.05); 
+}
+
+/* สีปุ่ม 1-10 */
+.bg-1 { background-color: #ef4444; } .bg-2 { background-color: #f97316; }
+.bg-3 { background-color: #f59e0b; } .bg-4 { background-color: #eab308; }
+.bg-5 { background-color: #fcd34d; } .bg-6 { background-color: #84cc16; }
+.bg-7 { background-color: #22c55e; } .bg-8 { background-color: #0ea5e9; }
+.bg-9 { background-color: #6366f1; } .bg-10 { background-color: #d946ef; }
+
+.score-display { 
+    font-size: 20px; font-weight: 600; color: #4A3338; margin-bottom: 35px; 
+}
+.score-display span { 
+    font-size: 36px; font-weight: 800; color: #D84B6B; margin-left: 10px; 
+}
+
+/* Responsive สำหรับมือถือ */
+@media (max-width: 600px) { 
+    .scale-btn { width: 45px; height: 45px; font-size: 18px; } 
+}

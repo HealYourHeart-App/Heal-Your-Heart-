@@ -1,0 +1,162 @@
+/* ========================================================
+   CSS เฉพาะสำหรับหน้า เข้าสู่ระบบ (Login)
+======================================================== */
+:root {
+    --primary-color: #D84B6B;
+    --secondary-color: #FFC6D3;
+    --text-main: #4A3338;
+}
+
+* { 
+    box-sizing: border-box; 
+    margin: 0; 
+    padding: 0; 
+}
+
+/* 🔥 จุดสำคัญ: บังคับให้โหลดภาพพื้นหลังโดยตรงจากโฟลเดอร์ photo 🔥 */
+body {
+    font-family: 'Prompt', sans-serif;
+    background-image: url('../photo/bg-nature.jpg') !important; /* ปรับ path ให้ถอยกลับไปหา photo */
+    background-size: cover !important;
+    background-position: center center !important;
+    background-attachment: fixed !important;
+    background-repeat: no-repeat !important;
+    min-height: 100vh;
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+    color: var(--text-main);
+    padding: 20px;
+}
+
+/* กล่องกระจกหน้าล็อกอิน */
+.container {
+    width: 100%;
+    max-width: 550px;
+    background-color: rgba(255, 255, 255, 0.85) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    border: 2px solid rgba(255, 182, 193, 0.9) !important;
+    border-radius: 30px;
+    padding: 40px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+    display: flex; 
+    flex-direction: column; 
+    gap: 20px;
+}
+
+.logo-section { 
+    display: flex; 
+    justify-content: center; 
+    margin-bottom: 10px; 
+}
+
+.logo-img { 
+    width: 280px; 
+    height: auto; 
+    mix-blend-mode: multiply; 
+    transition: 0.3s; 
+}
+
+.logo-img:hover { 
+    transform: scale(1.05); 
+}
+
+/* กล่องฟอร์ม */
+.card {
+    background-color: rgba(255, 255, 255, 0.9);
+    border: 2px solid var(--secondary-color);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(216, 75, 107, 0.1);
+}
+
+.welcome-box {
+    background-color: #FFF0F3;
+    color: var(--primary-color);
+    padding: 20px; 
+    text-align: center;
+    font-weight: 600; 
+    font-size: 16px;
+    border-bottom: 2px solid var(--secondary-color);
+}
+
+.form-box { 
+    padding: 30px; 
+    text-align: center; 
+}
+
+.form-box h3 { 
+    color: var(--primary-color); 
+    font-size: 18px; 
+    margin-bottom: 25px; 
+    font-weight: 700; 
+}
+
+.form-group { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 15px; 
+    margin-bottom: 25px; 
+}
+
+select {
+    width: 100%; 
+    padding: 15px;
+    font-family: 'Prompt', sans-serif; 
+    font-size: 15px;
+    color: var(--text-main);
+    border: 2px solid var(--secondary-color);
+    border-radius: 12px; 
+    outline: none; 
+    transition: 0.3s;
+    background-color: #fff; 
+    cursor: pointer;
+}
+
+select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 10px rgba(216, 75, 107, 0.2);
+}
+
+.submit-btn {
+    width: 100%; 
+    background-color: var(--primary-color); 
+    color: #fff;
+    border: none; 
+    padding: 15px; 
+    border-radius: 50px;
+    font-size: 18px; 
+    font-weight: 700; 
+    font-family: 'Prompt', sans-serif;
+    cursor: pointer; 
+    transition: 0.3s; 
+    box-shadow: 0 5px 15px rgba(216, 75, 107, 0.3);
+}
+
+.submit-btn:hover { 
+    background-color: #A3334E; 
+    transform: translateY(-3px); 
+    box-shadow: 0 8px 20px rgba(216, 75, 107, 0.4); 
+}
+
+.note-box {
+    font-size: 13px; 
+    color: #8C6A6F; 
+    text-align: left;
+    line-height: 1.6; 
+    margin-top: 20px; 
+    padding-top: 20px; 
+    border-top: 1px dashed #FFC6D3;
+}
+
+.note-box u { 
+    color: var(--primary-color); 
+    font-weight: 600; 
+}
+
+/* ================= Responsive ================= */
+@media (max-width: 480px) { 
+    .container { padding: 25px 20px; } 
+    .form-box { padding: 20px 15px; } 
+}

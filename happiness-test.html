@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heal Your Heart - แบบประเมินความสุข</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- ดึงไฟล์ CSS มาใช้งาน -->
+    <link rel="stylesheet" href="css/home.css">
+    <link rel="stylesheet" href="css/quiz.css"> <!-- ใช้โครงสร้างร่วมกับแบบประเมินอื่น -->
+    <link rel="stylesheet" href="css/happiness.css"> <!-- ใช้ตกแต่งเฉพาะปุ่มคะแนน 1-10 -->
+    
+</head>
+<body>
+    <div class="home-container">
+        
+        <!-- Header -->
+        <header class="header-section">
+            <div class="logo"><img src="photo/logo01.png" alt="Logo" class="logo-img"></div>
+            <div class="header-content">
+                <h1>“ เว็บแอปพลิเคชันสำหรับการประเมินความเครียดและสุขภาวะทางอารมณ์ ”</h1>
+                <nav class="top-nav">
+                    <a href="home.html" class="nav-btn">หน้าแรก</a>
+                    <a href="assessment.html" class="nav-btn active">แบบประเมิน</a>
+                </nav>
+            </div>
+        </header>
+
+        <main class="quiz-main">
+            <div class="quiz-section">
+                <h2 class="quiz-title">💖 แบบประเมินความสุข (Happiness Scale)</h2>
+                
+                <div class="instruction-box">
+                    ในช่วง 1 เดือนที่ผ่านมา ท่านมีความสุขอยู่ในระดับใด?<br>
+                    <span style="font-size: 15px; color: #D84B6B;">( 1 = น้อยที่สุด, 10 = มากที่สุด )</span>
+                </div>
+
+                <form id="happinessForm">
+                    <div class="scale-container" id="btnGroup">
+                        <button type="button" class="scale-btn bg-1" onclick="selectScore(1)">1</button>
+                        <button type="button" class="scale-btn bg-2" onclick="selectScore(2)">2</button>
+                        <button type="button" class="scale-btn bg-3" onclick="selectScore(3)">3</button>
+                        <button type="button" class="scale-btn bg-4" onclick="selectScore(4)">4</button>
+                        <button type="button" class="scale-btn bg-5" onclick="selectScore(5)">5</button>
+                        <button type="button" class="scale-btn bg-6" onclick="selectScore(6)">6</button>
+                        <button type="button" class="scale-btn bg-7" onclick="selectScore(7)">7</button>
+                        <button type="button" class="scale-btn bg-8" onclick="selectScore(8)">8</button>
+                        <button type="button" class="scale-btn bg-9" onclick="selectScore(9)">9</button>
+                        <button type="button" class="scale-btn bg-10" onclick="selectScore(10)">10</button>
+                    </div>
+
+                    <div class="score-display">
+                        คะแนนที่คุณเลือก: <span id="displayScore">-</span>
+                    </div>
+
+                    <div class="bottom-actions">
+                        <a href="assessment.html" class="back-prev-btn">← กลับ</a>
+                        <button type="submit" class="submit-next-btn">บันทึกและดูผลลัพธ์ »</button>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <!-- ดึงไฟล์ JS ของหน้านี้มาใช้งาน -->
+    <script src="js/happiness.js"></script>
+</body>
+</html>

@@ -1,0 +1,133 @@
+/* ========================================================
+   สไตล์สำหรับหน้า "แบบสอบถาม" (questionnaire.css)
+======================================================== */
+
+.quiz-main {
+    width: 100%;
+    max-width: 1000px;
+    margin: 20px auto; 
+    padding-bottom: 40px;
+    background: transparent !important;
+}
+
+/* ================= แถบความคืบหน้า ================= */
+.progress-section { margin-bottom: 25px; }
+.progress-text {
+    display: flex; justify-content: space-between;
+    font-weight: 600; color: #4A3338;
+    margin-bottom: 10px; font-size: 15px;
+}
+.progress-bar-bg {
+    width: 100%; height: 8px;
+    background-color: #FFF0F3; border: 1px solid #FFC6D3; 
+    border-radius: 10px; overflow: hidden;
+}
+.progress-bar-fill {
+    height: 100%; background-color: #D84B6B; border-radius: 10px;
+    transition: width 0.4s ease;
+}
+
+/* ================= กล่องแบบประเมินหลัก ================= */
+.quiz-section {
+    background-color: rgba(255, 255, 255, 0.9);
+    border: 2px solid #FFC6D3;
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 10px 30px rgba(216, 75, 107, 0.1);
+}
+
+.quiz-title {
+    text-align: center; color: #D84B6B; 
+    font-size: 26px; font-weight: 700; margin-bottom: 25px;
+}
+
+.instruction-box {
+    background-color: #FFF0F3; color: #4A3338; 
+    padding: 15px 25px; border-radius: 12px;
+    font-weight: 500; font-size: 16px; margin-bottom: 30px;
+    border: 1px dashed #FFC6D3; line-height: 1.6;
+}
+
+/* ================= แถวคำถามและปุ่มตอบ ================= */
+.question-row {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 25px 0; border-bottom: 1px dashed #FFC6D3; gap: 20px;
+}
+.question-row:last-child { border-bottom: none; }
+
+.q-text { flex: 1; font-size: 18px; color: #4A3338; font-weight: 600; line-height: 1.5; }
+
+.q-options { display: grid; gap: 12px; }
+.opts-4 { grid-template-columns: repeat(4, 1fr); flex: 0 0 600px; }
+.opts-2 { grid-template-columns: repeat(2, 1fr); flex: 0 0 300px; }
+
+.hidden-radio { display: none; }
+
+/* ปุ่มกดตัวเลือกพื้นฐาน */
+.opt-btn {
+    display: block; text-align: center;
+    padding: 12px; border-radius: 8px;
+    font-size: 15px; font-weight: 600;
+    cursor: pointer; background-color: #fff;
+    transition: all 0.3s; box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/* สีปุ่มแบบต่างๆ (เวลาเลือกแล้วสีจะเปลี่ยน) */
+.btn-green { border: 2px solid #10b981; color: #10b981; }
+.hidden-radio:checked + .btn-green { background-color: #10b981; color: #fff; transform: translateY(-3px); box-shadow: 0 6px 15px rgba(16, 185, 129, 0.3); }
+
+.btn-blue { border: 2px solid #3b82f6; color: #3b82f6; }
+.hidden-radio:checked + .btn-blue { background-color: #3b82f6; color: #fff; transform: translateY(-3px); box-shadow: 0 6px 15px rgba(59, 130, 246, 0.3); }
+
+.btn-yellow { border: 2px solid #f59e0b; color: #f59e0b; }
+.hidden-radio:checked + .btn-yellow { background-color: #f59e0b; color: #fff; transform: translateY(-3px); box-shadow: 0 6px 15px rgba(245, 158, 11, 0.3); }
+
+.btn-red { border: 2px solid #ef4444; color: #ef4444; }
+.hidden-radio:checked + .btn-red { background-color: #ef4444; color: #fff; transform: translateY(-3px); box-shadow: 0 6px 15px rgba(239, 68, 68, 0.3); }
+
+.btn-blue-outline { border: 2px solid #3b82f6; color: #3b82f6; }
+.hidden-radio:checked + .btn-blue-outline { background-color: #3b82f6; color: #fff; transform: translateY(-3px); box-shadow: 0 6px 15px rgba(59, 130, 246, 0.3); }
+
+.btn-red-outline { border: 2px solid #ef4444; color: #ef4444; }
+.hidden-radio:checked + .btn-red-outline { background-color: #ef4444; color: #fff; transform: translateY(-3px); box-shadow: 0 6px 15px rgba(239, 68, 68, 0.3); }
+
+/* ================= ปุ่มกดย้อนกลับและถัดไป ================= */
+.bottom-actions {
+    margin-top: 40px; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;
+}
+.back-prev-btn {
+    background-color: #fff; color: #D84B6B; border: 2px solid #D84B6B;
+    padding: 15px 40px; border-radius: 50px; font-size: 18px;
+    font-weight: 700; text-decoration: none; display: inline-flex;
+    align-items: center; justify-content: center;
+    box-shadow: 0 4px 10px rgba(216, 75, 107, 0.1); transition: 0.3s;
+}
+.back-prev-btn:hover { background-color: #FFF0F3; transform: translateY(-3px); box-shadow: 0 6px 15px rgba(216, 75, 107, 0.2); }
+
+.submit-next-btn {
+    background-color: #D84B6B; color: #fff; border: none;
+    padding: 15px 50px; border-radius: 50px; font-size: 18px;
+    font-weight: 700; cursor: pointer;
+    box-shadow: 0 5px 15px rgba(216, 75, 107, 0.3); transition: 0.3s;
+}
+.submit-next-btn:hover { background-color: #A3334E; transform: translateY(-3px); box-shadow: 0 8px 20px rgba(216, 75, 107, 0.4); }
+
+/* ปุ่มลอยเลื่อนขึ้นบน */
+.floating-top-btn {
+    position: fixed; bottom: 30px; right: 30px;
+    background-color: #fff; color: #D84B6B; border: 2px solid #D84B6B;
+    width: 50px; height: 50px; border-radius: 50%; display: flex;
+    align-items: center; justify-content: center; text-decoration: none;
+    font-weight: bold; font-size: 22px;
+    box-shadow: 0 4px 15px rgba(216, 75, 107, 0.2); z-index: 100; transition: 0.3s;
+}
+.floating-top-btn:hover { background-color: #D84B6B; color: #fff; transform: translateY(-5px); }
+
+/* ================= Responsive สำหรับมือถือ ================= */
+@media (max-width: 992px) {
+    .question-row { flex-direction: column; align-items: flex-start; }
+    .q-options { width: 100%; flex: 1; }
+    .opts-4, .opts-2 { grid-template-columns: 1fr; }
+    .bottom-actions { flex-direction: column; }
+    .floating-top-btn { bottom: 15px; right: 15px; width: 45px; height: 45px; font-size: 18px; }
+}

@@ -1,0 +1,159 @@
+/* ================= ไฟล์ relax.css (ลบส่วนที่ซ้ำกับ home.css ออกแล้ว) ================= */
+/* หน้าเว็บจะดึงระยะขอบและกรอบกระจกจาก home.css มาใช้ ทำให้เท่ากับหน้าอื่น 100% */
+
+/* ================= เนื้อหาหลัก ================= */
+.main-content {
+    padding: 0 10px; 
+    margin: 0 auto;
+    max-width: 1100px;
+}
+
+/* ================= หัวข้อหมวดหมู่ (ข้อความพร้อมเส้นขีดใต้) ================= */
+.section-header {
+    background-color: transparent; 
+    border: none; 
+    color: #D84B6B; 
+    padding: 0;
+    font-weight: bold;
+    font-size: 24px;
+    display: block;
+    text-align: center;
+    margin: 20px auto 40px auto;
+    position: relative;
+}
+
+.section-header::after {
+    content: '';
+    display: block;
+    width: 450px; 
+    height: 4px;
+    background-color: #D84B6B;
+    margin: 15px auto 0 auto;
+    border-radius: 2px;
+}
+
+/* ================= การ์ดเนื้อหา ================= */
+.content-card {
+    display: flex; 
+    gap: 25px; 
+    margin-bottom: 30px; 
+    align-items: stretch; 
+    padding: 0 20px;
+}
+
+.card-img-container {
+    width: 320px; 
+    flex-shrink: 0; 
+    position: relative;
+}
+
+.card-img-container img {
+    width: 100%; 
+    height: 180px; 
+    object-fit: cover;
+    border-radius: 12px; 
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.clickable-img { cursor: pointer; }
+.card-img-container:hover img.clickable-img { transform: scale(1.05); }
+
+.card-number {
+    position: absolute; 
+    top: 15px; 
+    left: -15px;
+    width: 40px; 
+    height: 40px;
+    background-color: #6b341a; 
+    color: white;
+    border-radius: 50% 50% 0px 50%;
+    transform: rotate(-45deg);
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.3); 
+    z-index: 10;
+}
+
+.card-number span {
+    transform: rotate(45deg); 
+    font-weight: bold; 
+    font-size: 20px;
+}
+
+.card-text-container {
+    flex-grow: 1; 
+    border: 2px solid #FFC6D3;
+    border-radius: 12px;
+    padding: 20px 25px; 
+    background-color: #ffffff;
+    display: flex; 
+    flex-direction: column; 
+    justify-content: space-between;
+}
+
+.card-text-container p { 
+    margin: 0 0 12px 0; 
+    color: #444; 
+    line-height: 1.6; 
+    font-size: 15px; 
+}
+
+.label-red { color: #D84B6B; font-weight: 600; } 
+
+.read-more {
+    display: block; 
+    text-align: right; 
+    color: #D84B6B; 
+    font-weight: 700; 
+    text-decoration: none; 
+    margin-top: 10px; 
+    font-size: 15px;
+}
+
+.read-more:hover { text-decoration: underline; }
+
+@media (max-width: 768px) {
+    .content-card { flex-direction: column; padding: 0 10px; }
+    .card-img-container { width: 100%; margin-left: 0; max-width: 350px; margin: 0 auto; }
+    .section-header::after { width: 80%; } 
+}
+
+/* ================= สไตล์ระบบซูมรูปภาพ (Modal) ================= */
+.image-modal {
+    display: none; position: fixed; z-index: 9999; 
+    padding-top: 60px; left: 0; top: 0; 
+    width: 100%; height: 100%; 
+    background-color: rgba(0,0,0,0.85); 
+    backdrop-filter: blur(5px);
+    overflow: auto; 
+}
+
+.modal-content {
+    margin: auto; display: block;
+    max-width: 90%; max-height: 80vh;
+    border-radius: 12px;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.5);
+    animation: zoomIn 0.3s ease;
+    transition: transform 0.3s ease;
+    cursor: zoom-in;
+}
+
+.modal-content.zoomed {
+    transform: scale(1.8);
+    cursor: zoom-out;
+}
+
+@keyframes zoomIn {
+    from {transform:scale(0.8); opacity: 0;} 
+    to {transform:scale(1); opacity: 1;}
+}
+
+.close-modal {
+    position: fixed; top: 20px; right: 35px;
+    color: #f1f1f1; font-size: 40px; font-weight: bold;
+    cursor: pointer; transition: 0.3s; z-index: 10000;
+}
+
+.close-modal:hover, .close-modal:focus { color: #d84b6b; text-decoration: none; }

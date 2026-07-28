@@ -1,0 +1,64 @@
+/* ========================================================
+   CSS เฉพาะสำหรับหน้า ข้อมูลและที่มาของแบบประเมิน (Reference)
+======================================================== */
+
+.ref-main { 
+    width: 100%; 
+    max-width: 900px; 
+    margin: 20px auto 40px auto; 
+}
+
+.ref-card {
+    background-color: rgba(255, 255, 255, 0.9); 
+    border: 2px solid #FFC6D3;
+    border-radius: 20px; 
+    padding: 40px; 
+    box-shadow: 0 10px 30px rgba(216, 75, 107, 0.1);
+}
+
+.ref-title { 
+    color: #D84B6B; 
+    font-size: 26px; 
+    font-weight: 700; 
+    margin-bottom: 20px; 
+    text-align: center; 
+}
+
+.ref-desc { 
+    text-align: center; 
+    color: #4A3338; 
+    margin-bottom: 40px; 
+    font-size: 16px; 
+}
+
+.ref-list { 
+    list-style: none; 
+    padding: 0; 
+}
+
+.ref-list li {
+    background-color: #FFF0F3; 
+    border-left: 6px solid #D84B6B;
+    padding: 20px 25px; 
+    margin-bottom: 20px; 
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(216, 75, 107, 0.05);
+}
+
+.ref-list h3 { 
+    color: #A3334E; 
+    font-size: 18px; 
+    margin-bottom: 8px; 
+    font-weight: 700; 
+}
+
+.ref-list p { 
+    color: #4A3338; 
+    font-size: 15px; 
+    line-height: 1.6; 
+}
+
+.ref-list span { 
+    font-weight: 600; 
+    color: #D84B6B; 
+}

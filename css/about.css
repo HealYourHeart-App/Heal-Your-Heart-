@@ -1,0 +1,111 @@
+/* ========================================================
+   CSS เฉพาะสำหรับหน้า เกี่ยวกับเรา (About)
+======================================================== */
+.about-grid { 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    gap: 40px; 
+    padding-bottom: 40px; 
+    margin-bottom: 40px; 
+}
+
+.about-card { 
+    width: 100%; 
+    max-width: 1000px; 
+    text-align: left; 
+    display: block !important; /* [แก้ไข] บังคับให้แสดงผล ลบล้างคำสั่งซ่อนจากการตั้งค่าเดิม */
+}
+
+.about-title { 
+    color: #D84B6B; 
+    font-size: 24px; 
+    font-weight: 700; 
+    margin-bottom: 30px; 
+    border-left: 6px solid #D84B6B; 
+    padding-left: 15px; 
+}
+
+.team-row { 
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between; 
+    background-color: #FFF0F3; 
+    border: 2px solid #FFC6D3; 
+    border-radius: 20px; 
+    padding: 25px 30px; 
+    margin-bottom: 20px; 
+    gap: 20px; 
+    transition: transform 0.3s; 
+    box-shadow: 0 5px 15px rgba(216,75,107,0.05); 
+}
+
+.team-row:hover { 
+    transform: translateX(5px); 
+    box-shadow: 0 8px 20px rgba(216,75,107,0.1); 
+}
+
+.team-info { 
+    flex: 1; 
+}
+
+.team-info h3 { 
+    color: #D84B6B; 
+    font-size: 20px; 
+    margin-bottom: 10px; 
+    font-weight: 700; 
+}
+
+.team-info p { 
+    color: #4A3338; 
+    font-size: 16px; 
+    line-height: 1.6; 
+}
+
+.team-image { 
+    flex: 0 0 120px; 
+    display: flex; 
+    justify-content: center; 
+}
+
+.circle-img-placeholder { 
+    width: 100px; 
+    height: 100px; 
+    border-radius: 50%; 
+    background-color: #FFDDE4; 
+    border: 3px solid #D84B6B; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    color: #D84B6B; 
+    font-size: 14px; 
+    font-weight: 700; 
+    overflow: hidden; 
+    box-shadow: 0 4px 10px rgba(216,75,107,0.2); 
+}
+
+.objective-info { 
+    background-color: #FFF0F3; 
+    border: 2px solid #FFC6D3; 
+    border-radius: 20px; 
+    padding: 35px; 
+    box-shadow: 0 5px 15px rgba(216,75,107,0.05); 
+}
+
+.objective-info p { 
+    color: #4A3338; 
+    font-size: 16px; 
+    line-height: 1.8; 
+    margin-bottom: 15px; 
+}
+
+/* Responsive สำหรับมือถือ */
+@media (max-width: 768px) { 
+    .team-row { 
+        flex-direction: column-reverse; 
+        text-align: center; 
+    } 
+    .about-title { 
+        font-size: 20px; 
+    } 
+}
