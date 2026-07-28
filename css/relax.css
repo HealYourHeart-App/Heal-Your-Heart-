@@ -1,4 +1,4 @@
-/* ================= ไฟล์ relax.css (ลบส่วนที่ซ้ำกับ home.css ออกแล้ว) ================= */
+/* ================= ไฟล์ relax.css ================= */
 /* หน้าเว็บจะดึงระยะขอบและกรอบกระจกจาก home.css มาใช้ ทำให้เท่ากับหน้าอื่น 100% */
 
 /* ================= เนื้อหาหลัก ================= */
@@ -8,43 +8,39 @@
     max-width: 1100px;
 }
 
-/* ================= หัวข้อหมวดหมู่ (ข้อความพร้อมเส้นขีดใต้) ================= */
+/* ================= หัวข้อหมวดหมู่ (กล่องสีชมพู) ================= */
 .section-header {
-    background-color: transparent; 
-    border: none; 
-    color: #D84B6B; 
-    padding: 0;
+    background-color: #FFF0F5; /* พื้นหลังสีชมพูอ่อน */
+    border: 2px solid #FFC6D3; /* เส้นขอบสีชมพู */
+    color: #D84B6B; /* สีข้อความชมพูอมแดง */
+    padding: 15px 40px;
+    border-radius: 15px; /* ทำมุมโค้งมน */
     font-weight: bold;
     font-size: 24px;
     display: block;
     text-align: center;
-    margin: 20px auto 40px auto;
-    position: relative;
+    margin: 30px auto 40px auto;
+    width: fit-content; /* ขนาดกล่องพอดีกับข้อความ */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); /* เพิ่มเงาให้ดูมีมิติ */
 }
 
-.section-header::after {
-    content: '';
-    display: block;
-    width: 450px; 
-    height: 4px;
-    background-color: #D84B6B;
-    margin: 15px auto 0 auto;
-    border-radius: 2px;
-}
-
-/* ================= การ์ดเนื้อหา ================= */
+/* ================= การ์ดเนื้อหา (กรอบใหญ่คลุมทั้งหมด) ================= */
 .content-card {
     display: flex; 
     gap: 25px; 
     margin-bottom: 30px; 
-    align-items: stretch; 
-    padding: 0 20px;
+    align-items: flex-start; /* จัดให้เนื้อหาชิดด้านบน */
+    padding: 25px; /* ระยะห่างรอบๆ รูปและข้อความด้านใน */
+    background-color: #ffffff; /* พื้นหลังสีขาวทั้งกรอบ */
+    border: 2px solid #FFC6D3; /* เส้นขอบสีชมพูรอบนอกสุด */
+    border-radius: 15px; /* มุมโค้งมนของกรอบใหญ่ */
+    position: relative; /* สำคัญ: เพื่อให้ตัวเลขวงกลมมาเกาะขอบกรอบใหญ่นี้ */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05); /* เงาบางๆ ให้กรอบดูลอยขึ้น */
 }
 
 .card-img-container {
     width: 320px; 
     flex-shrink: 0; 
-    position: relative;
 }
 
 .card-img-container img {
@@ -59,16 +55,16 @@
 .clickable-img { cursor: pointer; }
 .card-img-container:hover img.clickable-img { transform: scale(1.05); }
 
+/* วงกลมตัวเลขสีชมพู เกาะเส้นขอบด้านซ้าย */
 .card-number {
     position: absolute; 
-    top: 15px; 
-    left: -15px;
-    width: 40px; 
-    height: 40px;
-    background-color: #6b341a; 
+    top: 30px; /* ระยะห่างจากขอบบน */
+    left: -22px; /* ขยับออกไปทางซ้ายให้นอกกรอบครึ่งนึง */
+    width: 45px; 
+    height: 45px;
+    background-color: #D84B6B; 
     color: white;
-    border-radius: 50% 50% 0px 50%;
-    transform: rotate(-45deg);
+    border-radius: 50%; /* ทำให้เป็นวงกลม */
     display: flex; 
     align-items: center; 
     justify-content: center;
@@ -77,17 +73,13 @@
 }
 
 .card-number span {
-    transform: rotate(45deg); 
     font-weight: bold; 
-    font-size: 20px;
+    font-size: 22px;
 }
 
+/* กล่องข้อความด้านใน (เอาพื้นหลังและเส้นขอบออกให้เนียนไปกับกรอบใหญ่) */
 .card-text-container {
     flex-grow: 1; 
-    border: 2px solid #FFC6D3;
-    border-radius: 12px;
-    padding: 20px 25px; 
-    background-color: #ffffff;
     display: flex; 
     flex-direction: column; 
     justify-content: space-between;
@@ -114,10 +106,21 @@
 
 .read-more:hover { text-decoration: underline; }
 
+/* Responsive สำหรับจอมือถือ */
 @media (max-width: 768px) {
-    .content-card { flex-direction: column; padding: 0 10px; }
-    .card-img-container { width: 100%; margin-left: 0; max-width: 350px; margin: 0 auto; }
-    .section-header::after { width: 80%; } 
+    .content-card { 
+        flex-direction: column; 
+        padding: 25px 15px; 
+    }
+    .card-img-container { 
+        width: 100%; 
+        max-width: 350px; 
+        margin: 0 auto; 
+    }
+    .card-number {
+        top: -15px; /* ขยับวงกลมไปไว้ขอบบนสุดตอนเป็นจอมือถือ */
+        left: 20px; /* เลื่อนเข้ามาด้านในเล็กน้อย */
+    }
 }
 
 /* ================= สไตล์ระบบซูมรูปภาพ (Modal) ================= */
