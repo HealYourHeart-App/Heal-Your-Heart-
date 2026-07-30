@@ -30,7 +30,7 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
     const occMap = { "student": "นักเรียน / นักศึกษา", "employee": "พนักงานบริษัท / ลูกจ้าง", "government": "ข้าราชการ / รัฐวิสาหกิจ", "freelance": "ธุรกิจส่วนตัว / ฟรีแลนซ์", "unemployed": "ว่างงาน", "other": "อื่นๆ" };
 
     // ✅ แก้ไข URL ให้ถูกต้อง 100% แล้ว (ระวังห้ามเว้นวรรคนะครับ)
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbymjqhA1WkWF5Sc0m4M2ziItq0d1luMtLdt_mSMNxcJz1fi-NeRPwK3d6F8U6KcCJ4RFw/exec';
+   const scriptURL = 'https://script.google.com/macros/s/AKfycbymjqhA1WkWF5Sc0m4M2ziItq0d1luMtLdt_mSMNxcJz1fi-NeRPwK3d6F8U6KcCJ4RFw/exec';
     
     const visitData = {
         action: "create", 
