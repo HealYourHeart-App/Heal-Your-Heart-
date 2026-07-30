@@ -364,12 +364,12 @@ function saveToGoogleSheets() {
         rq: document.getElementById('score-rq') ? document.getElementById('score-rq').innerText : "-",
         burnout: document.getElementById('score-bo') ? document.getElementById('score-bo').innerText : "-"
     };
-
     // ส่งข้อมูลไปที่ Google Sheets
     fetch(scriptURL, {
         method: 'POST',
         body: JSON.stringify(dataToSend),
-        headers: { 'Content-Type': 'text/plain;charset=utf-8' }
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        redirect: "follow" // 🟢 เพิ่มบรรทัดนี้เข้ามาครับ!
     })
     .then(response => response.json())
     .then(result => {
