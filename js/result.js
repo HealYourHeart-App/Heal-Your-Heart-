@@ -344,7 +344,7 @@ document.addEventListener('DOMContentLoaded', function() {
 // ==========================================
 function saveToGoogleSheets() {
     // นำ URL จากภาพ image_2ba292.png มาใส่ตรงนี้
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbymjqhA1WkWF5Sc0m4M2ziltq0d1luMtLdt_mSMNxcJz1fi-NeRPwK3d6F8U6KcCJ4RFw/exec';
+    const scriptURL ='https://script.google.com/macros/s/AKfycbymjqhA1WkWF5Sc0m4M2ziItq0d1luMtLdt_mSMNxcJz1fi-NeRPwK3d6F8U6KcCJ4RFw/exec';
 
     // ป้องกันการยิงข้อมูลซ้ำเวลารีเฟรช
     if (sessionStorage.getItem('isSavedToSheet') === 'true') {
