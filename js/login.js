@@ -29,7 +29,8 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
     const ageMap = { "under18": "ต่ำกว่า 18 ปี", "18-24": "18 - 24 ปี", "25-34": "25 - 34 ปี", "35-44": "35 - 44 ปี", "45up": "45 ปีขึ้นไป" };
     const occMap = { "student": "นักเรียน / นักศึกษา", "employee": "พนักงานบริษัท / ลูกจ้าง", "government": "ข้าราชการ / รัฐวิสาหกิจ", "freelance": "ธุรกิจส่วนตัว / ฟรีแลนซ์", "unemployed": "ว่างงาน", "other": "อื่นๆ" };
 
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbymjqhA1WkWF5Sc0m4M2ziltq0d1luMtLdt_mSMNxcJz1fi-NeRPwK3d6F8U6KcCJ4RFw/exec';
+    // ✅ แก้ไข URL ให้ถูกต้อง 100% แล้ว (ระวังห้ามเว้นวรรคนะครับ)
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbymjqhA1WkWF5Sc0m4M2ziItq0d1luMtLdt_mSMNxcJz1fi-NeRPwK3d6F8U6KcCJ4RFw/exec';
     
     const visitData = {
         action: "create", 
@@ -64,6 +65,7 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
     .catch(error => {
         console.error("Error:", error);
         // ⚠️ ถ้าระบบหลังบ้านล่ม ก็ยังให้ผ่านไปหน้า home.html ได้ เพื่อไม่ให้ผู้ใช้ค้างอยู่หน้าแรก
+        // (ช่วงทดสอบระบบ ถ้าอยากเห็น Error ชัดๆ ให้ลองใส่ // หน้าบรรทัดล่างนี้ไว้ก่อนได้ครับ)
         window.location.href = 'home.html';
     });
 });
