@@ -1,3 +1,7 @@
+// ==========================================
+// ฐานข้อมูลและ Mapping
+// ==========================================
+
 // Mapping ข้อมูลผู้ใช้ภาษาไทย
 const ageMap = {
     "under18": "ต่ำกว่า 18 ปี",
@@ -21,7 +25,7 @@ const occMap = {
     "other": "อื่นๆ" 
 };
 
-// ฐานข้อมูลคำแนะนำ (ของเดิมของคุณครบ 100%)
+// ฐานข้อมูลคำแนะนำ (ของคุณครบ 100%)
 const adviceDB = {
     overall: {
         normal: {
@@ -105,57 +109,68 @@ const adviceDB = {
     }
 };
 
+// ==========================================
+// ฟังก์ชันจัดการ UI และ Event
+// ==========================================
+
 function toggleAdvice(id) {
     document.getElementById(id).classList.toggle('show');
 }
 
-// ฟังก์ชันปิด Modal สำหรับปุ่ม "รับทราบและปิดหน้าต่าง"
-document.getElementById('closeModalBtn').addEventListener('click', function() {
-    document.getElementById('riskModal').classList.add('hidden');
-});
+document.addEventListener('DOMContentLoaded', function() {
+    
+    // ฟังก์ชันปิด Modal สำหรับปุ่ม "รับทราบและปิดหน้าต่าง"
+    const closeModalBtn = document.getElementById('closeModalBtn');
+    if(closeModalBtn) {
+        closeModalBtn.addEventListener('click', function() {
+            document.getElementById('riskModal').classList.add('hidden');
+        });
+    }
 
-// ฟังก์ชันปิด Modal สำหรับเครื่องหมาย X มุมขวาบน (ถ้าคุณใส่ไว้ใน HTML)
-let closeBtnX = document.getElementById('closeModalX');
-if(closeBtnX) {
-    closeBtnX.addEventListener('click', function() {
-        document.getElementById('riskModal').classList.add('hidden');
-    });
-}
+    // ฟังก์ชันปิด Modal สำหรับเครื่องหมาย X มุมขวาบน
+    let closeBtnX = document.getElementById('closeModalX');
+    if(closeBtnX) {
+        closeBtnX.addEventListener('click', function() {
+            document.getElementById('riskModal').classList.add('hidden');
+        });
+    }
 
-// ================= ฟังก์ชันหลัก: ดึงคะแนนและประมวลผล =================
-window.onload = function() {
+    // ================= ฟังก์ชันหลัก: ดึงคะแนนและประมวลผล =================
     
     // 1. ดึงข้อมูล User (ลองหาจาก sessionStorage และ localStorage เผื่อไว้)
-    let ageVal = sessionStorage.getItem('age') || localStorage.getItem('age') || '18-24';
+    let ageVal = sessionStorage.getItem('age') || localStorage.getItem('age') || '';
     let genderVal = sessionStorage.getItem('gender') || localStorage.getItem('gender') || 'not_specified';
     let occVal = sessionStorage.getItem('occupation') || localStorage.getItem('occupation') || 'other';
 
-    // Mapping อายุให้ตรงกับฐานข้อมูลคำแนะนำของคุณ
-    let ageGroup = "18_24";
+    // 🔥 การแก้ปัญหา: แมปปิงค่าที่มาจาก HTML ให้ตรงกับคีย์ในฐานข้อมูล adviceDB อย่างสมบูรณ์
+    let ageGroup = "18_24"; // ค่าเริ่มต้นกันพัง
     if(ageVal === 'under18') ageGroup = 'under18';
+    else if(ageVal === '18-24' || ageVal === '18_24') ageGroup = '18_24';
     else if(ageVal === '25-34' || ageVal === '25_34') ageGroup = '25_34';
     else if(ageVal === '35-44' || ageVal === '35_44') ageGroup = '35_44';
-    else if(ageVal === 'over45' || ageVal === '45up') ageGroup = 'over45';
+    else if(ageVal === '45up' || ageVal === 'over45') ageGroup = 'over45';
 
-    document.getElementById('display-gender').innerText = genderMap[genderVal] || "ไม่ระบุ";
-    document.getElementById('display-age').innerText = ageMap[ageVal] || "ไม่ระบุ";
-    document.getElementById('display-occ').innerText = occMap[occVal] || "ไม่ระบุ";
-    const agePrefix = `<strong>ช่วงวัย ${ageMap[ageVal] || ''} ของท่าน:</strong><br>`;
+    // นำค่าภาษาไทยไปแสดงบนหน้าจอ
+    if(document.getElementById('display-gender')) document.getElementById('display-gender').innerText = genderMap[genderVal] || "ไม่ระบุ";
+    if(document.getElementById('display-age')) document.getElementById('display-age').innerText = ageMap[ageGroup] || "ไม่ระบุ";
+    if(document.getElementById('display-occ')) document.getElementById('display-occ').innerText = occMap[occVal] || "ไม่ระบุ";
+    
+    const agePrefix = `<strong>ช่วงวัย ${ageMap[ageGroup] || ''} ของท่าน:</strong><br>`;
 
     // ตัวแปรเก็บคะแนน 
     const sST5 = parseInt(sessionStorage.getItem('scoreST5') || localStorage.getItem('scoreST5'));
     const s2Q = parseInt(sessionStorage.getItem('score2Q') || localStorage.getItem('score2Q'));
     const s9Q = parseInt(sessionStorage.getItem('score9Q') || localStorage.getItem('score9Q'));
-    const sHap = parseInt(localStorage.getItem('happinessScore'));
-    const sRQ = parseInt(localStorage.getItem('rqScore'));
-    const sBO = parseInt(localStorage.getItem('burnoutScore'));
+    const sHap = parseInt(localStorage.getItem('happinessScore') || sessionStorage.getItem('happinessScore'));
+    const sRQ = parseInt(localStorage.getItem('rqScore') || sessionStorage.getItem('rqScore'));
+    const sBO = parseInt(localStorage.getItem('burnoutScore') || sessionStorage.getItem('burnoutScore'));
 
     let hasSevereRisk = false;
     let overallStatus = "normal";
     let evaluatedCount = 0;
 
     // ================= 1. ประมวลผล ST-5 =================
-    if(!isNaN(sST5)) {
+    if(!isNaN(sST5) && document.getElementById('score-st5')) {
         evaluatedCount++;
         document.getElementById('score-st5').innerText = sST5;
         const elStat = document.getElementById('status-st5');
@@ -175,7 +190,7 @@ window.onload = function() {
     }
 
     // ================= 2. ประมวลผล 2Q+ =================
-    if(!isNaN(s2Q)) {
+    if(!isNaN(s2Q) && document.getElementById('score-2q')) {
         evaluatedCount++;
         document.getElementById('score-2q').innerText = s2Q;
         const elStat = document.getElementById('status-2q');
@@ -191,7 +206,7 @@ window.onload = function() {
     }
 
     // ================= 3. ประมวลผล 9Q =================
-    if(!isNaN(s9Q)) {
+    if(!isNaN(s9Q) && document.getElementById('score-9q')) {
         evaluatedCount++;
         document.getElementById('score-9q').innerText = s9Q;
         const elStat = document.getElementById('status-9q');
@@ -215,7 +230,7 @@ window.onload = function() {
     }
 
     // ================= 4. ความสุข (Happiness) =================
-    if(!isNaN(sHap)) {
+    if(!isNaN(sHap) && document.getElementById('score-hap')) {
         evaluatedCount++;
         document.getElementById('score-hap').innerText = sHap;
         const elStat = document.getElementById('status-hap');
@@ -234,7 +249,7 @@ window.onload = function() {
     }
 
     // ================= 5. พลังใจ (RQ) =================
-    if(!isNaN(sRQ)) {
+    if(!isNaN(sRQ) && document.getElementById('score-rq')) {
         evaluatedCount++;
         document.getElementById('score-rq').innerText = sRQ;
         const elStat = document.getElementById('status-rq');
@@ -253,7 +268,7 @@ window.onload = function() {
     }
 
     // ================= 6. ภาวะหมดไฟ (Burnout) =================
-    if(!isNaN(sBO)) {
+    if(!isNaN(sBO) && document.getElementById('score-bo')) {
         evaluatedCount++;
         document.getElementById('score-bo').innerText = sBO;
         const elStat = document.getElementById('status-bo');
@@ -278,10 +293,12 @@ window.onload = function() {
     const overallAdviceText = document.getElementById('overall-advice-text');
 
     if(evaluatedCount === 0) {
-        overallIcon.innerText = "📝";
-        overallStatusEl.innerText = "รอผลการประเมิน";
-        overallStatusEl.style.color = "#64748b";
-        overallAdviceText.innerText = "คุณยังไม่ได้ทำแบบประเมินใดๆ กรุณากลับไปทำแบบประเมินเพื่อให้ระบบประมวลผลครับ";
+        if(overallIcon) overallIcon.innerText = "📝";
+        if(overallStatusEl) {
+            overallStatusEl.innerText = "รอผลการประเมิน";
+            overallStatusEl.style.color = "#64748b";
+        }
+        if(overallAdviceText) overallAdviceText.innerText = "คุณยังไม่ได้ทำแบบประเมินใดๆ กรุณากลับไปทำแบบประเมินเพื่อให้ระบบประมวลผลครับ";
         return;
     }
 
@@ -290,21 +307,27 @@ window.onload = function() {
     }
 
     if (overallStatus === "severe") {
-        overallIcon.innerText = "💔";
-        overallStatusEl.innerHTML = "สภาวะจิตใจอยู่ในเกณฑ์เสี่ยงสูง";
-        overallStatusEl.style.color = "#dc2626";
-        overallAdviceText.innerHTML = adviceDB.overall.severe;
-        document.getElementById('modal-summary-content').innerHTML = adviceDB.overall.severe;
-        document.getElementById('riskModal').classList.remove('hidden');
+        if(overallIcon) overallIcon.innerText = "💔";
+        if(overallStatusEl) {
+            overallStatusEl.innerHTML = "สภาวะจิตใจอยู่ในเกณฑ์เสี่ยงสูง";
+            overallStatusEl.style.color = "#dc2626";
+        }
+        if(overallAdviceText) overallAdviceText.innerHTML = adviceDB.overall.severe;
+        if(document.getElementById('modal-summary-content')) document.getElementById('modal-summary-content').innerHTML = adviceDB.overall.severe;
+        if(document.getElementById('riskModal')) document.getElementById('riskModal').classList.remove('hidden');
     } else if (overallStatus === "mild") {
-        overallIcon.innerText = "🔋";
-        overallStatusEl.innerHTML = "จิตใจเริ่มอ่อนล้า ต้องการการดูแล";
-        overallStatusEl.style.color = "#ea580c";
-        overallAdviceText.innerHTML = "<strong>คำแนะนำสำหรับคุณ:</strong><br>" + (adviceDB.overall.mild[ageGroup] || "กรุณาพักผ่อนให้มากขึ้น");
+        if(overallIcon) overallIcon.innerText = "🔋";
+        if(overallStatusEl) {
+            overallStatusEl.innerHTML = "จิตใจเริ่มอ่อนล้า ต้องการการดูแล";
+            overallStatusEl.style.color = "#ea580c";
+        }
+        if(overallAdviceText) overallAdviceText.innerHTML = "<strong>คำแนะนำสำหรับคุณ:</strong><br>" + (adviceDB.overall.mild[ageGroup] || "กรุณาพักผ่อนให้มากขึ้น");
     } else {
-        overallIcon.innerText = "💖";
-        overallStatusEl.innerHTML = "สภาวะจิตใจโดยรวมแข็งแรงดี";
-        overallStatusEl.style.color = "#059669";
-        overallAdviceText.innerHTML = "<strong>คำแนะนำสำหรับคุณ:</strong><br>" + (adviceDB.overall.normal[ageGroup] || "ยอดเยี่ยมมาก รักษาสมดุลแบบนี้ไว้นะครับ");
+        if(overallIcon) overallIcon.innerText = "💖";
+        if(overallStatusEl) {
+            overallStatusEl.innerHTML = "สภาวะจิตใจโดยรวมแข็งแรงดี";
+            overallStatusEl.style.color = "#059669";
+        }
+        if(overallAdviceText) overallAdviceText.innerHTML = "<strong>คำแนะนำสำหรับคุณ:</strong><br>" + (adviceDB.overall.normal[ageGroup] || "ยอดเยี่ยมมาก รักษาสมดุลแบบนี้ไว้นะครับ");
     }
-};
+});
