@@ -353,17 +353,21 @@ const scriptURL = 'https://script.google.com/macros/s/AKfycbymjqhA1WkWF5Sc0m4M2z
     }
 
     // รวบรวมข้อมูลจากหน้าจอ
-    const dataToSend = {
-        gender: document.getElementById('display-gender') ? document.getElementById('display-gender').innerText : "-",
-        age: document.getElementById('display-age') ? document.getElementById('display-age').innerText : "-",
-        occupation: document.getElementById('display-occ') ? document.getElementById('display-occ').innerText : "-",
-        st5: document.getElementById('score-st5') ? document.getElementById('score-st5').innerText : "-",
-        q2: document.getElementById('score-2q') ? document.getElementById('score-2q').innerText : "-",
-        q9: document.getElementById('score-9q') ? document.getElementById('score-9q').innerText : "-",
-        happiness: document.getElementById('score-hap') ? document.getElementById('score-hap').innerText : "-",
-        rq: document.getElementById('score-rq') ? document.getElementById('score-rq').innerText : "-",
-        burnout: document.getElementById('score-bo') ? document.getElementById('score-bo').innerText : "-"
-    };
+  // รวบรวมข้อมูลจากหน้าจอ
+const dataToSend = {
+    action: 'update', // 🟢 เพิ่มบรรทัดนี้: บอก API ว่านี่คือการอัปเดตข้อมูล
+    rowId: sessionStorage.getItem('sheetRowId'), // 🟢 เพิ่มบรรทัดนี้: ดึง ID แถวที่ได้จากตอน Login มาใช้อ้างอิง
+    
+    gender: document.getElementById('display-gender') ? document.getElementById('display-gender').innerText : "-",
+    age: document.getElementById('display-age') ? document.getElementById('display-age').innerText : "-",
+    occupation: document.getElementById('display-occ') ? document.getElementById('display-occ').innerText : "-",
+    st5: document.getElementById('score-st5') ? document.getElementById('score-st5').innerText : "-",
+    q2: document.getElementById('score-2q') ? document.getElementById('score-2q').innerText : "-",
+    q9: document.getElementById('score-9q') ? document.getElementById('score-9q').innerText : "-",
+    happiness: document.getElementById('score-hap') ? document.getElementById('score-hap').innerText : "-",
+    rq: document.getElementById('score-rq') ? document.getElementById('score-rq').innerText : "-",
+    burnout: document.getElementById('score-bo') ? document.getElementById('score-bo').innerText : "-"
+};
     // ส่งข้อมูลไปที่ Google Sheets
     fetch(scriptURL, {
         method: 'POST',
