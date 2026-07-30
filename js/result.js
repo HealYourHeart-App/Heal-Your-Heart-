@@ -333,53 +333,55 @@ document.addEventListener('DOMContentLoaded', function() {
         if(overallAdviceText) overallAdviceText.innerHTML = "<strong>คำแนะนำสำหรับคุณ:</strong><br>" + (adviceDB.overall.normal[ageGroup] || "ยอดเยี่ยมมาก รักษาสมดุลแบบนี้ไว้นะครับ");
     }
 
-    // 🟢 จุดที่ 1: เรียกใช้ฟังก์ชันเซฟข้อมูลก่อนบรรทัดปิดปีกกาสุดท้าย
+   // 🟢 จุดที่ 1: เรียกใช้ฟังก์ชันเซฟข้อมูลก่อนบรรทัดปิดปีกกาสุดท้าย
     saveToGoogleSheets();
 
-}); // <-- นี่คือบรรทัดปิดสุดของโค้ดเดิมของคุณ
+}); // <-- นี่คือบรรทัดปิดสุดของฟังก์ชันเดิมของคุณ (เช่น DOMContentLoaded)
 
 // 🟢 จุดที่ 2: วางฟังก์ชันนี้ต่อท้ายสุดของไฟล์ได้เลยครับ
 // ==========================================
 // ฟังก์ชันส่งข้อมูลไปยัง Google Sheets
 // ==========================================
 function saveToGoogleSheets() {
-    // นำ URL จากภาพ image_2ba292.png มาใส่ตรงนี้
-const scriptURL = 'https://script.google.com/macros/s/AKfycbymjqhA1WkWF5Sc0m4M2ziItq0d1luMtLdt_mSMNxcJz1fi-NeRPwK3d6F8U6KcCJ4RFw/exec';
+    // URL ที่ถูกต้อง 100% ไม่มีช่องว่างและเป็น I ใหญ่
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbymjqhA1WkWF5Sc0m4M2ziItq0d1luMtLdt_mSMNxcJz1fi-NeRPwK3d6F8U6KcCJ4RFw/exec';
 
-    // ป้องกันการยิงข้อมูลซ้ำเวลารีเฟรช
+    // ป้องกันการยิงข้อมูลซ้ำเวลารีเฟรชหน้าเว็บ
     if (sessionStorage.getItem('isSavedToSheet') === 'true') {
         console.log("ข้อมูลนี้ถูกบันทึกลงชีตไปแล้ว");
         return; 
     }
 
     // รวบรวมข้อมูลจากหน้าจอ
-  // รวบรวมข้อมูลจากหน้าจอ
-const dataToSend = {
-    action: 'update', // 🟢 เพิ่มบรรทัดนี้: บอก API ว่านี่คือการอัปเดตข้อมูล
-    rowId: sessionStorage.getItem('sheetRowId'), // 🟢 เพิ่มบรรทัดนี้: ดึง ID แถวที่ได้จากตอน Login มาใช้อ้างอิง
-    
-    gender: document.getElementById('display-gender') ? document.getElementById('display-gender').innerText : "-",
-    age: document.getElementById('display-age') ? document.getElementById('display-age').innerText : "-",
-    occupation: document.getElementById('display-occ') ? document.getElementById('display-occ').innerText : "-",
-    st5: document.getElementById('score-st5') ? document.getElementById('score-st5').innerText : "-",
-    q2: document.getElementById('score-2q') ? document.getElementById('score-2q').innerText : "-",
-    q9: document.getElementById('score-9q') ? document.getElementById('score-9q').innerText : "-",
-    happiness: document.getElementById('score-hap') ? document.getElementById('score-hap').innerText : "-",
-    rq: document.getElementById('score-rq') ? document.getElementById('score-rq').innerText : "-",
-    burnout: document.getElementById('score-bo') ? document.getElementById('score-bo').innerText : "-"
-};
+    const dataToSend = {
+        action: 'update', // 🟢 บอก API ว่านี่คือการอัปเดตข้อมูล
+        rowId: sessionStorage.getItem('sheetRowId'), // 🟢 ดึง ID แถวที่ได้จากตอน Login มาใช้อ้างอิง
+        
+        gender: document.getElementById('display-gender') ? document.getElementById('display-gender').innerText : "-",
+        age: document.getElementById('display-age') ? document.getElementById('display-age').innerText : "-",
+        occupation: document.getElementById('display-occ') ? document.getElementById('display-occ').innerText : "-",
+        st5: document.getElementById('score-st5') ? document.getElementById('score-st5').innerText : "-",
+        q2: document.getElementById('score-2q') ? document.getElementById('score-2q').innerText : "-",
+        q9: document.getElementById('score-9q') ? document.getElementById('score-9q').innerText : "-",
+        happiness: document.getElementById('score-hap') ? document.getElementById('score-hap').innerText : "-",
+        rq: document.getElementById('score-rq') ? document.getElementById('score-rq').innerText : "-",
+        burnout: document.getElementById('score-bo') ? document.getElementById('score-bo').innerText : "-"
+    };
+
     // ส่งข้อมูลไปที่ Google Sheets
     fetch(scriptURL, {
         method: 'POST',
         body: JSON.stringify(dataToSend),
         headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-        redirect: "follow" // 🟢 เพิ่มบรรทัดนี้เข้ามาครับ!
+        redirect: "follow" // 🟢 จำเป็นมากเพื่อป้องกันปัญหา CORS
     })
     .then(response => response.json())
     .then(result => {
         if (result.status === "success") {
             console.log("บันทึกข้อมูลลง Google Sheets สำเร็จ!");
-            sessionStorage.setItem('isSavedToSheet', 'true'); // มาร์คไว้ว่าเซฟแล้ว
+            sessionStorage.setItem('isSavedToSheet', 'true'); // มาร์คไว้ว่าเซฟแล้ว จะได้ไม่ส่งซ้ำ
+        } else {
+            console.error("บันทึกข้อมูลไม่สำเร็จ:", result);
         }
     })
     .catch(error => {
