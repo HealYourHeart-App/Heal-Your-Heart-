@@ -388,3 +388,14 @@ function saveToGoogleSheets() {
         console.error("เกิดข้อผิดพลาดในการส่งข้อมูล:", error);
     });
 }
+// ==========================================
+// ฟังก์ชันล้างข้อมูลเมื่อกดปุ่ม "กลับหน้าแรก"
+// ==========================================
+function clearDataAndGoHome() {
+    // ล้างคะแนนเก่าที่จำไว้ทั้งหมด
+    localStorage.clear();
+    sessionStorage.clear();
+    
+    // สั่งให้เปลี่ยนหน้าไปที่หน้าแรก
+    window.location.href = "home.html"; 
+}
