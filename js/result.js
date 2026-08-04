@@ -306,8 +306,6 @@ document.addEventListener('DOMContentLoaded', function() {
         overallStatus = "severe";
     }
 
-    // ... (โค้ดก่อนหน้านี้ของคุณ) ...
-
     if (overallStatus === "severe") {
         if(overallIcon) overallIcon.innerText = "💔";
         if(overallStatusEl) {
@@ -334,9 +332,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
    // 🟢 จุดที่ 1: เรียกใช้ฟังก์ชันเซฟข้อมูลก่อนบรรทัดปิดปีกกาสุดท้าย
-    saveToGoogleSheets();
+   saveToGoogleSheets();
 
-}); // <-- นี่คือบรรทัดปิดสุดของฟังก์ชันเดิมของคุณ (เช่น DOMContentLoaded)
+}); 
 
 // 🟢 จุดที่ 2: วางฟังก์ชันนี้ต่อท้ายสุดของไฟล์ได้เลยครับ
 // ==========================================
@@ -388,6 +386,7 @@ function saveToGoogleSheets() {
         console.error("เกิดข้อผิดพลาดในการส่งข้อมูล:", error);
     });
 }
+
 // ==========================================
 // ฟังก์ชันล้างข้อมูลเมื่อกดปุ่ม "กลับหน้าแรก"
 // ==========================================
