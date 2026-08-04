@@ -177,7 +177,38 @@
     background: #b93d58; 
     transform: translateY(-2px);
 }
+/* ================= 6. สไตล์ที่ย้ายมาจาก Inline HTML ================= */
+#overall-advice-text {
+    margin-top: 15px; 
+    font-size: 16px; 
+    color: #475569; 
+    text-align: left; 
+    padding: 0 20px;
+}
 
+.hotline-btn {
+    background: #fff;
+    color: #D84B6B;
+    border: 2px solid #D84B6B;
+    padding: 15px 40px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: bold;
+    display: inline-block;
+    transition: all 0.3s ease;
+}
+
+.hotline-btn:hover {
+    background: #FFF0F3;
+    transform: translateY(-2px);
+}
+
+.bottom-nav {
+    margin-top: 20px; 
+    display: flex; 
+    justify-content: center; 
+    gap: 15px;
+}
 /* ================= Responsive ================= */
 @media (max-width: 900px) { .result-grid-new { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 600px) { .result-grid-new { grid-template-columns: 1fr; } }
