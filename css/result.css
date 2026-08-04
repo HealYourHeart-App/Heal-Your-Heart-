@@ -176,3 +176,47 @@
 
 @media (max-width: 900px) { .result-grid-new { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 600px) { .result-grid-new { grid-template-columns: 1fr; } }
+/* ================= 5. ปุ่มกดด้านล่าง ================= */
+.bottom-actions {
+    margin-bottom: 50px; 
+    text-align: center;
+}
+
+/* ปุ่มแบบโปร่ง (กลับไปทำแบบประเมิน) */
+.btn-outline-pink {
+    background: #fff;
+    padding: 15px 40px;
+    font-size: 18px;
+    color: #D84B6B;
+    border: 2px solid #D84B6B;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: bold;
+    display: inline-block;
+    transition: all 0.3s ease;
+}
+
+.btn-outline-pink:hover {
+    background: #FFF0F3;
+    transform: translateY(-2px);
+}
+
+/* ปุ่มแบบทึบ (กลับหน้าแรก) */
+.btn-solid-pink {
+    background: #D84B6B;
+    padding: 15px 40px;
+    font-size: 18px;
+    color: #fff;
+    border: 2px solid #D84B6B;
+    border-radius: 30px;
+    font-weight: bold;
+    display: inline-block;
+    margin-left: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-solid-pink:hover {
+    background: #b93d58; 
+    transform: translateY(-2px);
+}
