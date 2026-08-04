@@ -177,6 +177,7 @@
     background: #b93d58; 
     transform: translateY(-2px);
 }
+
 /* ================= 6. สไตล์ที่ย้ายมาจาก Inline HTML ================= */
 #overall-advice-text {
     margin-top: 15px; 
@@ -209,6 +210,7 @@
     justify-content: center; 
     gap: 15px;
 }
+
 /* ================= Responsive ================= */
 @media (max-width: 900px) { .result-grid-new { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 600px) { .result-grid-new { grid-template-columns: 1fr; } }
