@@ -121,6 +121,7 @@
 .modal-icon-top { font-size: 70px; margin-bottom: 15px; color: #ef4444; animation: pulse 1.5s infinite; }
 @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
 .modal-title-red { color: #ef4444; font-size: 26px; font-weight: 700; margin-bottom: 15px; }
+
 .modal-body-scroll {
     max-height: 55vh; /* จำกัดความสูงของเนื้อหาให้อยู่ที่ 55% ของหน้าจอ */
     overflow-y: auto; /* สร้างแถบเลื่อนแนวตั้งอัตโนมัติเมื่อข้อความล้น */
@@ -128,54 +129,10 @@
     margin-bottom: 20px; /* เว้นระยะห่างจากปุ่มกดด้านล่าง */
     text-align: left; /* จัดข้อความให้อยู่ชิดซ้าย (หรือ center ตามต้องการ) */
 }
+
 .modal-btn { display: inline-block; background-color: #ef4444; color: white; border: none; padding: 12px 40px; border-radius: 30px; font-size: 18px; font-weight: 700; cursor: pointer; transition: 0.2s; width: 100%; margin-top: 20px; }
-.modal-btn:hover { background-color: #b91c1c; }/* ================= 5. ปุ่มกดด้านล่าง ================= */
-.bottom-actions {
-    margin-bottom: 50px; 
-    text-align: center;
-}
+.modal-btn:hover { background-color: #b91c1c; }
 
-/* ปุ่มแบบโปร่ง (กลับไปทำแบบประเมิน) */
-.btn-outline-pink {
-    background: #fff;
-    padding: 15px 40px;
-    font-size: 18px;
-    color: #D84B6B;
-    border: 2px solid #D84B6B;
-    border-radius: 30px;
-    text-decoration: none;
-    font-weight: bold;
-    display: inline-block;
-    transition: all 0.3s ease;
-}
-
-.btn-outline-pink:hover {
-    background: #FFF0F3;
-    transform: translateY(-2px);
-}
-
-/* ปุ่มแบบทึบ (กลับหน้าแรก) */
-.btn-solid-pink {
-    background: #D84B6B;
-    padding: 15px 40px;
-    font-size: 18px;
-    color: #fff;
-    border: 2px solid #D84B6B;
-    border-radius: 30px;
-    font-weight: bold;
-    display: inline-block;
-    margin-left: 10px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.btn-solid-pink:hover {
-    background: #b93d58; 
-    transform: translateY(-2px);
-}
-
-@media (max-width: 900px) { .result-grid-new { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 600px) { .result-grid-new { grid-template-columns: 1fr; } }
 /* ================= 5. ปุ่มกดด้านล่าง ================= */
 .bottom-actions {
     margin-bottom: 50px; 
@@ -220,3 +177,7 @@
     background: #b93d58; 
     transform: translateY(-2px);
 }
+
+/* ================= Responsive ================= */
+@media (max-width: 900px) { .result-grid-new { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 600px) { .result-grid-new { grid-template-columns: 1fr; } }
