@@ -60,6 +60,12 @@
     color: #d84b6b;
 }
 
+/* เพิ่มสไตล์สำหรับช่วงวัยที่ใช้งานมากที่สุด (แทน Inline CSS เดิม) */
+#topAgeGroup {
+    font-size: 24px;
+    margin-top: 15px;
+}
+
 /* โครงสร้าง Grid สำหรับกราฟ */
 .charts-grid {
     display: grid;
@@ -87,6 +93,11 @@
 /* กราฟแท่ง (อาชีพ) ให้กินพื้นที่เต็มความกว้าง */
 .full-width {
     grid-column: span 2;
+}
+
+/* เพิ่มขีดจำกัดความสูงให้กราฟอาชีพ (แทน Inline CSS เดิม) */
+#occupationChart {
+    max-height: 300px;
 }
 
 /* รองรับมือถือ */
