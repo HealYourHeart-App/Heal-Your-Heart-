@@ -336,9 +336,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 }); 
 
-// 🟢 จุดที่ 2: วางฟังก์ชันนี้ต่อท้ายสุดของไฟล์ได้เลยครับ
 // ==========================================
-// ฟังก์ชันส่งข้อมูลไปยัง Google Sheets
+// ฟังก์ชันส่งข้อมูลไปยัง Google Sheets (อัปเดตแก้บัค 0 แล้ว!)
 // ==========================================
 function saveToGoogleSheets() {
     // URL ที่ถูกต้อง 100% ไม่มีช่องว่างและเป็น I ใหญ่
@@ -350,6 +349,15 @@ function saveToGoogleSheets() {
         return; 
     }
 
+    // 🟢 สร้างฟังก์ชันตัวช่วย: ถ้าช่องคะแนนว่างเปล่า หรือเป็นขีด หรือ NaN ให้ส่งคำว่า "รอประเมิน" ไปที่ Sheets
+    function getScoreOrWaiting(elementId) {
+        const el = document.getElementById(elementId);
+        if (!el || el.innerText.trim() === "" || el.innerText.trim() === "-" || el.innerText.trim() === "NaN") {
+            return "รอประเมิน";
+        }
+        return el.innerText.trim();
+    }
+
     // รวบรวมข้อมูลจากหน้าจอ
     const dataToSend = {
         action: 'update', // 🟢 บอก API ว่านี่คือการอัปเดตข้อมูล
@@ -358,12 +366,14 @@ function saveToGoogleSheets() {
         gender: document.getElementById('display-gender') ? document.getElementById('display-gender').innerText : "-",
         age: document.getElementById('display-age') ? document.getElementById('display-age').innerText : "-",
         occupation: document.getElementById('display-occ') ? document.getElementById('display-occ').innerText : "-",
-        st5: document.getElementById('score-st5') ? document.getElementById('score-st5').innerText : "-",
-        q2: document.getElementById('score-2q') ? document.getElementById('score-2q').innerText : "-",
-        q9: document.getElementById('score-9q') ? document.getElementById('score-9q').innerText : "-",
-        happiness: document.getElementById('score-hap') ? document.getElementById('score-hap').innerText : "-",
-        rq: document.getElementById('score-rq') ? document.getElementById('score-rq').innerText : "-",
-        burnout: document.getElementById('score-bo') ? document.getElementById('score-bo').innerText : "-"
+        
+        // 🟢 ดึงค่าคะแนนผ่านฟังก์ชันตัวช่วยที่เพิ่งสร้าง จะป้องกันปัญหาช่องว่างกลายเป็น 0 
+        st5: getScoreOrWaiting('score-st5'),
+        q2: getScoreOrWaiting('score-2q'),
+        q9: getScoreOrWaiting('score-9q'),
+        happiness: getScoreOrWaiting('score-hap'),
+        rq: getScoreOrWaiting('score-rq'),
+        burnout: getScoreOrWaiting('score-bo')
     };
 
     // ส่งข้อมูลไปที่ Google Sheets
