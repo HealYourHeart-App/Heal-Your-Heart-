@@ -337,21 +337,24 @@ document.addEventListener('DOMContentLoaded', function() {
 }); 
 
 // ==========================================
-// ฟังก์ชันส่งข้อมูลไปยัง Google Sheets (อัปเดตระบบป้องกันเซฟซ้ำ!)
+// ฟังก์ชันส่งข้อมูลไปยัง Google Sheets (อัปเดตขั้นสุด! ดึงจาก Memory ป้องกัน 0 จาก HTML)
 // ==========================================
 function saveToGoogleSheets() {
     const scriptURL = 'https://script.google.com/macros/s/AKfycbymjqhA1WkWF5Sc0m4M2ziItq0d1luMtLdt_mSMNxcJz1fi-NeRPwK3d6F8U6KcCJ4RFw/exec';
 
-    // ฟังก์ชันตัวช่วยดึงคะแนน
-    function getScoreOrWaiting(elementId) {
-        const el = document.getElementById(elementId);
-        if (!el || el.innerText.trim() === "" || el.innerText.trim() === "-" || el.innerText.trim() === "NaN") {
-            return "รอประเมิน";
+    // 🟢 ฟังก์ชันใหม่: ดึงคะแนนจาก Memory โดยตรง
+    function getScoreFromMemory(key) {
+        let val = sessionStorage.getItem(key) || localStorage.getItem(key);
+        let parsed = parseInt(val);
+        
+        // ถ้าผลออกมาเป็น NaN (แปลว่ายังไม่ได้กดทำแบบประเมินนั้นเลย) ให้ส่งคำว่า "รอประเมิน"
+        if (isNaN(parsed)) {
+            return "รอประเมิน"; 
         }
-        return el.innerText.trim();
+        return parsed; 
     }
 
-    // รวบรวมข้อมูลจากหน้าจอ
+    // รวบรวมข้อมูล
     const dataToSend = {
         action: 'update', 
         rowId: sessionStorage.getItem('sheetRowId'), 
@@ -360,12 +363,12 @@ function saveToGoogleSheets() {
         age: document.getElementById('display-age') ? document.getElementById('display-age').innerText : "-",
         occupation: document.getElementById('display-occ') ? document.getElementById('display-occ').innerText : "-",
         
-        st5: getScoreOrWaiting('score-st5'),
-        q2: getScoreOrWaiting('score-2q'),
-        q9: getScoreOrWaiting('score-9q'),
-        happiness: getScoreOrWaiting('score-hap'),
-        rq: getScoreOrWaiting('score-rq'),
-        burnout: getScoreOrWaiting('score-bo')
+        st5: getScoreFromMemory('scoreST5'),
+        q2: getScoreFromMemory('score2Q'),
+        q9: getScoreFromMemory('score9Q'),
+        happiness: getScoreFromMemory('happinessScore'),
+        rq: getScoreFromMemory('rqScore'),
+        burnout: getScoreFromMemory('burnoutScore')
     };
 
     // 🔥 ระบบป้องกันเซฟซ้ำแบบใหม่ (เช็คว่าข้อมูลเปลี่ยนไปจากเดิมหรือไม่)
@@ -386,10 +389,8 @@ function saveToGoogleSheets() {
     .then(result => {
         if (result.status === "success") {
             console.log("บันทึกข้อมูลลง Google Sheets สำเร็จ!");
-            // บันทึกข้อมูลล่าสุดไว้เทียบในรอบหน้า
-            sessionStorage.setItem('lastSavedData', currentDataStr); 
-            // เคลียร์ flag เก่าทิ้งเผื่อค้าง
-            sessionStorage.removeItem('isSavedToSheet'); 
+            sessionStorage.setItem('lastSavedData', currentDataStr); // อัปเดตความจำรอบล่าสุด
+            sessionStorage.removeItem('isSavedToSheet'); // เคลียร์ของเก่าทิ้ง
         } else {
             console.error("บันทึกข้อมูลไม่สำเร็จ:", result);
         }
