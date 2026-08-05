@@ -25,7 +25,7 @@ const occMap = {
     "other": "อื่นๆ" 
 };
 
-// ฐานข้อมูลคำแนะนำ (ของคุณครบ 100%)
+// ฐานข้อมูลคำแนะนำ
 const adviceDB = {
     overall: {
         normal: {
@@ -137,12 +137,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // ================= ฟังก์ชันหลัก: ดึงคะแนนและประมวลผล =================
     
-    // 1. ดึงข้อมูล User (ลองหาจาก sessionStorage และ localStorage เผื่อไว้)
     let ageVal = sessionStorage.getItem('age') || localStorage.getItem('age') || '';
     let genderVal = sessionStorage.getItem('gender') || localStorage.getItem('gender') || 'not_specified';
     let occVal = sessionStorage.getItem('occupation') || localStorage.getItem('occupation') || 'other';
 
-    // 🔥 การแก้ปัญหา: แมปปิงค่าที่มาจาก HTML ให้ตรงกับคีย์ในฐานข้อมูล adviceDB อย่างสมบูรณ์
     let ageGroup = "18_24"; // ค่าเริ่มต้นกันพัง
     if(ageVal === 'under18') ageGroup = 'under18';
     else if(ageVal === '18-24' || ageVal === '18_24') ageGroup = '18_24';
@@ -331,74 +329,62 @@ document.addEventListener('DOMContentLoaded', function() {
         if(overallAdviceText) overallAdviceText.innerHTML = "<strong>คำแนะนำสำหรับคุณ:</strong><br>" + (adviceDB.overall.normal[ageGroup] || "ยอดเยี่ยมมาก รักษาสมดุลแบบนี้ไว้นะครับ");
     }
 
-   // 🟢 จุดที่ 1: เรียกใช้ฟังก์ชันเซฟข้อมูลก่อนบรรทัดปิดปีกกาสุดท้าย
-   saveToGoogleSheets();
+    // ==========================================
+    // ฟังก์ชันส่งข้อมูลไปยัง Google Sheets (อัปเดตใหม่สุด ดึงจากตัวแปรคะแนนตรงๆ)
+    // ==========================================
+    function saveToGoogleSheets() {
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbymjqhA1WkWF5Sc0m4M2ziItq0d1luMtLdt_mSMNxcJz1fi-NeRPwK3d6F8U6KcCJ4RFw/exec';
+
+        // 🟢 ใช้ค่าจากตัวแปร (sST5, sBO, ...) ที่คำนวณด้านบนเลย 
+        // ถ้าค่าเป็น NaN (คือยังไม่ทำ) ให้ส่งคำว่า "รอประเมิน"
+        const dataToSend = {
+            action: 'update', 
+            rowId: sessionStorage.getItem('sheetRowId'), 
+            
+            gender: document.getElementById('display-gender') ? document.getElementById('display-gender').innerText : "-",
+            age: document.getElementById('display-age') ? document.getElementById('display-age').innerText : "-",
+            occupation: document.getElementById('display-occ') ? document.getElementById('display-occ').innerText : "-",
+            
+            st5: isNaN(sST5) ? "รอประเมิน" : sST5,
+            q2: isNaN(s2Q) ? "รอประเมิน" : s2Q,
+            q9: isNaN(s9Q) ? "รอประเมิน" : s9Q,
+            happiness: isNaN(sHap) ? "รอประเมิน" : sHap,
+            rq: isNaN(sRQ) ? "รอประเมิน" : sRQ,
+            burnout: isNaN(sBO) ? "รอประเมิน" : sBO
+        };
+
+        const currentDataStr = JSON.stringify(dataToSend);
+        if (sessionStorage.getItem('lastSavedData') === currentDataStr) {
+            console.log("ข้อมูลไม่มีการเปลี่ยนแปลง (ป้องกันการส่งข้อมูลซ้ำจากการรีเฟรช)");
+            return; 
+        }
+
+        // ส่งข้อมูลไปที่ Google Sheets
+        fetch(scriptURL, {
+            method: 'POST',
+            body: currentDataStr,
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            redirect: "follow"
+        })
+        .then(response => response.json())
+        .then(result => {
+            if (result.status === "success") {
+                console.log("บันทึกข้อมูลลง Google Sheets สำเร็จ!");
+                sessionStorage.setItem('lastSavedData', currentDataStr); // อัปเดตความจำรอบล่าสุด
+                sessionStorage.removeItem('isSavedToSheet'); // เคลียร์ของเก่าทิ้ง
+            } else {
+                console.error("บันทึกข้อมูลไม่สำเร็จ:", result);
+            }
+        })
+        .catch(error => {
+            console.error("เกิดข้อผิดพลาดในการส่งข้อมูล:", error);
+        });
+    }
+
+    // เรียกใช้ฟังก์ชันทันทีหลังจากดึงคะแนนทุกอย่างเสร็จแล้ว
+    saveToGoogleSheets();
 
 }); 
-
-// ==========================================
-// ฟังก์ชันส่งข้อมูลไปยัง Google Sheets (อัปเดตขั้นสุด! ดึงจาก Memory ป้องกัน 0 จาก HTML)
-// ==========================================
-function saveToGoogleSheets() {
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbymjqhA1WkWF5Sc0m4M2ziItq0d1luMtLdt_mSMNxcJz1fi-NeRPwK3d6F8U6KcCJ4RFw/exec';
-
-    // 🟢 ฟังก์ชันใหม่: ดึงคะแนนจาก Memory โดยตรง
-    function getScoreFromMemory(key) {
-        let val = sessionStorage.getItem(key) || localStorage.getItem(key);
-        let parsed = parseInt(val);
-        
-        // ถ้าผลออกมาเป็น NaN (แปลว่ายังไม่ได้กดทำแบบประเมินนั้นเลย) ให้ส่งคำว่า "รอประเมิน"
-        if (isNaN(parsed)) {
-            return "รอประเมิน"; 
-        }
-        return parsed; 
-    }
-
-    // รวบรวมข้อมูล
-    const dataToSend = {
-        action: 'update', 
-        rowId: sessionStorage.getItem('sheetRowId'), 
-        
-        gender: document.getElementById('display-gender') ? document.getElementById('display-gender').innerText : "-",
-        age: document.getElementById('display-age') ? document.getElementById('display-age').innerText : "-",
-        occupation: document.getElementById('display-occ') ? document.getElementById('display-occ').innerText : "-",
-        
-        st5: getScoreFromMemory('scoreST5'),
-        q2: getScoreFromMemory('score2Q'),
-        q9: getScoreFromMemory('score9Q'),
-        happiness: getScoreFromMemory('happinessScore'),
-        rq: getScoreFromMemory('rqScore'),
-        burnout: getScoreFromMemory('burnoutScore')
-    };
-
-    // 🔥 ระบบป้องกันเซฟซ้ำแบบใหม่ (เช็คว่าข้อมูลเปลี่ยนไปจากเดิมหรือไม่)
-    const currentDataStr = JSON.stringify(dataToSend);
-    if (sessionStorage.getItem('lastSavedData') === currentDataStr) {
-        console.log("ข้อมูลไม่มีการเปลี่ยนแปลง (ป้องกันการส่งข้อมูลซ้ำจากการรีเฟรช)");
-        return; 
-    }
-
-    // ส่งข้อมูลไปที่ Google Sheets
-    fetch(scriptURL, {
-        method: 'POST',
-        body: currentDataStr,
-        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-        redirect: "follow"
-    })
-    .then(response => response.json())
-    .then(result => {
-        if (result.status === "success") {
-            console.log("บันทึกข้อมูลลง Google Sheets สำเร็จ!");
-            sessionStorage.setItem('lastSavedData', currentDataStr); // อัปเดตความจำรอบล่าสุด
-            sessionStorage.removeItem('isSavedToSheet'); // เคลียร์ของเก่าทิ้ง
-        } else {
-            console.error("บันทึกข้อมูลไม่สำเร็จ:", result);
-        }
-    })
-    .catch(error => {
-        console.error("เกิดข้อผิดพลาดในการส่งข้อมูล:", error);
-    });
-}
 
 // ==========================================
 // ฟังก์ชันล้างข้อมูลเมื่อกดปุ่ม "กลับหน้าแรก"
