@@ -337,19 +337,12 @@ document.addEventListener('DOMContentLoaded', function() {
 }); 
 
 // ==========================================
-// ฟังก์ชันส่งข้อมูลไปยัง Google Sheets (อัปเดตแก้บัค 0 แล้ว!)
+// ฟังก์ชันส่งข้อมูลไปยัง Google Sheets (อัปเดตระบบป้องกันเซฟซ้ำ!)
 // ==========================================
 function saveToGoogleSheets() {
-    // URL ที่ถูกต้อง 100% ไม่มีช่องว่างและเป็น I ใหญ่
     const scriptURL = 'https://script.google.com/macros/s/AKfycbymjqhA1WkWF5Sc0m4M2ziItq0d1luMtLdt_mSMNxcJz1fi-NeRPwK3d6F8U6KcCJ4RFw/exec';
 
-    // ป้องกันการยิงข้อมูลซ้ำเวลารีเฟรชหน้าเว็บ
-    if (sessionStorage.getItem('isSavedToSheet') === 'true') {
-        console.log("ข้อมูลนี้ถูกบันทึกลงชีตไปแล้ว");
-        return; 
-    }
-
-    // 🟢 สร้างฟังก์ชันตัวช่วย: ถ้าช่องคะแนนว่างเปล่า หรือเป็นขีด หรือ NaN ให้ส่งคำว่า "รอประเมิน" ไปที่ Sheets
+    // ฟังก์ชันตัวช่วยดึงคะแนน
     function getScoreOrWaiting(elementId) {
         const el = document.getElementById(elementId);
         if (!el || el.innerText.trim() === "" || el.innerText.trim() === "-" || el.innerText.trim() === "NaN") {
@@ -360,14 +353,13 @@ function saveToGoogleSheets() {
 
     // รวบรวมข้อมูลจากหน้าจอ
     const dataToSend = {
-        action: 'update', // 🟢 บอก API ว่านี่คือการอัปเดตข้อมูล
-        rowId: sessionStorage.getItem('sheetRowId'), // 🟢 ดึง ID แถวที่ได้จากตอน Login มาใช้อ้างอิง
+        action: 'update', 
+        rowId: sessionStorage.getItem('sheetRowId'), 
         
         gender: document.getElementById('display-gender') ? document.getElementById('display-gender').innerText : "-",
         age: document.getElementById('display-age') ? document.getElementById('display-age').innerText : "-",
         occupation: document.getElementById('display-occ') ? document.getElementById('display-occ').innerText : "-",
         
-        // 🟢 ดึงค่าคะแนนผ่านฟังก์ชันตัวช่วยที่เพิ่งสร้าง จะป้องกันปัญหาช่องว่างกลายเป็น 0 
         st5: getScoreOrWaiting('score-st5'),
         q2: getScoreOrWaiting('score-2q'),
         q9: getScoreOrWaiting('score-9q'),
@@ -376,18 +368,28 @@ function saveToGoogleSheets() {
         burnout: getScoreOrWaiting('score-bo')
     };
 
+    // 🔥 ระบบป้องกันเซฟซ้ำแบบใหม่ (เช็คว่าข้อมูลเปลี่ยนไปจากเดิมหรือไม่)
+    const currentDataStr = JSON.stringify(dataToSend);
+    if (sessionStorage.getItem('lastSavedData') === currentDataStr) {
+        console.log("ข้อมูลไม่มีการเปลี่ยนแปลง (ป้องกันการส่งข้อมูลซ้ำจากการรีเฟรช)");
+        return; 
+    }
+
     // ส่งข้อมูลไปที่ Google Sheets
     fetch(scriptURL, {
         method: 'POST',
-        body: JSON.stringify(dataToSend),
+        body: currentDataStr,
         headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-        redirect: "follow" // 🟢 จำเป็นมากเพื่อป้องกันปัญหา CORS
+        redirect: "follow"
     })
     .then(response => response.json())
     .then(result => {
         if (result.status === "success") {
             console.log("บันทึกข้อมูลลง Google Sheets สำเร็จ!");
-            sessionStorage.setItem('isSavedToSheet', 'true'); // มาร์คไว้ว่าเซฟแล้ว จะได้ไม่ส่งซ้ำ
+            // บันทึกข้อมูลล่าสุดไว้เทียบในรอบหน้า
+            sessionStorage.setItem('lastSavedData', currentDataStr); 
+            // เคลียร์ flag เก่าทิ้งเผื่อค้าง
+            sessionStorage.removeItem('isSavedToSheet'); 
         } else {
             console.error("บันทึกข้อมูลไม่สำเร็จ:", result);
         }
