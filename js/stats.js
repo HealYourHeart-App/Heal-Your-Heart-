@@ -1,4 +1,4 @@
-// URL ของ Google Apps Script (ต้องมีฟังก์ชัน doGet() เรียบร้อยแล้ว)
+// URL ของ Google Apps Script (ต้องมีฟังก์ชัน doGet() เวอร์ชันที่ส่งข้อมูลสรุปแล้ว)
 const scriptURL = 'https://script.google.com/macros/s/AKfycbymjqhA1WkWF5Sc0m4M2ziItq0d1luMtLdt_mSMNxcJz1fi-NeRPwK3d6F8U6KcCJ4RFw/exec';
 
 // สีธีมสำหรับกราฟ
@@ -11,47 +11,17 @@ async function fetchAndRenderStatistics() {
         document.getElementById('totalUsers').innerText = "กำลังโหลด...";
         document.getElementById('topAgeGroup').innerText = "กำลังโหลด...";
 
-        // ดึงข้อมูลจาก API
+        // ดึงข้อมูลสรุปจาก API (Apps Script นับให้เสร็จแล้ว ไม่ใช่ raw data รายคน)
         const response = await fetch(scriptURL);
         const result = await response.json();
 
         if (result.status === "success") {
-            const allData = result.data;
             const totalUsers = result.total_users;
+            const ageCounts = result.age_counts;
+            const genderCounts = result.gender_counts;
+            const occCounts = result.occ_counts;
 
-            // 1. ตัวแปรเก็บจำนวนแต่ละหมวดหมู่
-            let ageCounts = { under18: 0, '18_24': 0, '25_34': 0, '35_44': 0, over45: 0 };
-            let genderCounts = { male: 0, female: 0, lgbtq: 0, not_specified: 0 };
-            let occCounts = { student: 0, employee: 0, government: 0, freelance: 0, unemployed: 0, other: 0 };
-
-            // 2. วนลูปนับข้อมูลจริงจาก Google Sheets
-            allData.forEach(row => {
-                // นับช่วงอายุ
-                let age = row['อายุ'] || "";
-                if (age.includes('ต่ำกว่า 18')) ageCounts.under18++;
-                else if (age.includes('18 - 24')) ageCounts['18_24']++;
-                else if (age.includes('25 - 34')) ageCounts['25_34']++;
-                else if (age.includes('35 - 44')) ageCounts['35_44']++;
-                else if (age.includes('45')) ageCounts.over45++;
-
-                // นับเพศ
-                let gender = row['เพศ'] || "";
-                if (gender === 'ชาย') genderCounts.male++;
-                else if (gender === 'หญิง') genderCounts.female++;
-                else if (gender.includes('ทางเลือก')) genderCounts.lgbtq++;
-                else genderCounts.not_specified++;
-
-                // นับอาชีพ
-                let occ = row['อาชีพ'] || "";
-                if (occ.includes('นักเรียน') || occ.includes('นักศึกษา')) occCounts.student++;
-                else if (occ.includes('บริษัท') || occ.includes('เงินเดือน')) occCounts.employee++;
-                else if (occ.includes('ราชการ') || occ.includes('วิสาหกิจ')) occCounts.government++;
-                else if (occ.includes('ส่วนตัว') || occ.includes('ฟรีแลนซ์')) occCounts.freelance++;
-                else if (occ.includes('ว่างงาน') || occ.includes('บ้าน')) occCounts.unemployed++;
-                else occCounts.other++;
-            });
-
-            // 3. แสดงผลตัวเลขสรุปด้านบน
+            // 1. แสดงผลตัวเลขสรุปด้านบน
             document.getElementById('totalUsers').innerText = totalUsers + " คน";
 
             // หาช่วงอายุที่เยอะที่สุด
@@ -59,7 +29,7 @@ async function fetchAndRenderStatistics() {
                 under18: 'ต่ำกว่า 18 ปี', '18_24': '18 - 24 ปี', '25_34': '25 - 34 ปี', '35_44': '35 - 44 ปี', over45: '45 ปีขึ้นไป'
             };
             let topAgeKey = Object.keys(ageCounts).reduce((a, b) => ageCounts[a] > ageCounts[b] ? a : b);
-            
+
             // ป้องกันกรณีไม่มีข้อมูลเลย
             if (ageCounts[topAgeKey] === 0) {
                 document.getElementById('topAgeGroup').innerText = "ยังไม่มีข้อมูล";
@@ -67,7 +37,7 @@ async function fetchAndRenderStatistics() {
                 document.getElementById('topAgeGroup').innerText = ageLabelsMap[topAgeKey];
             }
 
-            // 4. วาดกราฟอายุ (Doughnut Chart)
+            // 2. วาดกราฟอายุ (Doughnut Chart)
             const ctxAge = document.getElementById('ageChart').getContext('2d');
             new Chart(ctxAge, {
                 type: 'doughnut',
@@ -82,7 +52,7 @@ async function fetchAndRenderStatistics() {
                 options: { responsive: true, plugins: { legend: { position: 'bottom', labels: { font: { family: 'Prompt' } } } } }
             });
 
-            // 5. วาดกราฟเพศ (Pie Chart)
+            // 3. วาดกราฟเพศ (Pie Chart)
             const ctxGender = document.getElementById('genderChart').getContext('2d');
             new Chart(ctxGender, {
                 type: 'pie',
@@ -97,7 +67,7 @@ async function fetchAndRenderStatistics() {
                 options: { responsive: true, plugins: { legend: { position: 'bottom', labels: { font: { family: 'Prompt' } } } } }
             });
 
-            // 6. วาดกราฟอาชีพ (Bar Chart แนวนอน)
+            // 4. วาดกราฟอาชีพ (Bar Chart แนวนอน)
             const ctxOcc = document.getElementById('occupationChart').getContext('2d');
             new Chart(ctxOcc, {
                 type: 'bar',
