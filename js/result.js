@@ -167,6 +167,14 @@ document.addEventListener('DOMContentLoaded', function() {
     let overallStatus = "normal";
     let evaluatedCount = 0;
 
+    // ⚠️ เช็คธงเสี่ยงทำร้ายตัวเอง/ฆ่าตัวตายก่อนเป็นอันดับแรก
+    // ธงนี้ถูกตั้งไว้จากคำตอบข้อเฉพาะ (2Q ข้อ 3 และ 9Q ข้อ 9) แยกต่างหากจากคะแนนรวม
+    // เพราะคะแนนรวมเพียงอย่างเดียวอาจไม่สูงพอจะเข้าเกณฑ์ "รุนแรง" ทั้งที่มีความเสี่ยงจริง
+    const hasSuicideRiskFlag = sessionStorage.getItem('suicideRisk') === '1' || localStorage.getItem('suicideRisk') === '1';
+    if (hasSuicideRiskFlag) {
+        hasSevereRisk = true;
+    }
+
     // ================= 1. ประมวลผล ST-5 =================
     if(!isNaN(sST5) && document.getElementById('score-st5')) {
         evaluatedCount++;
@@ -398,7 +406,7 @@ function clearDataAndGoHome() {
     // ห้ามล้าง sheetRowId / gender / age / occupation
     // เพราะถ้าล้างไปด้วย ระบบจะลืมว่าเคยจองแถวไว้แล้ว
     // แล้วพอทำแบบทดสอบตัวถัดไปเสร็จ จะไปสร้างแถวใหม่ใน Google Sheets แทนการอัปเดตแถวเดิม
-    const scoreKeys = ['scoreST5', 'score2Q', 'score9Q', 'happinessScore', 'rqScore', 'burnoutScore', 'lastSavedData'];
+    const scoreKeys = ['scoreST5', 'score2Q', 'score9Q', 'happinessScore', 'rqScore', 'burnoutScore', 'lastSavedData', 'suicideRisk'];
 
     scoreKeys.forEach(key => {
         localStorage.removeItem(key);
