@@ -394,10 +394,17 @@ document.addEventListener('DOMContentLoaded', function() {
 // ฟังก์ชันล้างข้อมูลเมื่อกดปุ่ม "กลับหน้าแรก"
 // ==========================================
 function clearDataAndGoHome() {
-    // ล้างคะแนนเก่าที่จำไว้ทั้งหมด
-    localStorage.clear();
-    sessionStorage.clear();
-    
+    // ⚠️ ล้างเฉพาะ "คะแนนแบบทดสอบ" เท่านั้น
+    // ห้ามล้าง sheetRowId / gender / age / occupation
+    // เพราะถ้าล้างไปด้วย ระบบจะลืมว่าเคยจองแถวไว้แล้ว
+    // แล้วพอทำแบบทดสอบตัวถัดไปเสร็จ จะไปสร้างแถวใหม่ใน Google Sheets แทนการอัปเดตแถวเดิม
+    const scoreKeys = ['scoreST5', 'score2Q', 'score9Q', 'happinessScore', 'rqScore', 'burnoutScore', 'lastSavedData'];
+
+    scoreKeys.forEach(key => {
+        localStorage.removeItem(key);
+        sessionStorage.removeItem(key);
+    });
+
     // สั่งให้เปลี่ยนหน้าไปที่หน้าแรก
     window.location.href = "home.html"; 
 }
