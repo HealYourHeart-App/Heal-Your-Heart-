@@ -31,9 +31,13 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
 
     // ✅ แก้ไข URL ให้ถูกต้อง 100% แล้ว (ระวังห้ามเว้นวรรคนะครับ)
    const scriptURL = 'https://script.google.com/macros/s/AKfycbymjqhA1WkWF5Sc0m4M2ziItq0d1luMtLdt_mSMNxcJz1fi-NeRPwK3d6F8U6KcCJ4RFw/exec';
+
+    // ⚠️ ต้องตรงกับ SECRET_TOKEN ใน Apps Script (Code.gs) เป๊ะๆ และตรงกับ token ใน result.js ด้วย
+    const SECRET_TOKEN = "MQLkPm6QkD79LbcAt8kpTQ6Yxz-p5lTI1WoxmR-VfMc";
     
     const visitData = {
         action: "create", 
+        token: SECRET_TOKEN,   // 👈 เพิ่มเข้ามาใหม่
         gender: genderMap[gender] || gender,
         age: ageMap[age] || age,
         occupation: occMap[occupation] || occupation,
@@ -58,6 +62,8 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
             console.log("บันทึกข้อมูลตั้งต้นที่แถว:", result.rowId);
             // เก็บเลขแถวที่ Google Sheets ส่งกลับมาไว้ใช้ตอนจบ
             sessionStorage.setItem('sheetRowId', result.rowId);
+        } else {
+            console.error("บันทึกข้อมูลตั้งต้นไม่สำเร็จ:", result);
         }
         // ✅ ข้อมูลบันทึกเสร็จแล้ว จึงย้ายไปหน้าแรก (Home)
         window.location.href = 'home.html';
