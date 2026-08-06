@@ -1,3 +1,10 @@
+// ⚠️ เช็คว่าล็อกอินผ่านมาแล้วหรือยัง (มี sheetRowId ใน sessionStorage ไหม)
+// ถ้าไม่มี แปลว่าเข้ามาหน้านี้ตรงๆ โดยไม่ผ่าน login -> เด้งกลับไปกรอกข้อมูลก่อน
+if (!sessionStorage.getItem('sheetRowId')) {
+    alert('กรุณากรอกข้อมูลเบื้องต้น (เพศ/อายุ/อาชีพ) ก่อนเริ่มทำแบบประเมินครับ 💖');
+    window.location.href = 'index.html';
+}
+
 // ฟังก์ชันสร้างปุ่ม 1-10 ด้วย JavaScript เพื่อความสะอาดของโค้ด HTML
 function generateScale(containerId, inputName) {
     let container = document.getElementById(containerId);
