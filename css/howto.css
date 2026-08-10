@@ -157,9 +157,23 @@
     margin: 0 auto 20px auto;
 }
 
+/* ================= ภาพอินโฟกราฟิกสรุปวิธีใช้งาน ================= */
+.infographic-wrapper {
+    text-align: center;
+    margin: 25px 0 35px;
+}
+
+.infographic-img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
 /* ================= Responsive ================= */
 @media (max-width: 768px) {
     .content-wrapper { padding: 30px 20px; }
     .step-list li { padding-left: 45px; }
     .step-list li::before { width: 35px; height: 35px; font-size: 16px; left: -10px; }
+    .infographic-wrapper { margin: 15px 0 25px; }
 }
