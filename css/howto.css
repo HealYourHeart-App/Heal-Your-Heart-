@@ -157,6 +157,11 @@
     margin: 0 auto 20px auto;
 }
 
+.bottom-actions {
+    text-align: center;
+    margin-top: 40px;
+}
+
 /* ================= ภาพอินโฟกราฟิกสรุปวิธีใช้งาน ================= */
 .infographic-wrapper {
     text-align: center;
