@@ -181,15 +181,19 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('score-st5').innerText = sST5;
         const elStat = document.getElementById('status-st5');
         const elAdv = document.getElementById('advice-st5');
+        const elIcon = document.getElementById('icon-st5');
         if(sST5 <= 4) {
             elStat.className = "card-status status-green"; elStat.innerText = "ปกติ";
+            if(elIcon) elIcon.innerText = "😊";
             elAdv.innerHTML = "<p><strong>ผลการประเมิน: ปกติ</strong></p><p>" + agePrefix + adviceDB.st5.level0_4[ageGroup] + "</p>";
         } else if(sST5 <= 7) {
             elStat.className = "card-status status-yellow"; elStat.innerText = "เครียดปานกลาง";
+            if(elIcon) elIcon.innerText = "😟";
             overallStatus = "mild";
             elAdv.innerHTML = "<p><strong>ผลการประเมิน: เริ่มมีความเครียดสะสม</strong></p><p>" + agePrefix + adviceDB.st5.level5_7[ageGroup] + "</p>";
         } else {
             elStat.className = "card-status status-red"; elStat.innerText = "เครียดมาก";
+            if(elIcon) elIcon.innerText = "😫";
             hasSevereRisk = true;
             elAdv.innerHTML = "<span class='unified-severe'>ผลการประเมิน: ความเครียดสูง</span><p>" + agePrefix + adviceDB.st5.level8plus[ageGroup] + "</p>";
         }
@@ -201,11 +205,14 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('score-2q').innerText = s2Q;
         const elStat = document.getElementById('status-2q');
         const elAdv = document.getElementById('advice-2q');
+        const elIcon = document.getElementById('icon-2q');
         if(s2Q === 0) {
             elStat.className = "card-status status-green"; elStat.innerText = "ปกติ";
+            if(elIcon) elIcon.innerText = "😊";
             elAdv.innerHTML = "<p><strong>ผลการประเมิน: ไม่พบความเสี่ยง</strong></p><p>" + agePrefix + adviceDB.q2.level0[ageGroup] + "</p>";
         } else {
             elStat.className = "card-status status-orange"; elStat.innerText = "มีภาวะเสี่ยง";
+            if(elIcon) elIcon.innerText = "😰";
             overallStatus = "mild";
             elAdv.innerHTML = "<span class='unified-severe'>ผลการประเมิน: พบความเสี่ยง</span><p>" + agePrefix + adviceDB.q2.level1plus[ageGroup] + "</p>";
         }
@@ -217,19 +224,24 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('score-9q').innerText = s9Q;
         const elStat = document.getElementById('status-9q');
         const elAdv = document.getElementById('advice-9q');
+        const elIcon = document.getElementById('icon-9q');
         if(s9Q >= 19) {
             elStat.className = "card-status status-red"; elStat.innerText = "ระดับรุนแรง";
+            if(elIcon) elIcon.innerText = "⛈️";
             hasSevereRisk = true;
             elAdv.innerHTML = "<span class='unified-severe'>ผลการประเมิน: ภาวะซึมเศร้าระดับรุนแรง</span><p>" + adviceDB.q9.severe + "</p>";
         } else if(s9Q <= 6) {
             elStat.className = "card-status status-green"; elStat.innerText = "ปกติ";
+            if(elIcon) elIcon.innerText = "🌤️";
             elAdv.innerHTML = "<p><strong>ผลการประเมิน: ไม่พบภาวะซึมเศร้า</strong></p><p>" + agePrefix + adviceDB.q9.level0_6[ageGroup] + "</p>";
         } else if(s9Q <= 12) {
             elStat.className = "card-status status-yellow"; elStat.innerText = "ระดับน้อย";
+            if(elIcon) elIcon.innerText = "🌥️";
             overallStatus = "mild";
             elAdv.innerHTML = "<p><strong>ผลการประเมิน: ภาวะซึมเศร้าระดับน้อย</strong></p><p>" + agePrefix + adviceDB.q9.level7_12[ageGroup] + "</p>";
         } else if(s9Q <= 18) {
             elStat.className = "card-status status-orange"; elStat.innerText = "ระดับปานกลาง";
+            if(elIcon) elIcon.innerText = "🌧️";
             overallStatus = "mild";
             elAdv.innerHTML = "<span class='unified-severe'>ผลการประเมิน: ภาวะซึมเศร้าระดับปานกลาง</span><p>" + agePrefix + adviceDB.q9.level13_18[ageGroup] + "</p>";
         }
@@ -241,14 +253,18 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('score-hap').innerText = sHap;
         const elStat = document.getElementById('status-hap');
         const elAdv = document.getElementById('advice-hap');
+        const elIcon = document.getElementById('icon-hap');
         if(sHap >= 8) {
             elStat.className = "card-status status-green"; elStat.innerText = "มีความสุขมาก";
+            if(elIcon) elIcon.innerText = "😄";
             elAdv.innerHTML = "<p>ดีเยี่ยม! คุณมีความสุขในเกณฑ์ที่ดีมาก รักษาสมดุลชีวิตแบบนี้ไว้นะครับ</p>";
         } else if(sHap >= 5) {
             elStat.className = "card-status status-yellow"; elStat.innerText = "มีความสุขปานกลาง";
+            if(elIcon) elIcon.innerText = "🙂";
             elAdv.innerHTML = "<p>คุณมีความสุขในเกณฑ์ปกติ ลองหากิจกรรมผ่อนคลายทำเพิ่มเพื่อเติมพลังบวกนะครับ</p>";
         } else {
             elStat.className = "card-status status-red"; elStat.innerText = "มีความสุขน้อย";
+            if(elIcon) elIcon.innerText = "😔";
             overallStatus = "mild";
             elAdv.innerHTML = "<p>ช่วงนี้คุณอาจจะรู้สึกเหนื่อยและหมดพลัง ลองให้เวลาตัวเองได้พักผ่อนและทำสิ่งที่ชอบบ้างนะครับ</p>";
         }
@@ -260,14 +276,18 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('score-rq').innerText = sRQ;
         const elStat = document.getElementById('status-rq');
         const elAdv = document.getElementById('advice-rq');
+        const elIcon = document.getElementById('icon-rq');
         if(sRQ >= 25) {
             elStat.className = "card-status status-green"; elStat.innerText = "พลังใจสูง";
+            if(elIcon) elIcon.innerText = "💖";
             elAdv.innerHTML = "<p>ภูมิต้านทานทางใจของคุณแข็งแกร่งมาก! คุณสามารถรับมือกับปัญหาที่เข้ามาได้อย่างยอดเยี่ยม</p>";
         } else if(sRQ >= 15) {
             elStat.className = "card-status status-yellow"; elStat.innerText = "พลังใจปานกลาง";
+            if(elIcon) elIcon.innerText = "🤍";
             elAdv.innerHTML = "<p>พลังใจของคุณอยู่ในเกณฑ์ดีครับ แต่อาจจะมีบางเรื่องที่ทำให้ท้อไปบ้าง ขอให้เชื่อมั่นในตัวเองนะ</p>";
         } else {
             elStat.className = "card-status status-orange"; elStat.innerText = "พลังใจเริ่มลดลง";
+            if(elIcon) elIcon.innerText = "💔";
             overallStatus = "mild";
             elAdv.innerHTML = "<p>ช่วงนี้คุณอาจจะท้อแท้ง่ายกว่าปกติ ลองหากำลังใจจากคนรอบข้าง หรือพักเรื่องหนักๆ ไว้ก่อนนะ</p>";
         }
@@ -279,15 +299,19 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('score-bo').innerText = sBO;
         const elStat = document.getElementById('status-bo');
         const elAdv = document.getElementById('advice-bo');
+        const elIcon = document.getElementById('icon-bo');
         if(sBO <= 5) {
             elStat.className = "card-status status-green"; elStat.innerText = "ปกติ";
+            if(elIcon) elIcon.innerText = "🔋";
             elAdv.innerHTML = "<p>คุณยังมีไฟในการใช้ชีวิตและการทำงานเต็มเปี่ยม ลุยต่อไปได้เลย!</p>";
         } else if(sBO <= 8) {
             elStat.className = "card-status status-orange"; elStat.innerText = "เริ่มหมดไฟ";
+            if(elIcon) elIcon.innerText = "🪫";
             overallStatus = "mild";
             elAdv.innerHTML = "<p>แบตเตอรี่ของคุณเริ่มลดลงแล้วนะ อย่าลืมแบ่งเวลาให้ตัวเองได้พักผ่อนจากการทำงานบ้าง</p>";
         } else {
             elStat.className = "card-status status-red"; elStat.innerText = "หมดไฟรุนแรง";
+            if(elIcon) elIcon.innerText = "🕯️";
             hasSevereRisk = true;
             elAdv.innerHTML = "<span class='unified-severe'>ผลการประเมิน: คุณมีภาวะหมดไฟสะสมรุนแรง</span><p>คุณฝืนตัวเองมาหนักเกินไปแล้ว ควรหาเวลาพักผ่อนยาวๆ และพูดคุยกับผู้เชี่ยวชาญเพื่อปรับสมดุลชีวิตด่วนครับ</p>";
         }
