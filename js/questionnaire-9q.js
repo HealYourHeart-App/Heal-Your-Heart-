@@ -50,9 +50,12 @@ document.getElementById('q9Form').addEventListener('submit', function(e) {
     sessionStorage.setItem('score9Q', total9Q);
     
     // เช็คว่าถ้าข้อ 9 (อยากทำร้ายตัวเอง) ตอบ > 0 ให้เปิดการแจ้งเตือนรุนแรงไว้
+    // และถ้าตอบ 0 (ไม่มีเลย) ต้องล้างธงเก่าทิ้งด้วย ไม่งั้นธงจากรอบก่อนหน้าจะค้างอยู่
     let q9_selfharm = parseInt(document.querySelector('input[name="q9"]:checked').value);
     if(q9_selfharm > 0) {
         sessionStorage.setItem('suicideRisk', 1);
+    } else {
+        sessionStorage.removeItem('suicideRisk');
     }
     
     // เสร็จสิ้นชุดประเมินหลัก! พุ่งไปหน้า Result ทันที
