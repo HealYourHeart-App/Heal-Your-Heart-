@@ -31,6 +31,13 @@
     margin: 0 auto 40px auto; text-align: center; box-shadow: 0 5px 15px rgba(216, 75, 107, 0.1); 
 }
 
+.loading-text {
+    text-align: center;
+    color: var(--primary-color, #D84B6B);
+    font-size: 16px;
+    padding: 30px 0;
+}
+
 /* ================= การ์ดเนื้อหา (ดีไซน์ใหม่) ================= */
 .content-row { 
     display: flex; flex-direction: row; align-items: stretch; width: 100%; 
