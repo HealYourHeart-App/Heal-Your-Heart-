@@ -133,3 +133,26 @@ body {
     .highlight-content { flex-direction: column; align-items: flex-start; justify-content: center; gap: 10px; padding: 15px 20px; height: auto; }
     .highlight-content h3 { font-size: 16px; padding-right: 0; white-space: normal; -webkit-line-clamp: 2; line-clamp: 2; }
 }
+/* ================= ปุ่มเล็กๆ ลับสำหรับแอดมิน (มุมขวาล่าง) ================= */
+.admin-dot {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: rgba(216, 75, 107, 0.35);
+    border: 1px solid rgba(216, 75, 107, 0.5);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    padding: 0;
+    cursor: pointer;
+    z-index: 999;
+    transition: background 0.2s, transform 0.15s;
+}
+.admin-dot:hover {
+    background: rgba(216, 75, 107, 0.8);
+    transform: scale(1.15);
+}
+.admin-dot:active {
+    transform: scale(0.95);
+}
