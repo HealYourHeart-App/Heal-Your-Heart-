@@ -160,3 +160,20 @@ select:focus {
     .container { padding: 25px 20px; } 
     .form-box { padding: 20px 15px; } 
 }
+/* ================= จุดลับสำหรับแอดมิน (มุมขวาล่าง) ================= */
+/* ตั้งใจทำให้เล็กมาก โปร่งใสเกือบหมด เพื่อไม่ให้ผู้ใช้ทั่วไปสังเกตเห็น */
+.admin-dot {
+    position: fixed;
+    bottom: 8px;
+    right: 8px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: transparent;
+    opacity: 0.15;
+    z-index: 999;
+    transition: opacity 0.2s;
+}
+.admin-dot:hover {
+    opacity: 0.5;
+}
