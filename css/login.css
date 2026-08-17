@@ -161,19 +161,18 @@ select:focus {
     .form-box { padding: 20px 15px; } 
 }
 /* ================= จุดลับสำหรับแอดมิน (มุมขวาล่าง) ================= */
-/* ตั้งใจทำให้เล็กมาก โปร่งใสเกือบหมด เพื่อไม่ให้ผู้ใช้ทั่วไปสังเกตเห็น */
+/* ตั้งใจทำให้เล็กและจางมาก แต่ยังพอมองเห็นได้ถ้าสังเกตดีๆ */
 .admin-dot {
     position: fixed;
-    bottom: 8px;
-    right: 8px;
-    width: 14px;
-    height: 14px;
+    bottom: 10px;
+    right: 10px;
+    width: 16px;
+    height: 16px;
     border-radius: 50%;
-    background: transparent;
-    opacity: 0.15;
+    background: rgba(216, 75, 107, 0.35);
     z-index: 999;
-    transition: opacity 0.2s;
+    transition: background 0.2s;
 }
 .admin-dot:hover {
-    opacity: 0.5;
+    background: rgba(216, 75, 107, 0.8);
 }
