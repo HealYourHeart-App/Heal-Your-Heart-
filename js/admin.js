@@ -52,19 +52,45 @@ async function loadItems() {
             return;
         }
 
-        list.innerHTML = currentItems.map(item => `
-            <div class="item-row">
-                <div class="item-info">
-                    <span class="item-type-badge ${item.type}">${TYPE_LABELS[item.type] || item.type}</span>
-                    <strong>${item.title || '(ไม่มีชื่อ)'}</strong>
-                    <span class="item-order">ลำดับ: ${item.order}</span>
+        // จัดกลุ่มตามประเภท เรียงหมวดตามลำดับที่กำหนดไว้ (บทความ, วิดีโอ, กิจกรรม, อาหารบำบัด)
+        const typeOrder = ['article', 'video', 'activity', 'food'];
+        const grouped = {};
+        typeOrder.forEach(t => grouped[t] = []);
+        currentItems.forEach(item => {
+            if (!grouped[item.type]) grouped[item.type] = []; // เผื่อมี type แปลกๆ ที่ไม่รู้จัก
+            grouped[item.type].push(item);
+        });
+
+        // เรียงแต่ละหมวดตามคอลัมน์ order
+        Object.keys(grouped).forEach(t => grouped[t].sort((a, b) => a.order - b.order));
+
+        const sectionIcons = { article: '📄', video: '🎬', activity: '🧘', food: '🍽️' };
+
+        list.innerHTML = typeOrder
+            .filter(t => grouped[t] && grouped[t].length > 0)
+            .map(type => `
+                <div class="type-section">
+                    <div class="type-section-header">
+                        <span class="type-section-title">${sectionIcons[type] || ''} ${TYPE_LABELS[type] || type}</span>
+                        <span class="type-section-count">${grouped[type].length} รายการ</span>
+                        <button onclick="openForm('${type}')" class="btn-outline-pink small">+ เพิ่มในหมวดนี้</button>
+                    </div>
+                    <div class="type-section-items">
+                        ${grouped[type].map(item => `
+                            <div class="item-row">
+                                <div class="item-info">
+                                    <strong>${item.title || '(ไม่มีชื่อ)'}</strong>
+                                    <span class="item-order">ลำดับ: ${item.order}</span>
+                                </div>
+                                <div class="item-actions">
+                                    <button onclick="editItem(${item.rowIndex})" class="btn-outline-pink small">แก้ไข</button>
+                                    <button onclick="deleteItem(${item.rowIndex})" class="btn-outline-pink small danger">ลบ</button>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
                 </div>
-                <div class="item-actions">
-                    <button onclick="editItem(${item.rowIndex})" class="btn-outline-pink small">แก้ไข</button>
-                    <button onclick="deleteItem(${item.rowIndex})" class="btn-outline-pink small danger">ลบ</button>
-                </div>
-            </div>
-        `).join('');
+            `).join('');
 
     } catch (err) {
         list.innerHTML = `<p class="error-text">เกิดข้อผิดพลาด: ${err.message}</p>`;
@@ -74,11 +100,14 @@ async function loadItems() {
 // ==========================================
 // เปิดฟอร์มเพิ่มใหม่ (ว่างเปล่า)
 // ==========================================
-function openForm() {
+function openForm(presetType) {
     editingRowIndex = null;
-    document.getElementById('formTitle').innerText = 'เพิ่มรายการใหม่';
-    document.getElementById('f_type').value = 'article';
-    document.getElementById('f_order').value = currentItems.length + 1;
+    const type = presetType || 'article';
+    document.getElementById('formTitle').innerText = 'เพิ่มรายการใหม่ - ' + (TYPE_LABELS[type] || type);
+    document.getElementById('f_type').value = type;
+    // หาเลขลำดับถัดไปในหมวดเดียวกัน (ไม่ใช่นับรวมทุกหมวด)
+    const sameTypeCount = currentItems.filter(i => i.type === type).length;
+    document.getElementById('f_order').value = sameTypeCount + 1;
     document.getElementById('f_image').value = '';
     document.getElementById('f_title').value = '';
     document.getElementById('f_summary').value = '';
