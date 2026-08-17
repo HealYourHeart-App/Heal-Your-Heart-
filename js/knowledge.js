@@ -19,3 +19,93 @@ function closeModal(event) {
     if (event && event.target.id === 'fullImage') return;
     document.getElementById("imageModal").style.display = "none";
 }
+
+// ==========================================
+// ดึงบทความ/วิดีโอจาก Google Sheets (แท็บ "Content") มาแสดงแบบ dynamic
+// เปลี่ยนเนื้อหาได้จาก Google Sheets โดยตรง ไม่ต้องแก้โค้ดไฟล์นี้เลย
+// ==========================================
+
+// ⚠️ URL เดียวกับที่ใช้ส่งข้อมูลแบบประเมิน (Apps Script เดียวกัน)
+const KNOWLEDGE_API_URL = 'https://script.google.com/macros/s/AKfycbymjqhA1WkWF5Sc0m4M2ziItq0d1luMtLdt_mSMNxcJz1fi-NeRPwK3d6F8U6KcCJ4RFw/exec?type=knowledge';
+
+// รองรับทั้ง 2 แบบ: ถ้ากรอกเป็น URL เต็ม (ขึ้นต้นด้วย http) ใช้ตรงๆ
+// ถ้ากรอกแค่ชื่อไฟล์ (เช่น A11.jpg) จะไปหาในโฟลเดอร์ photo/ ให้อัตโนมัติ
+function resolveImagePath(image) {
+    if (!image) return 'photo/logo01.png'; // รูป fallback เผื่อไม่มีรูป
+    if (image.indexOf('http') === 0) return image;
+    return 'photo/' + image;
+}
+
+// สร้าง HTML การ์ด 1 อัน จากข้อมูล 1 แถว
+function renderContentCard(item, number) {
+    const imgSrc = resolveImagePath(item.image);
+
+    if (item.type === 'article') {
+        return `
+        <div class="content-row">
+            <div class="number-badge">${number}</div>
+            <div class="image-box">
+                <img src="${imgSrc}" alt="${item.title || 'บทความ'}" class="clickable-img" onclick="openModal(this.src)">
+            </div>
+            <div class="info-box">
+                <p class="content-title"><span class="label-red">ชื่อบทความ :</span> ${item.title || ''}</p>
+                <p><span class="label-red">เนื้อหาย่อย :</span> ${item.summary || ''}</p>
+                <p class="reference"><span class="label-red">${item.reference_label || 'อ้างอิงบทความจาก'} :</span> ${item.reference_text || ''}</p>
+                ${item.link ? `<a href="${item.link}" target="_blank" class="read-more-link">ลิงก์บทความ อ่านต่อ....... <span>&raquo;</span></a>` : ''}
+            </div>
+        </div>`;
+    }
+
+    // type === 'video'
+    return `
+    <div class="content-row">
+        <div class="number-badge">${number}</div>
+        <div class="image-box">
+            <a href="${item.link || '#'}" target="_blank">
+                <img src="${imgSrc}" alt="${item.title || 'วิดีโอ'}" class="clickable-img">
+            </a>
+        </div>
+        <div class="info-box">
+            <p class="content-title"><span class="label-red">ชื่อคลิปวิดีโอ :</span> ${item.title || ''}</p>
+            <p><span class="label-red">เนื้อหาย่อย :</span> ${item.summary || ''}</p>
+            <p class="reference"><span class="label-red">${item.reference_label || 'ลิงก์วิดีโอ (Youtube)'} :</span> ${item.link ? `<a href="${item.link}" target="_blank" style="color: #dc2626; text-decoration: underline;">${item.reference_text || 'คลิกเพื่อรับชม'}</a>` : (item.reference_text || '-')}</p>
+        </div>
+    </div>`;
+}
+
+async function loadKnowledgeContent() {
+    const articlesContainer = document.getElementById('articles-container');
+    const videosContainer = document.getElementById('videos-container');
+    if (!articlesContainer && !videosContainer) return; // ไม่ใช่หน้านี้ ไม่ต้องทำอะไร
+
+    try {
+        const response = await fetch(KNOWLEDGE_API_URL);
+        const result = await response.json();
+
+        if (result.status !== 'success') {
+            throw new Error(result.message || 'โหลดเนื้อหาไม่สำเร็จ');
+        }
+
+        const articles = result.items.filter(item => item.type === 'article');
+        const videos = result.items.filter(item => item.type === 'video');
+
+        if (articlesContainer) {
+            articlesContainer.innerHTML = articles.length
+                ? articles.map((item, i) => renderContentCard(item, i + 1)).join('')
+                : '<p class="loading-text">ยังไม่มีบทความในขณะนี้</p>';
+        }
+
+        if (videosContainer) {
+            videosContainer.innerHTML = videos.length
+                ? videos.map((item, i) => renderContentCard(item, i + 1)).join('')
+                : '<p class="loading-text">ยังไม่มีวิดีโอในขณะนี้</p>';
+        }
+
+    } catch (error) {
+        console.error('เกิดข้อผิดพลาดในการโหลดเนื้อหา:', error);
+        if (articlesContainer) articlesContainer.innerHTML = '<p class="loading-text">ไม่สามารถโหลดบทความได้ในขณะนี้ กรุณาลองใหม่ภายหลัง</p>';
+        if (videosContainer) videosContainer.innerHTML = '<p class="loading-text">ไม่สามารถโหลดวิดีโอได้ในขณะนี้ กรุณาลองใหม่ภายหลัง</p>';
+    }
+}
+
+document.addEventListener('DOMContentLoaded', loadKnowledgeContent);
