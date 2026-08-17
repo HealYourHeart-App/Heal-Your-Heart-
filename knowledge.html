@@ -1,111 +1,77 @@
-function openModal(imgSrc) {
-    var modal = document.getElementById("imageModal");
-    var modalImg = document.getElementById("fullImage");
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heal Your Heart - สาระความรู้เกี่ยวกับสุขภาพจิต</title>
     
-    modal.style.display = "block";
-    modalImg.src = imgSrc;
-    modalImg.classList.remove("zoomed"); // รีเซ็ตการซูมทุกครั้งที่เปิด
-}
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- ลิงก์ไปไฟล์ CSS หลักและ CSS เฉพาะหน้านี้ -->
+    <link rel="stylesheet" href="css/home.css">
+    <link rel="stylesheet" href="css/knowledge.css">
+</head>
+<body>
 
-// ฟังก์ชันสลับการซูม
-function toggleZoom(event) {
-    event.stopPropagation(); // หยุด event ไม่ให้เรียก closeModal
-    var img = document.getElementById("fullImage");
-    img.classList.toggle("zoomed");
-}
-
-function closeModal(event) {
-    // ป้องกันปิดเมื่อคลิกที่รูป
-    if (event && event.target.id === 'fullImage') return;
-    document.getElementById("imageModal").style.display = "none";
-}
-
-// ==========================================
-// ดึงบทความ/วิดีโอจาก Google Sheets (แท็บ "Content") มาแสดงแบบ dynamic
-// เปลี่ยนเนื้อหาได้จาก Google Sheets โดยตรง ไม่ต้องแก้โค้ดไฟล์นี้เลย
-// ==========================================
-
-// ⚠️ URL เดียวกับที่ใช้ส่งข้อมูลแบบประเมิน (Apps Script เดียวกัน)
-const KNOWLEDGE_API_URL = 'https://script.google.com/macros/s/AKfycbymjqhA1WkWF5Sc0m4M2ziItq0d1luMtLdt_mSMNxcJz1fi-NeRPwK3d6F8U6KcCJ4RFw/exec?type=knowledge';
-
-// รองรับทั้ง 2 แบบ: ถ้ากรอกเป็น URL เต็ม (ขึ้นต้นด้วย http) ใช้ตรงๆ
-// ถ้ากรอกแค่ชื่อไฟล์ (เช่น A11.jpg) จะไปหาในโฟลเดอร์ photo/ ให้อัตโนมัติ
-function resolveImagePath(image) {
-    if (!image) return 'photo/logo01.png'; // รูป fallback เผื่อไม่มีรูป
-    if (image.indexOf('http') === 0) return image;
-    return 'photo/' + image;
-}
-
-// สร้าง HTML การ์ด 1 อัน จากข้อมูล 1 แถว
-function renderContentCard(item, number) {
-    const imgSrc = resolveImagePath(item.image);
-
-    if (item.type === 'article') {
-        return `
-        <div class="content-row">
-            <div class="number-badge">${number}</div>
-            <div class="image-box">
-                <img src="${imgSrc}" alt="${item.title || 'บทความ'}" class="clickable-img" onclick="openModal(this.src)">
+    <div class="home-container">
+        <!-- ================= ส่วนหัว (Header) ================= -->
+        <header class="header-section">
+            <div class="logo">
+                <img src="photo/logo01.png" alt="Heal Your Heart Logo" class="logo-img">
             </div>
-            <div class="info-box">
-                <p class="content-title"><span class="label-red">ชื่อบทความ :</span> ${item.title || ''}</p>
-                <p><span class="label-red">เนื้อหาย่อย :</span> ${item.summary || ''}</p>
-                <p class="reference"><span class="label-red">${item.reference_label || 'อ้างอิงบทความจาก'} :</span> ${item.reference_text || ''}</p>
-                ${item.link ? `<a href="${item.link}" target="_blank" class="read-more-link">ลิงก์บทความ อ่านต่อ....... <span>&raquo;</span></a>` : ''}
+            <div class="header-content">
+                <h1>“ เว็บแอปพลิเคชันสำหรับการประเมินความเครียดและสุขภาวะทางอารมณ์ พร้อมคำแนะนำเบื้องต้น ”</h1>
+                <nav class="top-nav">
+                    <a href="home.html" class="nav-btn">หน้าแรก</a>
+                    <a href="about.html" class="nav-btn">เกี่ยวกับเรา</a>
+                    <a href="assessment.html" class="nav-btn">แบบประเมิน</a>
+                    <a href="knowledge.html" class="nav-btn active">สาระความรู้เกี่ยวกับสุขภาพจิต</a>
+                    <a href="relax.html" class="nav-btn">แนะนำกิจกรรมผ่อนคลายและพัฒนาตนเอง</a>
+                </nav>
             </div>
-        </div>`;
-    }
+        </header>
 
-    // type === 'video'
-    return `
-    <div class="content-row">
-        <div class="number-badge">${number}</div>
-        <div class="image-box">
-            <a href="${item.link || '#'}" target="_blank">
-                <img src="${imgSrc}" alt="${item.title || 'วิดีโอ'}" class="clickable-img">
-            </a>
-        </div>
-        <div class="info-box">
-            <p class="content-title"><span class="label-red">ชื่อคลิปวิดีโอ :</span> ${item.title || ''}</p>
-            <p><span class="label-red">เนื้อหาย่อย :</span> ${item.summary || ''}</p>
-            <p class="reference"><span class="label-red">${item.reference_label || 'ลิงก์วิดีโอ (Youtube)'} :</span> ${item.link ? `<a href="${item.link}" target="_blank" style="color: #dc2626; text-decoration: underline;">${item.reference_text || 'คลิกเพื่อรับชม'}</a>` : (item.reference_text || '-')}</p>
-        </div>
-    </div>`;
-}
+        <main class="knowledge-content">
+            
+            <!-- ================= หัวข้อที่ 1 (บทความ) ================= -->
+            <div class="content-section">
+                <h2 class="section-title">หัวข้อที่ 1 บทความสาระความรู้เกี่ยวกับสุขภาพจิต</h2>
+                <div id="articles-container">
+                    <p class="loading-text">กำลังโหลดบทความ...</p>
+                </div>
+            </div>
 
-async function loadKnowledgeContent() {
-    const articlesContainer = document.getElementById('articles-container');
-    const videosContainer = document.getElementById('videos-container');
-    if (!articlesContainer && !videosContainer) return; // ไม่ใช่หน้านี้ ไม่ต้องทำอะไร
+            <!-- ================= หัวข้อที่ 2 (วิดีโอ) ================= -->
+            <div class="content-section" style="margin-top: 20px;">
+                <h2 class="section-title">หัวข้อที่ 2 แนะนำช่องวิดีโอ สาระความรู้เกี่ยวกับสุขภาพจิต</h2>
+                <div id="videos-container">
+                    <p class="loading-text">กำลังโหลดวิดีโอ...</p>
+                </div>
+            </div>
+        </main>
 
-    try {
-        const response = await fetch(KNOWLEDGE_API_URL);
-        const result = await response.json();
+        <!-- ================= ส่วนท้ายสุด (Footer) ================= -->
+        <footer class="footer-section">
+            <div class="hotline-wrapper">
+                <a href="tel:1323" class="hotline-btn">📞 สายด่วนสุขภาพจิต 1323 (โทรฟรี 24 ชม.)</a>
+            </div>
+            <nav class="bottom-nav">
+                <a href="contact.html" class="footer-btn">ติดต่อเรา</a>
+                <a href="reference.html" class="footer-btn">ข้อมูลและที่มาของแบบประเมิน</a>
+                <a href="privacy.html" class="footer-btn">นโยบายความเป็นส่วนตัว</a>
+                <a href="stats.html" class="footer-btn">สถิติผู้มาเข้าใช้บริการ</a>
+            </nav>
+        </footer>
+    </div>
 
-        if (result.status !== 'success') {
-            throw new Error(result.message || 'โหลดเนื้อหาไม่สำเร็จ');
-        }
+    <!-- ส่วนของ Modal ซูมรูปภาพ -->
+    <div id="imageModal" class="image-modal" onclick="closeModal(event)">
+        <span class="close-modal" onclick="closeModal(event)">&times;</span>
+        <img class="modal-content" id="fullImage" onclick="toggleZoom(event)">
+    </div>
 
-        const articles = result.items.filter(item => item.type === 'article');
-        const videos = result.items.filter(item => item.type === 'video');
+    <!-- ดึงไฟล์ JS มาใช้งาน -->
+    <script src="js/knowledge.js"></script>
 
-        if (articlesContainer) {
-            articlesContainer.innerHTML = articles.length
-                ? articles.map((item, i) => renderContentCard(item, i + 1)).join('')
-                : '<p class="loading-text">ยังไม่มีบทความในขณะนี้</p>';
-        }
-
-        if (videosContainer) {
-            videosContainer.innerHTML = videos.length
-                ? videos.map((item, i) => renderContentCard(item, i + 1)).join('')
-                : '<p class="loading-text">ยังไม่มีวิดีโอในขณะนี้</p>';
-        }
-
-    } catch (error) {
-        console.error('เกิดข้อผิดพลาดในการโหลดเนื้อหา:', error);
-        if (articlesContainer) articlesContainer.innerHTML = '<p class="loading-text">ไม่สามารถโหลดบทความได้ในขณะนี้ กรุณาลองใหม่ภายหลัง</p>';
-        if (videosContainer) videosContainer.innerHTML = '<p class="loading-text">ไม่สามารถโหลดวิดีโอได้ในขณะนี้ กรุณาลองใหม่ภายหลัง</p>';
-    }
-}
-
-document.addEventListener('DOMContentLoaded', loadKnowledgeContent);
+</body>
+</html>
