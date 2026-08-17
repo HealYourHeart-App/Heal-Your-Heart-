@@ -102,17 +102,58 @@
 .items-list {
     display: flex;
     flex-direction: column;
+    gap: 28px;
+}
+
+/* ================= หมวดหมู่ (บทความ / วิดีโอ / กิจกรรม / อาหารบำบัด) ================= */
+.type-section {
+    border: 2px solid #FFC6D3;
+    border-radius: 14px;
+    overflow: hidden;
+}
+
+.type-section-header {
+    display: flex;
+    align-items: center;
     gap: 12px;
+    background: #FFF0F3;
+    padding: 14px 20px;
+    flex-wrap: wrap;
+}
+
+.type-section-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: #D84B6B;
+}
+
+.type-section-count {
+    font-size: 13px;
+    color: #8C6A6F;
+    background: #fff;
+    border-radius: 20px;
+    padding: 2px 12px;
+}
+
+.type-section-header .btn-outline-pink {
+    margin-left: auto;
+}
+
+.type-section-items {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 14px;
 }
 
 .item-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: #FFF0F3;
-    border: 1px solid #FFC6D3;
-    border-radius: 12px;
-    padding: 15px 20px;
+    background: #fff;
+    border: 1px solid #FFE1E8;
+    border-radius: 10px;
+    padding: 12px 18px;
     flex-wrap: wrap;
     gap: 10px;
 }
@@ -206,4 +247,6 @@
 @media (max-width: 600px) {
     .admin-card { padding: 25px 20px; }
     .item-row { flex-direction: column; align-items: flex-start; }
+    .type-section-header { flex-direction: column; align-items: flex-start; }
+    .type-section-header .btn-outline-pink { margin-left: 0; }
 }
