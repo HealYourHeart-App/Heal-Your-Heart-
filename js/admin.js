@@ -16,17 +16,41 @@ const TYPE_LABELS = {
 // ==========================================
 // เช็ครหัสผ่าน (เก็บไว้ใน sessionStorage เฉพาะแท็บนี้ ปิดแท็บแล้วต้องใส่ใหม่)
 // ==========================================
-function checkAdminPassword() {
+async function checkAdminPassword() {
     const pw = document.getElementById('adminPasswordInput').value;
+    const errorEl = document.getElementById('loginError');
+    const btn = document.querySelector('#loginGate .btn-solid-pink');
+
     if (!pw) {
-        document.getElementById('loginError').innerText = 'กรุณากรอกรหัสผ่าน';
+        errorEl.innerText = 'กรุณากรอกรหัสผ่าน';
         return;
     }
-    // เก็บรหัสผ่านไว้ใช้แนบไปกับทุก request ที่แก้ไขข้อมูล (เช็คจริงฝั่ง server อีกที)
-    sessionStorage.setItem('adminPassword', pw);
-    document.getElementById('loginGate').style.display = 'none';
-    document.getElementById('adminPanel').style.display = 'block';
-    loadItems();
+
+    errorEl.innerText = '';
+    if (btn) { btn.disabled = true; btn.innerText = 'กำลังตรวจสอบ...'; }
+
+    try {
+        const res = await fetch(ADMIN_API_URL, {
+            method: 'POST',
+            body: JSON.stringify({ action: 'verify_admin_password', adminPassword: pw }),
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' }
+        });
+        const result = await res.json();
+
+        if (result.status === 'success') {
+            // รหัสถูกต้องจริง ยืนยันจาก server แล้วเท่านั้นถึงจะเก็บและโชว์แผงควบคุม
+            sessionStorage.setItem('adminPassword', pw);
+            document.getElementById('loginGate').style.display = 'none';
+            document.getElementById('adminPanel').style.display = 'block';
+            loadItems();
+        } else {
+            errorEl.innerText = 'รหัสผ่านไม่ถูกต้อง';
+        }
+    } catch (err) {
+        errorEl.innerText = 'เกิดข้อผิดพลาดในการเชื่อมต่อ: ' + err.message;
+    } finally {
+        if (btn) { btn.disabled = false; btn.innerText = 'เข้าสู่ระบบ'; }
+    }
 }
 
 // ==========================================
