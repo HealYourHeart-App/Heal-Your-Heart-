@@ -12,7 +12,266 @@
 .admin-card {
     background: rgba(255, 255, 255, 0.95);
     border-radius: 20px;
+    border: 2px solid #FFC6D3;/* ========================================================
+   CSS เฉพาะสำหรับหน้าแอดมิน (admin.html)
+======================================================== */
+
+.admin-main {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    padding-bottom: 40px;
+}
+
+.admin-page-label {
+    text-align: center;
+    color: #D84B6B;
+    font-weight: 700;
+    font-size: 18px;
+    margin: 10px 0 25px;
+}
+
+.admin-card {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
     border: 2px solid #FFC6D3;
+    padding: 40px;
+    box-shadow: 0 10px 30px rgba(216, 75, 107, 0.1);
+    max-width: 500px;
+    margin: 40px auto;
+    text-align: center;
+}
+
+.admin-card h2 {
+    color: #D84B6B;
+    margin-bottom: 20px;
+}
+
+.admin-card input[type="password"] {
+    width: 100%;
+    padding: 12px 16px;
+    border-radius: 10px;
+    border: 2px solid #FFC6D3;
+    font-family: 'Prompt', sans-serif;
+    font-size: 15px;
+    margin-bottom: 15px;
+}
+
+/* หน้าจอหลัก (หลังใส่รหัสแล้ว) กว้างเต็มพื้นที่ ไม่ใช่กล่องแคบเหมือนหน้า login */
+#adminPanel.admin-card {
+    max-width: 100%;
+    text-align: left;
+}
+
+.admin-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.admin-toolbar h2 {
+    margin: 0;
+}
+
+.btn-solid-pink {
+    background: #D84B6B;
+    color: #fff;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 10px;
+    font-family: 'Prompt', sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.btn-solid-pink:hover { background: #c23e5c; }
+
+.btn-outline-pink {
+    background: #fff;
+    color: #D84B6B;
+    border: 2px solid #FFC6D3;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-family: 'Prompt', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.btn-outline-pink:hover { background: #FFF0F3; }
+.btn-outline-pink.small { padding: 6px 14px; font-size: 13px; }
+.btn-outline-pink.danger { color: #dc2626; border-color: #fecaca; }
+.btn-outline-pink.danger:hover { background: #fef2f2; }
+
+.error-text {
+    color: #dc2626;
+    font-size: 14px;
+    margin-top: 10px;
+    min-height: 18px;
+}
+
+.loading-text {
+    text-align: center;
+    color: #D84B6B;
+    padding: 20px 0;
+}
+
+/* ================= รายการเนื้อหา ================= */
+.items-list {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+}
+
+/* ================= หมวดหมู่ (บทความ / วิดีโอ / กิจกรรม / อาหารบำบัด) ================= */
+.type-section {
+    border: 2px solid #FFC6D3;
+    border-radius: 14px;
+    overflow: hidden;
+}
+
+.type-section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #FFF0F3;
+    padding: 14px 20px;
+    flex-wrap: wrap;
+}
+
+.type-section-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: #D84B6B;
+}
+
+.type-section-count {
+    font-size: 13px;
+    color: #8C6A6F;
+    background: #fff;
+    border-radius: 20px;
+    padding: 2px 12px;
+}
+
+.type-section-header .btn-outline-pink {
+    margin-left: auto;
+}
+
+.type-section-items {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 14px;
+}
+
+.item-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fff;
+    border: 1px solid #FFE1E8;
+    border-radius: 10px;
+    padding: 12px 18px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.item-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.item-type-badge {
+    font-size: 12px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 20px;
+    color: #fff;
+}
+.item-type-badge.article { background: #3b82f6; }
+.item-type-badge.video { background: #D84B6B; }
+.item-type-badge.activity { background: #10b981; }
+.item-type-badge.food { background: #f59e0b; }
+
+.item-order {
+    color: #8C6A6F;
+    font-size: 13px;
+}
+
+.item-actions {
+    display: flex;
+    gap: 8px;
+}
+
+/* ================= ฟอร์มเพิ่ม/แก้ไข (Modal) ================= */
+.form-modal-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 20px;
+}
+
+.form-modal {
+    background: #fff;
+    border-radius: 16px;
+    padding: 30px;
+    max-width: 550px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.form-modal h3 {
+    color: #D84B6B;
+    margin-bottom: 20px;
+}
+
+.form-modal label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: #4A3338;
+    margin-top: 14px;
+    margin-bottom: 6px;
+}
+
+.form-modal input,
+.form-modal select,
+.form-modal textarea {
+    width: 100%;
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 2px solid #FFC6D3;
+    font-family: 'Prompt', sans-serif;
+    font-size: 14px;
+}
+
+.form-modal textarea { resize: vertical; }
+
+.form-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 25px;
+    justify-content: flex-end;
+}
+
+/* ================= Responsive ================= */
+@media (max-width: 600px) {
+    .admin-card { padding: 25px 20px; }
+    .item-row { flex-direction: column; align-items: flex-start; }
+    .type-section-header { flex-direction: column; align-items: flex-start; }
+    .type-section-header .btn-outline-pink { margin-left: 0; }
+}
     padding: 40px;
     box-shadow: 0 10px 30px rgba(216, 75, 107, 0.1);
     max-width: 500px;
