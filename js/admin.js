@@ -94,17 +94,21 @@ async function loadItems() {
             .filter(t => grouped[t] && grouped[t].length > 0)
             .map(type => `
                 <div class="type-section">
-                    <div class="type-section-header">
+                    <div class="type-section-header type-${type}">
                         <span class="type-section-title">${sectionIcons[type] || ''} ${TYPE_LABELS[type] || type}</span>
                         <span class="type-section-count">${grouped[type].length} รายการ</span>
                         <button onclick="openForm('${type}')" class="btn-outline-pink small">+ เพิ่มในหมวดนี้</button>
                     </div>
                     <div class="type-section-items">
-                        ${grouped[type].map(item => `
-                            <div class="item-row">
+                        ${grouped[type].map((item, idx) => `
+                            <div class="item-row type-${type}">
+                                <div class="item-order-num">${idx + 1}</div>
                                 <div class="item-info">
                                     <strong>${item.title || '(ไม่มีชื่อ)'}</strong>
-                                    <span class="item-order">ลำดับ: ${item.order}</span>
+                                </div>
+                                <div class="item-move-actions">
+                                    <button onclick="moveItem(${item.rowIndex}, 'up')" class="move-btn" ${idx === 0 ? 'disabled' : ''} title="ย้ายขึ้น">▲</button>
+                                    <button onclick="moveItem(${item.rowIndex}, 'down')" class="move-btn" ${idx === grouped[type].length - 1 ? 'disabled' : ''} title="ย้ายลง">▼</button>
                                 </div>
                                 <div class="item-actions">
                                     <button onclick="editItem(${item.rowIndex})" class="btn-outline-pink small">แก้ไข</button>
@@ -119,6 +123,58 @@ async function loadItems() {
     } catch (err) {
         list.innerHTML = `<p class="error-text">เกิดข้อผิดพลาด: ${err.message}</p>`;
     }
+}
+
+// ==========================================
+// ย้ายลำดับรายการขึ้น/ลง (สลับค่า order กับรายการข้างเคียงในหมวดเดียวกัน)
+// ==========================================
+async function moveItem(rowIndex, direction) {
+    const item = currentItems.find(i => i.rowIndex === rowIndex);
+    if (!item) return;
+
+    const sameType = currentItems.filter(i => i.type === item.type).sort((a, b) => a.order - b.order);
+    const idx = sameType.findIndex(i => i.rowIndex === rowIndex);
+    const swapIdx = direction === 'up' ? idx - 1 : idx + 1;
+    if (swapIdx < 0 || swapIdx >= sameType.length) return; // อยู่ขอบสุดแล้ว ย้ายต่อไม่ได้
+
+    const other = sameType[swapIdx];
+
+    // สลับค่า order กัน
+    const temp = item.order;
+    item.order = other.order;
+    other.order = temp;
+
+    try {
+        await persistItem(item);
+        await persistItem(other);
+        loadItems();
+    } catch (err) {
+        alert('ย้ายลำดับไม่สำเร็จ: ' + err.message);
+    }
+}
+
+// บันทึกรายการ (ใช้ภายในสำหรับการย้ายลำดับ ไม่ผ่านฟอร์ม)
+async function persistItem(item) {
+    const payload = {
+        action: 'save_content',
+        adminPassword: sessionStorage.getItem('adminPassword'),
+        rowIndex: item.rowIndex,
+        type: item.type,
+        order: item.order,
+        image: item.image,
+        title: item.title,
+        summary: item.summary,
+        reference_label: item.reference_label,
+        reference_text: item.reference_text,
+        link: item.link
+    };
+    const res = await fetch(ADMIN_API_URL, {
+        method: 'POST',
+        body: JSON.stringify(payload),
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' }
+    });
+    const result = await res.json();
+    if (result.status !== 'success') throw new Error(result.message || 'บันทึกไม่สำเร็จ');
 }
 
 // ==========================================
