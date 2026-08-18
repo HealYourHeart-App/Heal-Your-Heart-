@@ -1,108 +1,294 @@
-<!DOCTYPE html>
-<html lang="th">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Heal Your Heart - แอดมินจัดการเนื้อหา</title>
+// ⚠️ ต้องตรงกับ URL Apps Script เดิม
+const ADMIN_API_URL = 'https://script.google.com/macros/s/AKfycbymjqhA1WkWF5Sc0m4M2ziItq0d1luMtLdt_mSMNxcJz1fi-NeRPwK3d6F8U6KcCJ4RFw/exec';
+const ADMIN_KNOWLEDGE_URL = ADMIN_API_URL + '?type=knowledge';
 
-    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/home.css">
-    <link rel="stylesheet" href="css/admin.css">
-</head>
-<body>
+let currentItems = [];
+let editingRowIndex = null; // null = กำลังเพิ่มใหม่, มีค่า = กำลังแก้ไขแถวนั้น
 
-    <div class="home-container">
+// ป้ายกำกับภาษาไทยของแต่ละประเภทเนื้อหา (ใช้แสดงในตาราง)
+const TYPE_LABELS = {
+    article: 'บทความ',
+    video: 'วิดีโอ',
+    activity: 'กิจกรรม',
+    food: 'อาหารบำบัด'
+};
 
-        <header class="header-section">
-            <div class="logo"><img src="photo/logo01.png" alt="Heal Your Heart Logo" class="logo-img"></div>
-            <div class="header-content">
-                <h1>" เว็บแอปพลิเคชันสำหรับการประเมินความเครียดและสุขภาวะทางอารมณ์ พร้อมคำแนะนำเบื้องต้น "</h1>
-                <nav class="top-nav">
-                    <a href="home.html" class="nav-btn">หน้าแรก</a>
-                    <a href="about.html" class="nav-btn">เกี่ยวกับเรา</a>
-                    <a href="assessment.html" class="nav-btn">แบบประเมิน</a>
-                    <a href="knowledge.html" class="nav-btn">สาระความรู้เกี่ยวกับสุขภาพจิต</a>
-                    <a href="relax.html" class="nav-btn">แนะนำกิจกรรมผ่อนคลายและพัฒนาตนเอง</a>
-                </nav>
-            </div>
-        </header>
+// ==========================================
+// เช็ครหัสผ่าน (เก็บไว้ใน sessionStorage เฉพาะแท็บนี้ ปิดแท็บแล้วต้องใส่ใหม่)
+// ==========================================
+async function checkAdminPassword() {
+    const pw = document.getElementById('adminPasswordInput').value;
+    const errorEl = document.getElementById('loginError');
+    const btn = document.querySelector('#loginGate .btn-solid-pink');
 
-        <main class="admin-main">
+    if (!pw) {
+        errorEl.innerText = 'กรุณากรอกรหัสผ่าน';
+        return;
+    }
 
-            <p class="admin-page-label">🔒 ระบบแอดมินจัดการเนื้อหาบทความ/วิดีโอ</p>
+    errorEl.innerText = '';
+    if (btn) { btn.disabled = true; btn.innerText = 'กำลังตรวจสอบ...'; }
 
-            <!-- ================= หน้าจอใส่รหัสผ่าน ================= -->
-            <div id="loginGate" class="admin-card">
-                <h2>🔒 กรุณาใส่รหัสผ่านแอดมิน</h2>
-                <input type="password" id="adminPasswordInput" placeholder="รหัสผ่าน">
-                <button onclick="checkAdminPassword()" class="btn-solid-pink">เข้าสู่ระบบ</button>
-                <p id="loginError" class="error-text"></p>
-            </div>
+    try {
+        const res = await fetch(ADMIN_API_URL, {
+            method: 'POST',
+            body: JSON.stringify({ action: 'verify_admin_password', adminPassword: pw }),
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' }
+        });
+        const result = await res.json();
 
-            <!-- ================= แผงควบคุมหลัก (โผล่หลังใส่รหัสถูก) ================= -->
-            <div id="adminPanel" class="admin-card" style="display:none;">
+        if (result.status === 'success') {
+            // รหัสถูกต้องจริง ยืนยันจาก server แล้วเท่านั้นถึงจะเก็บและโชว์แผงควบคุม
+            sessionStorage.setItem('adminPassword', pw);
+            document.getElementById('loginGate').style.display = 'none';
+            document.getElementById('adminPanel').style.display = 'block';
+            loadItems();
+        } else {
+            errorEl.innerText = 'รหัสผ่านไม่ถูกต้อง';
+        }
+    } catch (err) {
+        errorEl.innerText = 'เกิดข้อผิดพลาดในการเชื่อมต่อ: ' + err.message;
+    } finally {
+        if (btn) { btn.disabled = false; btn.innerText = 'เข้าสู่ระบบ'; }
+    }
+}
 
-                <div class="admin-toolbar">
-                    <h2>จัดการบทความ / วิดีโอ</h2>
-                    <button onclick="openForm()" class="btn-solid-pink">+ เพิ่มรายการใหม่</button>
-                </div>
+// ==========================================
+// โหลดรายการทั้งหมดมาแสดง
+// ==========================================
+async function loadItems() {
+    const list = document.getElementById('itemsList');
+    list.innerHTML = '<p class="loading-text">กำลังโหลดข้อมูล...</p>';
 
-                <div id="itemsList" class="items-list">
-                    <p class="loading-text">กำลังโหลดข้อมูล...</p>
-                </div>
-            </div>
+    try {
+        const res = await fetch(ADMIN_KNOWLEDGE_URL);
+        const result = await res.json();
 
-            <!-- ================= ฟอร์มเพิ่ม/แก้ไข (Modal) ================= -->
-            <div id="formModal" class="form-modal-overlay" style="display:none;">
-                <div class="form-modal">
-                    <h3 id="formTitle">เพิ่มรายการใหม่</h3>
+        if (result.status !== 'success') {
+            list.innerHTML = `<p class="error-text">โหลดข้อมูลไม่สำเร็จ: ${result.message || ''}</p>`;
+            return;
+        }
 
-                    <label>ประเภท</label>
-                    <select id="f_type">
-                        <option value="article">บทความสาระความรู้ (article) - หน้า knowledge.html</option>
-                        <option value="video">วิดีโอ (video) - หน้า knowledge.html</option>
-                        <option value="activity">กิจกรรมผ่อนคลาย (activity) - หน้า relax.html</option>
-                        <option value="food">อาหารบำบัด (food) - หน้า relax.html</option>
-                    </select>
+        currentItems = result.items;
 
-                    <label>ลำดับที่แสดง (ตัวเลข)</label>
-                    <input type="number" id="f_order" placeholder="เช่น 11">
+        if (currentItems.length === 0) {
+            list.innerHTML = '<p class="loading-text">ยังไม่มีรายการเนื้อหา ลองกด "+ เพิ่มรายการใหม่" ได้เลย</p>';
+            return;
+        }
 
-                    <label>รูปภาพ (ชื่อไฟล์ในโฟลเดอร์ photo/ เช่น A11.jpg หรือวาง URL เต็มก็ได้)</label>
-                    <input type="text" id="f_image" placeholder="A11.jpg หรือ https://...">
+        // จัดกลุ่มตามประเภท เรียงหมวดตามลำดับที่กำหนดไว้ (บทความ, วิดีโอ, กิจกรรม, อาหารบำบัด)
+        const typeOrder = ['article', 'video', 'activity', 'food'];
+        const grouped = {};
+        typeOrder.forEach(t => grouped[t] = []);
+        currentItems.forEach(item => {
+            if (!grouped[item.type]) grouped[item.type] = []; // เผื่อมี type แปลกๆ ที่ไม่รู้จัก
+            grouped[item.type].push(item);
+        });
 
-                    <label>ชื่อบทความ/วิดีโอ</label>
-                    <input type="text" id="f_title" placeholder="ชื่อเรื่อง">
+        // เรียงแต่ละหมวดตามคอลัมน์ order
+        Object.keys(grouped).forEach(t => grouped[t].sort((a, b) => a.order - b.order));
 
-                    <label>เนื้อหาย่อย</label>
-                    <textarea id="f_summary" rows="3" placeholder="สรุปเนื้อหาสั้นๆ"></textarea>
+        const sectionIcons = { article: '📄', video: '🎬', activity: '🧘', food: '🍽️' };
 
-                    <label>ป้ายกำกับอ้างอิง (เช่น "อ้างอิงบทความจาก" หรือ "ลิงก์วิดีโอ (Youtube)")</label>
-                    <input type="text" id="f_reference_label" placeholder="อ้างอิงบทความจาก">
-
-                    <label>ข้อความอ้างอิง</label>
-                    <input type="text" id="f_reference_text" placeholder="เช่น ชื่อแหล่งอ้างอิง หรือ 'คลิกเพื่อรับชม'">
-
-                    <label>ลิงก์</label>
-                    <input type="text" id="f_link" placeholder="https://...">
-
-                    <div class="form-actions">
-                        <button onclick="closeForm()" class="btn-outline-pink">ยกเลิก</button>
-                        <button onclick="saveItem()" class="btn-solid-pink">บันทึก</button>
+        list.innerHTML = typeOrder
+            .filter(t => grouped[t] && grouped[t].length > 0)
+            .map(type => `
+                <div class="type-section">
+                    <div class="type-section-header type-${type}">
+                        <span class="type-section-title">${sectionIcons[type] || ''} ${TYPE_LABELS[type] || type}</span>
+                        <span class="type-section-count">${grouped[type].length} รายการ</span>
+                        <button onclick="openForm('${type}')" class="btn-outline-pink small">+ เพิ่มในหมวดนี้</button>
                     </div>
-                    <p id="formError" class="error-text"></p>
+                    <div class="type-section-items">
+                        ${grouped[type].map((item, idx) => `
+                            <div class="item-row type-${type}">
+                                <div class="item-order-num">${idx + 1}</div>
+                                <div class="item-info">
+                                    <strong>${item.title || '(ไม่มีชื่อ)'}</strong>
+                                </div>
+                                <div class="item-move-actions">
+                                    <button onclick="moveItem(${item.rowIndex}, 'up')" class="move-btn" ${idx === 0 ? 'disabled' : ''} title="ย้ายขึ้น">▲</button>
+                                    <button onclick="moveItem(${item.rowIndex}, 'down')" class="move-btn" ${idx === grouped[type].length - 1 ? 'disabled' : ''} title="ย้ายลง">▼</button>
+                                </div>
+                                <div class="item-actions">
+                                    <button onclick="editItem(${item.rowIndex})" class="btn-outline-pink small">แก้ไข</button>
+                                    <button onclick="deleteItem(${item.rowIndex})" class="btn-outline-pink small danger">ลบ</button>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
                 </div>
-            </div>
+            `).join('');
 
-        </main>
+    } catch (err) {
+        list.innerHTML = `<p class="error-text">เกิดข้อผิดพลาด: ${err.message}</p>`;
+    }
+}
 
-        <footer class="footer-section">
-            <nav class="bottom-nav">
-                <a href="home.html" class="nav-btn">กลับหน้าแรก</a>
-            </nav>
-        </footer>
-    </div>
+// ==========================================
+// ย้ายลำดับรายการขึ้น/ลง (สลับค่า order กับรายการข้างเคียงในหมวดเดียวกัน)
+// ==========================================
+async function moveItem(rowIndex, direction) {
+    const item = currentItems.find(i => i.rowIndex === rowIndex);
+    if (!item) return;
 
-    <script src="js/admin.js?v=2"></script>
-</body>
-</html>
+    const sameType = currentItems.filter(i => i.type === item.type).sort((a, b) => a.order - b.order);
+    const idx = sameType.findIndex(i => i.rowIndex === rowIndex);
+    const swapIdx = direction === 'up' ? idx - 1 : idx + 1;
+    if (swapIdx < 0 || swapIdx >= sameType.length) return; // อยู่ขอบสุดแล้ว ย้ายต่อไม่ได้
+
+    const other = sameType[swapIdx];
+
+    // สลับค่า order กัน
+    const temp = item.order;
+    item.order = other.order;
+    other.order = temp;
+
+    try {
+        await persistItem(item);
+        await persistItem(other);
+        loadItems();
+    } catch (err) {
+        alert('ย้ายลำดับไม่สำเร็จ: ' + err.message);
+    }
+}
+
+// บันทึกรายการ (ใช้ภายในสำหรับการย้ายลำดับ ไม่ผ่านฟอร์ม)
+async function persistItem(item) {
+    const payload = {
+        action: 'save_content',
+        adminPassword: sessionStorage.getItem('adminPassword'),
+        rowIndex: item.rowIndex,
+        type: item.type,
+        order: item.order,
+        image: item.image,
+        title: item.title,
+        summary: item.summary,
+        reference_label: item.reference_label,
+        reference_text: item.reference_text,
+        link: item.link
+    };
+    const res = await fetch(ADMIN_API_URL, {
+        method: 'POST',
+        body: JSON.stringify(payload),
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' }
+    });
+    const result = await res.json();
+    if (result.status !== 'success') throw new Error(result.message || 'บันทึกไม่สำเร็จ');
+}
+
+// ==========================================
+// เปิดฟอร์มเพิ่มใหม่ (ว่างเปล่า)
+// ==========================================
+function openForm(presetType) {
+    editingRowIndex = null;
+    const type = presetType || 'article';
+    document.getElementById('formTitle').innerText = 'เพิ่มรายการใหม่ - ' + (TYPE_LABELS[type] || type);
+    document.getElementById('f_type').value = type;
+    // หาเลขลำดับถัดไปในหมวดเดียวกัน (ไม่ใช่นับรวมทุกหมวด)
+    const sameTypeCount = currentItems.filter(i => i.type === type).length;
+    document.getElementById('f_order').value = sameTypeCount + 1;
+    document.getElementById('f_image').value = '';
+    document.getElementById('f_title').value = '';
+    document.getElementById('f_summary').value = '';
+    document.getElementById('f_reference_label').value = 'อ้างอิงบทความจาก';
+    document.getElementById('f_reference_text').value = '';
+    document.getElementById('f_link').value = '';
+    document.getElementById('formError').innerText = '';
+    document.getElementById('formModal').style.display = 'flex';
+}
+
+// ==========================================
+// เปิดฟอร์มแก้ไข (เติมข้อมูลเดิมของแถวนั้น)
+// ==========================================
+function editItem(rowIndex) {
+    const item = currentItems.find(i => i.rowIndex === rowIndex);
+    if (!item) return;
+
+    editingRowIndex = rowIndex;
+    document.getElementById('formTitle').innerText = 'แก้ไขรายการ';
+    document.getElementById('f_type').value = item.type;
+    document.getElementById('f_order').value = item.order;
+    document.getElementById('f_image').value = item.image || '';
+    document.getElementById('f_title').value = item.title || '';
+    document.getElementById('f_summary').value = item.summary || '';
+    document.getElementById('f_reference_label').value = item.reference_label || '';
+    document.getElementById('f_reference_text').value = item.reference_text || '';
+    document.getElementById('f_link').value = item.link || '';
+    document.getElementById('formError').innerText = '';
+    document.getElementById('formModal').style.display = 'flex';
+}
+
+function closeForm() {
+    document.getElementById('formModal').style.display = 'none';
+}
+
+// ==========================================
+// บันทึก (เพิ่มใหม่ หรือแก้ไข ขึ้นอยู่กับ editingRowIndex)
+// ==========================================
+async function saveItem() {
+    const payload = {
+        action: 'save_content',
+        adminPassword: sessionStorage.getItem('adminPassword'),
+        rowIndex: editingRowIndex, // null ถ้าเพิ่มใหม่
+        type: document.getElementById('f_type').value,
+        order: document.getElementById('f_order').value,
+        image: document.getElementById('f_image').value,
+        title: document.getElementById('f_title').value,
+        summary: document.getElementById('f_summary').value,
+        reference_label: document.getElementById('f_reference_label').value,
+        reference_text: document.getElementById('f_reference_text').value,
+        link: document.getElementById('f_link').value
+    };
+
+    if (!payload.title) {
+        document.getElementById('formError').innerText = 'กรุณากรอกชื่อบทความ/วิดีโอ';
+        return;
+    }
+
+    try {
+        const res = await fetch(ADMIN_API_URL, {
+            method: 'POST',
+            body: JSON.stringify(payload),
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' }
+        });
+        const result = await res.json();
+
+        if (result.status === 'success') {
+            closeForm();
+            loadItems();
+        } else {
+            document.getElementById('formError').innerText = 'บันทึกไม่สำเร็จ: ' + (result.message || '');
+        }
+    } catch (err) {
+        document.getElementById('formError').innerText = 'เกิดข้อผิดพลาด: ' + err.message;
+    }
+}
+
+// ==========================================
+// ลบรายการ
+// ==========================================
+async function deleteItem(rowIndex) {
+    if (!confirm('ยืนยันลบรายการนี้ใช่ไหม? กู้คืนไม่ได้นะครับ')) return;
+
+    try {
+        const res = await fetch(ADMIN_API_URL, {
+            method: 'POST',
+            body: JSON.stringify({
+                action: 'delete_content',
+                adminPassword: sessionStorage.getItem('adminPassword'),
+                rowIndex: rowIndex
+            }),
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' }
+        });
+        const result = await res.json();
+
+        if (result.status === 'success') {
+            loadItems();
+        } else {
+            alert('ลบไม่สำเร็จ: ' + (result.message || ''));
+        }
+    } catch (err) {
+        alert('เกิดข้อผิดพลาด: ' + err.message);
+    }
+}
