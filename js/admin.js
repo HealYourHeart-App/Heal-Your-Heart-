@@ -104,7 +104,7 @@ async function loadItems() {
                             <div class="item-row type-${type}">
                                 <div class="item-order-num">${idx + 1}</div>
                                 <div class="item-info">
-                                    <strong>${item.title || '(ไม่มีชื่อ)'}</strong>
+                                    <strong>${item.featured ? '⭐ ' : ''}${item.title || '(ไม่มีชื่อ)'}</strong>
                                 </div>
                                 <div class="item-move-actions">
                                     <button onclick="moveItem(${item.rowIndex}, 'up')" class="move-btn" ${idx === 0 ? 'disabled' : ''} title="ย้ายขึ้น">▲</button>
@@ -166,7 +166,8 @@ async function persistItem(item) {
         summary: item.summary,
         reference_label: item.reference_label,
         reference_text: item.reference_text,
-        link: item.link
+        link: item.link,
+        featured: item.featured ? 'yes' : 'no'
     };
     const res = await fetch(ADMIN_API_URL, {
         method: 'POST',
@@ -194,6 +195,7 @@ function openForm(presetType) {
     document.getElementById('f_reference_label').value = 'อ้างอิงบทความจาก';
     document.getElementById('f_reference_text').value = '';
     document.getElementById('f_link').value = '';
+    document.getElementById('f_featured').checked = false;
     document.getElementById('formError').innerText = '';
     document.getElementById('formModal').style.display = 'flex';
 }
@@ -215,6 +217,7 @@ function editItem(rowIndex) {
     document.getElementById('f_reference_label').value = item.reference_label || '';
     document.getElementById('f_reference_text').value = item.reference_text || '';
     document.getElementById('f_link').value = item.link || '';
+    document.getElementById('f_featured').checked = !!item.featured;
     document.getElementById('formError').innerText = '';
     document.getElementById('formModal').style.display = 'flex';
 }
@@ -238,7 +241,8 @@ async function saveItem() {
         summary: document.getElementById('f_summary').value,
         reference_label: document.getElementById('f_reference_label').value,
         reference_text: document.getElementById('f_reference_text').value,
-        link: document.getElementById('f_link').value
+        link: document.getElementById('f_link').value,
+        featured: document.getElementById('f_featured').checked ? 'yes' : 'no'
     };
 
     if (!payload.title) {
