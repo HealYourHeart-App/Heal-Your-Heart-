@@ -291,6 +291,21 @@
 
 .form-modal textarea { resize: vertical; }
 
+.checkbox-label {
+    display: flex !important;
+    align-items: center;
+    gap: 8px;
+    margin-top: 18px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #4A3338;
+    cursor: pointer;
+}
+.checkbox-label input[type="checkbox"] {
+    width: auto;
+    accent-color: #D84B6B;
+}
+
 .form-actions {
     display: flex;
     gap: 10px;
