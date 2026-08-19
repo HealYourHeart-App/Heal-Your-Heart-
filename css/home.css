@@ -156,3 +156,12 @@ body {
 .admin-dot:active {
     transform: scale(0.95);
 }
+
+/* ================= ข้อความระหว่างโหลด carousel หน้าแรก ================= */
+.loading-text {
+    text-align: center;
+    color: #D84B6B;
+    font-size: 15px;
+    padding: 20px;
+    width: 100%;
+}
