@@ -102,9 +102,12 @@ async function loadItems() {
                     <div class="type-section-items">
                         ${grouped[type].map((item, idx) => `
                             <div class="item-row type-${type}">
-                                <div class="item-order-num">${idx + 1}</div>
+                                <div class="item-order-num ${item.featured ? 'is-featured' : ''}">
+                                    ${idx + 1}
+                                    ${item.featured ? '<span class="featured-star">⭐</span>' : ''}
+                                </div>
                                 <div class="item-info">
-                                    <strong>${item.featured ? '⭐ ' : ''}${item.title || '(ไม่มีชื่อ)'}</strong>
+                                    <strong>${item.title || '(ไม่มีชื่อ)'}</strong>
                                 </div>
                                 <div class="item-move-actions">
                                     <button onclick="moveItem(${item.rowIndex}, 'up')" class="move-btn" ${idx === 0 ? 'disabled' : ''} title="ย้ายขึ้น">▲</button>
