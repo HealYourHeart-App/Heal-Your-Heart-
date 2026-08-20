@@ -11,32 +11,29 @@
 </head>
 <body>
 
-    <div class="home-container">
+    <div class="home-container admin-gate-container">
 
-        <header class="header-section">
-            <div class="logo"><img src="photo/logo01.png" alt="Heal Your Heart Logo" class="logo-img"></div>
-            <div class="header-content">
-                <h1>" เว็บแอปพลิเคชันสำหรับการประเมินความเครียดและสุขภาวะทางอารมณ์ พร้อมคำแนะนำเบื้องต้น "</h1>
-                <nav class="top-nav">
-                    <a href="home.html" class="nav-btn">หน้าแรก</a>
-                    <a href="assessment.html" class="nav-btn">แบบประเมิน</a>
-                    <a href="knowledge.html" class="nav-btn">สาระความรู้เกี่ยวกับสุขภาพจิต</a>
-                    <a href="relax.html" class="nav-btn">แนะนำกิจกรรมผ่อนคลายและพัฒนาตนเอง</a>
-                    <a href="about.html" class="nav-btn">เกี่ยวกับเรา</a>
-                </nav>
-            </div>
-        </header>
+        <div class="admin-gate-logo">
+            <img src="photo/logo01.png" alt="Heal Your Heart Logo" class="logo-img">
+        </div>
 
         <main class="admin-main">
 
-            <p class="admin-page-label">🔒 ระบบแอดมินจัดการเนื้อหาบทความ/วิดีโอ</p>
-
-            <!-- ================= หน้าจอใส่รหัสผ่าน ================= -->
-            <div id="loginGate" class="admin-card">
-                <h2>🔒 กรุณาใส่รหัสผ่านแอดมิน</h2>
-                <input type="password" id="adminPasswordInput" placeholder="รหัสผ่าน" onkeydown="if (event.key === 'Enter') checkAdminPassword();">
-                <button onclick="checkAdminPassword()" class="btn-solid-pink">เข้าสู่ระบบ</button>
-                <p id="loginError" class="error-text"></p>
+            <!-- ================= หน้าจอใส่รหัสผ่าน =================
+                 ⚠️ ตั้งใจไม่โชว์เมนู/โครงสร้างเว็บใดๆ ในหน้านี้ก่อนพิสูจน์ตัวตน
+                 ให้เห็นแค่โลโก้ + ช่องรหัสผ่าน + ปุ่มกลับหน้าแรกเท่านั้น -->
+            <div id="loginGate" class="admin-gate-card">
+                <div class="admin-gate-header">
+                    <span class="admin-gate-icon">🔒</span>
+                    <h2>พื้นที่แอดมิน</h2>
+                    <p>กรุณาใส่รหัสผ่านเพื่อเข้าสู่ระบบจัดการเนื้อหา</p>
+                </div>
+                <div class="admin-gate-body">
+                    <input type="password" id="adminPasswordInput" placeholder="รหัสผ่าน" onkeydown="if (event.key === 'Enter') checkAdminPassword();">
+                    <button onclick="checkAdminPassword()" class="btn-solid-pink admin-gate-submit">เข้าสู่ระบบ</button>
+                    <p id="loginError" class="error-text"></p>
+                    <a href="index.html" class="admin-gate-back">← กลับหน้าแรก</a>
+                </div>
             </div>
 
             <!-- ================= แผงควบคุมหลัก (โผล่หลังใส่รหัสถูก) ================= -->
@@ -44,21 +41,32 @@
 
                 <div class="admin-toolbar">
                     <h2>จัดการบทความ / วิดีโอ</h2>
-                    <button onclick="openForm()" class="btn-solid-pink">+ เพิ่มรายการใหม่</button>
+                    <div class="admin-toolbar-actions">
+                        <div class="admin-test-picker">
+                            <select id="adminTestAge" title="เลือกช่วงอายุที่จะใช้ทดสอบ">
+                                <option value="under18">ต่ำกว่า 18 ปี</option>
+                                <option value="18-24">18 - 24 ปี</option>
+                                <option value="25-34" selected>25 - 34 ปี</option>
+                                <option value="35-44">35 - 44 ปี</option>
+                                <option value="45up">45 ปีขึ้นไป</option>
+                            </select>
+                            <button onclick="startAdminAssessmentTest()" class="btn-outline-pink" title="ทำแบบประเมินเพื่อทดสอบระบบ โดยไม่ถูกนับรวมในสถิติผู้ใช้งาน">🧪 ทดสอบแบบประเมิน</button>
+                        </div>
+                        <button onclick="openForm()" class="btn-solid-pink">+ เพิ่มรายการใหม่</button>
+                    </div>
                 </div>
 
                 <div id="itemsList" class="items-list">
                     <p class="loading-text">กำลังโหลดข้อมูล...</p>
                 </div>
+
+                <div class="admin-panel-footer">
+                    <a href="index.html" class="btn-outline-pink">← กลับหน้าแรก</a>
+                </div>
             </div>
 
         </main>
 
-        <footer class="footer-section">
-            <nav class="bottom-nav">
-                <a href="home.html" class="nav-btn">กลับหน้าแรก</a>
-            </nav>
-        </footer>
     </div>
 
     <!-- ================= ฟอร์มเพิ่ม/แก้ไข (Modal) =================
@@ -115,6 +123,6 @@
     </div>
 
     <script src="js/config.js?v=1"></script>
-    <script src="js/admin.js?v=6"></script>
+    <script src="js/admin.js?v=7"></script>
 </body>
 </html>

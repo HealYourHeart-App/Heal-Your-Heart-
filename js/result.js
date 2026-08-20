@@ -376,6 +376,13 @@ document.addEventListener('DOMContentLoaded', function() {
     // ฟังก์ชันส่งข้อมูลไปยัง Google Sheets (อัปเดตใหม่สุด ดึงจากตัวแปรคะแนนตรงๆ)
     // ==========================================
     function saveToGoogleSheets() {
+        // 🧪 โหมดทดสอบแอดมิน (เข้ามาจากปุ่ม "ทดสอบแบบประเมิน" ในหน้าแอดมิน)
+        // ไม่ส่งข้อมูลไป Google Sheets เลย เพื่อไม่ให้ถูกนับรวมในสถิติผู้ใช้งานที่แดชบอร์ด (stats.html)
+        if (sessionStorage.getItem('adminTestMode') === '1') {
+            console.log("โหมดทดสอบแอดมิน: ข้ามการบันทึกข้อมูลลง Google Sheets");
+            return;
+        }
+
         // URL และ Token ใช้จาก js/config.js ไฟล์เดียว (ต้องโหลด config.js ก่อนไฟล์นี้ในหน้า .html)
         const scriptURL = APP_CONFIG.SCRIPT_URL;
         const SECRET_TOKEN = APP_CONFIG.SECRET_TOKEN;

@@ -17,6 +17,153 @@
     margin: 10px 0 25px;
 }
 
+/* ================= หน้าประตูรหัสผ่าน (ก่อนล็อกอิน) =================
+   ตั้งใจให้เห็นแค่โลโก้เล็กๆ + ช่องรหัสผ่าน ไม่โชว์เมนู/โครงสร้างเว็บ ================= */
+.admin-gate-container {
+    max-width: 500px;
+}
+/* หลังล็อกอินสำเร็จ ขยายกลับเป็นความกว้างปกติเพื่อให้แผงจัดการเนื้อหาแสดงผลได้เต็มที่ */
+.admin-gate-container.is-authenticated {
+    max-width: 1200px;
+}
+
+.admin-gate-logo {
+    text-align: center;
+    padding-bottom: 10px;
+}
+.admin-gate-logo .logo-img {
+    width: 110px;
+    margin-bottom: 0;
+    filter: drop-shadow(0 4px 10px rgba(216, 75, 107, 0.15));
+}
+
+/* การ์ดหน้าประตูรหัสผ่าน: หัวการ์ดสีชมพูอ่อน + เนื้อหาสีขาว ให้ดูเป็นชุดเดียวกับหน้า index.html */
+.admin-gate-card {
+    background-color: rgba(255, 255, 255, 0.95);
+    border: 2px solid #FFC6D3;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(216, 75, 107, 0.12);
+    max-width: 420px;
+    margin: 30px auto 0;
+}
+
+.admin-gate-header {
+    background-color: #FFF0F3;
+    border-bottom: 2px solid #FFC6D3;
+    padding: 30px 30px 24px;
+    text-align: center;
+}
+.admin-gate-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    margin-bottom: 12px;
+    border-radius: 50%;
+    background: #fff;
+    font-size: 26px;
+    box-shadow: 0 4px 12px rgba(216, 75, 107, 0.15);
+}
+.admin-gate-header h2 {
+    color: #D84B6B;
+    font-size: 20px;
+    margin-bottom: 6px;
+}
+.admin-gate-header p {
+    color: #8C6A6F;
+    font-size: 13.5px;
+    line-height: 1.5;
+}
+
+.admin-gate-body {
+    padding: 28px 30px 26px;
+    text-align: center;
+}
+.admin-gate-body input[type="password"] {
+    width: 100%;
+    padding: 13px 16px;
+    border-radius: 10px;
+    border: 2px solid #FFC6D3;
+    font-family: 'Prompt', sans-serif;
+    font-size: 15px;
+    margin-bottom: 18px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+.admin-gate-body input[type="password"]:focus {
+    outline: none;
+    border-color: #D84B6B;
+    box-shadow: 0 0 0 4px rgba(216, 75, 107, 0.12);
+}
+.admin-gate-submit {
+    width: 100%;
+    padding: 14px;
+    font-size: 16px;
+    border-radius: 50px;
+    box-shadow: 0 5px 15px rgba(216, 75, 107, 0.25);
+}
+.admin-gate-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(216, 75, 107, 0.35); }
+
+.admin-gate-back {
+    display: block;
+    width: 100%;
+    margin-top: 14px;
+    padding: 12px;
+    border-radius: 50px;
+    border: 2px solid #FFC6D3;
+    background: #fff;
+    color: #D84B6B;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+    box-sizing: border-box;
+    transition: all 0.2s ease;
+}
+.admin-gate-back:hover {
+    background: #FFF0F3;
+    border-color: #D84B6B;
+    transform: translateY(-2px);
+}
+
+/* ================= แผงควบคุมหลัก (หลังล็อกอิน) ================= */
+.admin-toolbar-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.admin-test-picker {
+    display: flex;
+    gap: 8px;
+}
+.admin-test-picker select {
+    padding: 0 12px;
+    border-radius: 10px;
+    border: 2px solid #FFC6D3;
+    font-family: 'Prompt', sans-serif;
+    font-size: 13px;
+    color: #4A3338;
+    background: #fff;
+    cursor: pointer;
+}
+
+.admin-panel-footer {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 2px solid #FFC6D3;
+    text-align: center;
+}
+.admin-panel-footer .btn-outline-pink {
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 12px 28px;
+}
+.admin-panel-footer .btn-outline-pink:hover { transform: translateY(-3px); box-shadow: 0 6px 15px rgba(216, 75, 107, 0.15); }
+
 .admin-card {
     background: rgba(255, 255, 255, 0.95);
     border-radius: 20px;

@@ -14,6 +14,23 @@ const TYPE_LABELS = {
 };
 
 // ==========================================
+// เปิดแผงควบคุม (ใช้ทั้งตอนใส่รหัสถูกครั้งแรก และตอนกลับมาจากโหมดทดสอบแบบประเมิน)
+// ==========================================
+function unlockAdminPanel() {
+    document.getElementById('loginGate').style.display = 'none';
+    document.getElementById('adminPanel').style.display = 'block';
+    document.querySelector('.admin-gate-container').classList.add('is-authenticated');
+    loadItems();
+}
+
+// ถ้าเคยใส่รหัสผ่านถูกไปแล้วในแท็บนี้ (เช่น กด "🧪 ทดสอบแบบประเมิน" แล้วกด "ออกจากโหมดทดสอบ"
+// กลับมาที่หน้านี้) ให้เข้าแผงควบคุมได้เลยไม่ต้องใส่รหัสซ้ำ — sessionStorage ผูกกับแท็บนี้เท่านั้น
+// ปิดแท็บแล้วก็ต้องใส่รหัสใหม่อยู่ดี จึงไม่ได้ลดความปลอดภัยไปจากเดิม
+if (sessionStorage.getItem('adminPassword')) {
+    document.addEventListener('DOMContentLoaded', unlockAdminPanel);
+}
+
+// ==========================================
 // เช็ครหัสผ่าน (เก็บไว้ใน sessionStorage เฉพาะแท็บนี้ ปิดแท็บแล้วต้องใส่ใหม่)
 // ==========================================
 async function checkAdminPassword() {
@@ -40,9 +57,7 @@ async function checkAdminPassword() {
         if (result.status === 'success') {
             // รหัสถูกต้องจริง ยืนยันจาก server แล้วเท่านั้นถึงจะเก็บและโชว์แผงควบคุม
             sessionStorage.setItem('adminPassword', pw);
-            document.getElementById('loginGate').style.display = 'none';
-            document.getElementById('adminPanel').style.display = 'block';
-            loadItems();
+            unlockAdminPanel();
         } else {
             errorEl.innerText = 'รหัสผ่านไม่ถูกต้อง';
         }
@@ -51,6 +66,23 @@ async function checkAdminPassword() {
     } finally {
         if (btn) { btn.disabled = false; btn.innerText = 'เข้าสู่ระบบ'; }
     }
+}
+
+// ==========================================
+// เริ่มทำแบบประเมินในฐานะแอดมิน (สำหรับทดสอบระบบ)
+// ตั้งค่า session ให้ผ่านทุกด่านตรวจ sheetRowId ได้เลยโดยไม่ต้องกรอกข้อมูลที่หน้า index.html
+// และ "ไม่สร้าง/ไม่อัปเดตแถวใน Google Sheets" เลย เพื่อไม่ให้ถูกนับรวมในสถิติผู้ใช้งานที่แดชบอร์ด (stats.html)
+// ==========================================
+function startAdminAssessmentTest() {
+    const ageSelect = document.getElementById('adminTestAge');
+    const age = ageSelect ? ageSelect.value : '25-34';
+
+    sessionStorage.setItem('adminTestMode', '1');
+    sessionStorage.setItem('sheetRowId', 'ADMIN-TEST');
+    sessionStorage.setItem('gender', 'not_specified');
+    sessionStorage.setItem('age', age);
+    sessionStorage.setItem('occupation', 'other');
+    window.location.href = 'home.html';
 }
 
 // ==========================================

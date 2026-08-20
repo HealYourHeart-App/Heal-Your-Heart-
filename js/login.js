@@ -1,6 +1,12 @@
 document.getElementById('loginForm').addEventListener('submit', function(e) {
     e.preventDefault(); // หยุดการเปลี่ยนหน้าไว้ก่อน
-    
+
+    // ⚠️ กันเหนียว: ถ้า session เดิมยังค้าง flag "adminTestMode" อยู่ (เช่น แอดมินเข้าโหมดทดสอบ
+    // แล้วไม่ได้กดปุ่ม "ออกจากโหมดทดสอบ" ก่อนมาเข้าสู่ระบบจริงในแท็บเดียวกัน) ต้องล้างทิ้งก่อนเสมอ
+    // เพราะการกรอกฟอร์มนี้คือการเข้าใช้งานจริง ไม่ใช่โหมดทดสอบ ถ้าไม่ล้าง js/result.js จะเข้าใจผิด
+    // และข้ามการบันทึกคะแนนตอนจบแบบประเมิน ทำให้แถวที่สร้างไว้ค้างเป็น "รอประเมิน" ตลอดไป
+    sessionStorage.removeItem('adminTestMode');
+
     // ดึงค่าที่ผู้ใช้เลือก
     const gender = document.getElementById('gender').value;
     const age = document.getElementById('age').value;
