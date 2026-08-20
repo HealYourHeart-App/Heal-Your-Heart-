@@ -148,10 +148,11 @@ body {
 @media (max-width: 1024px) { 
     .highlight-card { width: calc(100vw - 130px); } 
 }
-@media (max-width: 768px) { 
-    .home-container { padding: 30px 20px; } 
-    .top-nav, .bottom-nav { gap: 10px; } 
-    .nav-btn { padding: 10px 15px; font-size: 14px; } 
+@media (max-width: 768px) {
+    .home-container { padding: 30px 20px; }
+    /* เรียงปุ่มเมนูเป็นแถวเดียวแนวตั้ง แทนการ wrap แบบ pill ความกว้างไม่เท่ากัน ที่ทำให้ดูไม่เรียงบนจอมือถือ */
+    .top-nav, .bottom-nav { gap: 10px; flex-direction: column; align-items: stretch; }
+    .nav-btn { padding: 10px 15px; font-size: 14px; text-align: center; }
     .health-check-card { padding: 30px 20px; } 
     .action-btn-large .text-btn { font-size: 16px; }
     .highlight-wrapper { padding: 30px 15px; } 

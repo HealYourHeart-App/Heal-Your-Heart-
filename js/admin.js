@@ -232,6 +232,7 @@ function openForm(presetType) {
     document.getElementById('f_link').value = '';
     document.getElementById('f_featured').checked = false;
     document.getElementById('formError').innerText = '';
+    window.scrollTo(0, 0); // กันมือถือบางรุ่นเรนเดอร์ modal (position: fixed) เพี้ยนตำแหน่งถ้าเปิดตอนหน้าเลื่อนอยู่
     document.getElementById('formModal').style.display = 'flex';
 }
 
@@ -254,6 +255,7 @@ function editItem(rowIndex) {
     document.getElementById('f_link').value = item.link || '';
     document.getElementById('f_featured').checked = isFeaturedValue(item.featured);
     document.getElementById('formError').innerText = '';
+    window.scrollTo(0, 0); // กันมือถือบางรุ่นเรนเดอร์ modal (position: fixed) เพี้ยนตำแหน่งถ้าเปิดตอนหน้าเลื่อนอยู่
     document.getElementById('formModal').style.display = 'flex';
 }
 

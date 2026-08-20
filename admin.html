@@ -34,7 +34,7 @@
             <!-- ================= หน้าจอใส่รหัสผ่าน ================= -->
             <div id="loginGate" class="admin-card">
                 <h2>🔒 กรุณาใส่รหัสผ่านแอดมิน</h2>
-                <input type="password" id="adminPasswordInput" placeholder="รหัสผ่าน">
+                <input type="password" id="adminPasswordInput" placeholder="รหัสผ่าน" onkeydown="if (event.key === 'Enter') checkAdminPassword();">
                 <button onclick="checkAdminPassword()" class="btn-solid-pink">เข้าสู่ระบบ</button>
                 <p id="loginError" class="error-text"></p>
             </div>
@@ -52,55 +52,6 @@
                 </div>
             </div>
 
-            <!-- ================= ฟอร์มเพิ่ม/แก้ไข (Modal) ================= -->
-            <div id="formModal" class="form-modal-overlay" style="display:none;">
-                <div class="form-modal">
-                    <h3 id="formTitle">เพิ่มรายการใหม่</h3>
-
-                    <label>ประเภท</label>
-                    <select id="f_type">
-                        <option value="article">บทความสาระความรู้ (article) - หน้า knowledge.html</option>
-                        <option value="video">วิดีโอ (video) - หน้า knowledge.html</option>
-                        <option value="activity">กิจกรรมผ่อนคลาย (activity) - หน้า relax.html</option>
-                        <option value="food">อาหารบำบัด (food) - หน้า relax.html</option>
-                    </select>
-
-
-                    <label>รูปภาพ (ชื่อไฟล์ในโฟลเดอร์ photo/ เช่น A11.jpg หรือวาง URL เต็มก็ได้)</label>
-                    <input type="text" id="f_image" placeholder="A11.jpg หรือ https://...">
-
-                    <label>ชื่อบทความ/วิดีโอ</label>
-                    <input type="text" id="f_title" placeholder="ชื่อเรื่อง">
-
-                    <label>เนื้อหาย่อย</label>
-                    <textarea id="f_summary" rows="3" placeholder="สรุปเนื้อหาสั้นๆ"></textarea>
-
-                    <label>ป้ายกำกับอ้างอิง (เช่น "อ้างอิงบทความจาก" หรือ "ลิงก์วิดีโอ (Youtube)")</label>
-                    <input type="text" id="f_reference_label" placeholder="อ้างอิงบทความจาก">
-
-                    <label>ข้อความอ้างอิง</label>
-                    <input type="text" id="f_reference_text" placeholder="เช่น ชื่อแหล่งอ้างอิง หรือ 'คลิกเพื่อรับชม'">
-
-                    <label>ลิงก์</label>
-                    <input type="text" id="f_link" placeholder="https://...">
-
-                    <label>ลำดับที่แสดง (ตัวเลข)</label>
-                    <div style="display:flex;gap:12px;align-items:center;">
-                        <input type="number" id="f_order" placeholder="เช่น 11">
-                        <label class="checkbox-label" style="margin:0;"> 
-                            <input type="checkbox" id="f_featured">
-                            ⭐ แสดงในแถบเลื่อนหน้าแรก
-                        </label>
-                    </div>
-
-                    <div class="form-actions">
-                        <button onclick="closeForm()" class="btn-outline-pink">ยกเลิก</button>
-                        <button onclick="saveItem()" class="btn-solid-pink">บันทึก</button>
-                    </div>
-                    <p id="formError" class="error-text"></p>
-                </div>
-            </div>
-
         </main>
 
         <footer class="footer-section">
@@ -110,7 +61,60 @@
         </footer>
     </div>
 
+    <!-- ================= ฟอร์มเพิ่ม/แก้ไข (Modal) =================
+         ⚠️ ตั้งใจวางไว้นอก .home-container เพราะ .home-container มี backdrop-filter
+         ซึ่งทำให้ position:fixed ของลูกข้างในยึดตำแหน่งตาม .home-container แทนที่จะยึดตาม
+         viewport จริง (บั๊ก CSS containing block) ทำให้ modal ไปโผล่ไกลจนต้องเลื่อนจอหา
+         ย้ายมาไว้เป็นลูกตรงของ body แทน จะได้ fixed ยึดกับจอจริงๆ -->
+    <div id="formModal" class="form-modal-overlay" style="display:none;">
+        <div class="form-modal">
+            <h3 id="formTitle">เพิ่มรายการใหม่</h3>
+
+            <label>ประเภท</label>
+            <select id="f_type">
+                <option value="article">บทความสาระความรู้ (article) - หน้า knowledge.html</option>
+                <option value="video">วิดีโอ (video) - หน้า knowledge.html</option>
+                <option value="activity">กิจกรรมผ่อนคลาย (activity) - หน้า relax.html</option>
+                <option value="food">อาหารบำบัด (food) - หน้า relax.html</option>
+            </select>
+
+
+            <label>รูปภาพ (ชื่อไฟล์ในโฟลเดอร์ photo/ เช่น A11.jpg หรือวาง URL เต็มก็ได้)</label>
+            <input type="text" id="f_image" placeholder="A11.jpg หรือ https://...">
+
+            <label>ชื่อบทความ/วิดีโอ</label>
+            <input type="text" id="f_title" placeholder="ชื่อเรื่อง">
+
+            <label>เนื้อหาย่อย</label>
+            <textarea id="f_summary" rows="3" placeholder="สรุปเนื้อหาสั้นๆ"></textarea>
+
+            <label>ป้ายกำกับอ้างอิง (เช่น "อ้างอิงบทความจาก" หรือ "ลิงก์วิดีโอ (Youtube)")</label>
+            <input type="text" id="f_reference_label" placeholder="อ้างอิงบทความจาก">
+
+            <label>ข้อความอ้างอิง</label>
+            <input type="text" id="f_reference_text" placeholder="เช่น ชื่อแหล่งอ้างอิง หรือ 'คลิกเพื่อรับชม'">
+
+            <label>ลิงก์</label>
+            <input type="text" id="f_link" placeholder="https://...">
+
+            <label>ลำดับที่แสดง (ตัวเลข)</label>
+            <div style="display:flex;gap:12px;align-items:center;">
+                <input type="number" id="f_order" placeholder="เช่น 11">
+                <label class="checkbox-label" style="margin:0;">
+                    <input type="checkbox" id="f_featured">
+                    ⭐ แสดงในแถบเลื่อนหน้าแรก
+                </label>
+            </div>
+
+            <div class="form-actions">
+                <button onclick="closeForm()" class="btn-outline-pink">ยกเลิก</button>
+                <button onclick="saveItem()" class="btn-solid-pink">บันทึก</button>
+            </div>
+            <p id="formError" class="error-text"></p>
+        </div>
+    </div>
+
     <script src="js/config.js?v=1"></script>
-    <script src="js/admin.js?v=4"></script>
+    <script src="js/admin.js?v=6"></script>
 </body>
 </html>
