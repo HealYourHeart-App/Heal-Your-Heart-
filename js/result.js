@@ -376,10 +376,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // ฟังก์ชันส่งข้อมูลไปยัง Google Sheets (อัปเดตใหม่สุด ดึงจากตัวแปรคะแนนตรงๆ)
     // ==========================================
     function saveToGoogleSheets() {
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbymjqhA1WkWF5Sc0m4M2ziItq0d1luMtLdt_mSMNxcJz1fi-NeRPwK3d6F8U6KcCJ4RFw/exec';
-
-        // ⚠️ ต้องตรงกับ SECRET_TOKEN ใน Apps Script (Code.gs) เป๊ะๆ
-        const SECRET_TOKEN = "MQLkPm6QkD79LbcAt8kpTQ6Yxz-p5lTI1WoxmR-VfMc";
+        // URL และ Token ใช้จาก js/config.js ไฟล์เดียว (ต้องโหลด config.js ก่อนไฟล์นี้ในหน้า .html)
+        const scriptURL = APP_CONFIG.SCRIPT_URL;
+        const SECRET_TOKEN = APP_CONFIG.SECRET_TOKEN;
 
         // 🟢 ใช้ค่าจากตัวแปร (sST5, sBO, ...) ที่คำนวณด้านบนเลย 
         // ถ้าค่าเป็น NaN (คือยังไม่ทำ) ให้ส่งคำว่า "รอประเมิน"

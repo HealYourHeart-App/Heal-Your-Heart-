@@ -198,11 +198,24 @@
 
 .featured-star {
     position: absolute;
-    top: -10px;
-    right: -10px;
+    /* ให้ดาวมาซ้อนมุมวงกลมตัวเลข ไม่ให้ออกไปไกล */
+    top: -8px;
+    right: -8px;
     font-size: 14px;
     line-height: 1;
+    z-index: 5;
+    cursor: pointer;
+    padding: 4px;
+    margin: -4px;
+    border-radius: 50%;
+    transition: transform 0.15s;
 }
+.featured-star:hover { transform: scale(1.2); }
+.featured-star.not-featured {
+    opacity: 0.35;
+    filter: grayscale(1);
+}
+.featured-star.not-featured:hover { opacity: 0.7; }
 
 .item-info {
     flex: 1;

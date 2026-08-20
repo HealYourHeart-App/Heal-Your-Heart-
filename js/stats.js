@@ -1,5 +1,5 @@
-// URL ของ Google Apps Script (ต้องมีฟังก์ชัน doGet() เวอร์ชันที่ส่งข้อมูลสรุปแล้ว)
-const scriptURL = 'https://script.google.com/macros/s/AKfycbymjqhA1WkWF5Sc0m4M2ziItq0d1luMtLdt_mSMNxcJz1fi-NeRPwK3d6F8U6KcCJ4RFw/exec';
+// URL ใช้จาก js/config.js ไฟล์เดียว (ต้องโหลด config.js ก่อนไฟล์นี้ในหน้า .html)
+const scriptURL = APP_CONFIG.SCRIPT_URL;
 
 // สีธีมสำหรับกราฟ
 const themeColors = ['#d84b6b', '#3b82f6', '#f59e0b', '#10b981', '#8b5cf6', '#64748b'];

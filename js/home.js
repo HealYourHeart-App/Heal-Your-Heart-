@@ -1,5 +1,5 @@
-// ⚠️ URL เดียวกับที่ใช้ทั้งเว็บ (Apps Script เดียวกัน)
-const HOME_API_URL = 'https://script.google.com/macros/s/AKfycbymjqhA1WkWF5Sc0m4M2ziItq0d1luMtLdt_mSMNxcJz1fi-NeRPwK3d6F8U6KcCJ4RFw/exec?type=knowledge';
+// URL ใช้จาก js/config.js ไฟล์เดียว (ต้องโหลด config.js ก่อนไฟล์นี้ในหน้า .html)
+const HOME_API_URL = APP_CONFIG.SCRIPT_URL + '?type=knowledge';
 
 const HOME_BADGE_LABELS = { article: 'บทความ', video: 'วิดีโอ', activity: 'กิจกรรม', food: 'อาหารบำบัด' };
 const HOME_LINK_TARGET = { article: 'knowledge.html', video: 'knowledge.html', activity: 'relax.html', food: 'relax.html' };
@@ -15,11 +15,14 @@ function renderHomeCard(item) {
     const imgSrc = resolveHomeImagePath(item.image);
     const badgeClass = 'badge-' + item.type;
     const linkTarget = HOME_LINK_TARGET[item.type] || 'knowledge.html';
-    return `
+        return `
         <a href="${linkTarget}" class="highlight-card">
             <div class="highlight-img-box">
                 <span class="highlight-badge ${badgeClass}">${HOME_BADGE_LABELS[item.type] || item.type}</span>
                 <img src="${imgSrc}" alt="${HOME_BADGE_LABELS[item.type] || ''}">
+                <div class="carousel-order-num ${isFeaturedValue(item.featured) ? 'is-featured' : ''}">${item.order || ''}
+                    ${isFeaturedValue(item.featured) ? '<span class="carousel-feature-star">⭐</span>' : ''}
+                </div>
             </div>
             <div class="highlight-content">
                 <h3>${item.title || ''}</h3>
@@ -41,7 +44,9 @@ async function loadHomeCarousel() {
         }
 
         // เลือกเฉพาะรายการที่ติ๊ก "แสดงในหน้าแรก" ไว้จากหน้าแอดมิน
-        const featured = result.items.filter(item => item.featured);
+        const featured = result.items
+            .filter(item => isFeaturedValue(item.featured))
+            .sort((a, b) => (parseInt(a.order || 0, 10) - parseInt(b.order || 0, 10)));
 
         if (featured.length === 0) {
             track.innerHTML = '<p class="loading-text">ยังไม่มีรายการที่เลือกให้แสดงในหน้าแรก (เลือกได้จากหน้าแอดมิน)</p>';

@@ -1,5 +1,5 @@
-// ⚠️ ต้องตรงกับ URL Apps Script เดิม
-const ADMIN_API_URL = 'https://script.google.com/macros/s/AKfycbymjqhA1WkWF5Sc0m4M2ziItq0d1luMtLdt_mSMNxcJz1fi-NeRPwK3d6F8U6KcCJ4RFw/exec';
+// URL และ Token ใช้จาก js/config.js ไฟล์เดียว (ต้องโหลด config.js ก่อนไฟล์นี้ในหน้า .html)
+const ADMIN_API_URL = APP_CONFIG.SCRIPT_URL;
 const ADMIN_KNOWLEDGE_URL = ADMIN_API_URL + '?type=knowledge';
 
 let currentItems = [];
@@ -70,61 +70,90 @@ async function loadItems() {
         }
 
         currentItems = result.items;
+        // ให้ devtools เข้าถึงได้ง่ายขณะดีบัก
+        try { window.currentItems = currentItems; } catch (e) { /* ignore */ }
 
-        if (currentItems.length === 0) {
-            list.innerHTML = '<p class="loading-text">ยังไม่มีรายการเนื้อหา ลองกด "+ เพิ่มรายการใหม่" ได้เลย</p>';
-            return;
-        }
-
-        // จัดกลุ่มตามประเภท เรียงหมวดตามลำดับที่กำหนดไว้ (บทความ, วิดีโอ, กิจกรรม, อาหารบำบัด)
-        const typeOrder = ['article', 'video', 'activity', 'food'];
-        const grouped = {};
-        typeOrder.forEach(t => grouped[t] = []);
-        currentItems.forEach(item => {
-            if (!grouped[item.type]) grouped[item.type] = []; // เผื่อมี type แปลกๆ ที่ไม่รู้จัก
-            grouped[item.type].push(item);
-        });
-
-        // เรียงแต่ละหมวดตามคอลัมน์ order
-        Object.keys(grouped).forEach(t => grouped[t].sort((a, b) => a.order - b.order));
-
-        const sectionIcons = { article: '📄', video: '🎬', activity: '🧘', food: '🍽️' };
-
-        list.innerHTML = typeOrder
-            .filter(t => grouped[t] && grouped[t].length > 0)
-            .map(type => `
-                <div class="type-section">
-                    <div class="type-section-header type-${type}">
-                        <span class="type-section-title">${sectionIcons[type] || ''} ${TYPE_LABELS[type] || type}</span>
-                        <span class="type-section-count">${grouped[type].length} รายการ</span>
-                        <button onclick="openForm('${type}')" class="btn-outline-pink small">+ เพิ่มในหมวดนี้</button>
-                    </div>
-                    <div class="type-section-items">
-                        ${grouped[type].map((item, idx) => `
-                            <div class="item-row type-${type}">
-                                <div class="item-order-num ${item.featured ? 'is-featured' : ''}">
-                                    ${idx + 1}
-                                    ${item.featured ? '<span class="featured-star">⭐</span>' : ''}
-                                </div>
-                                <div class="item-info">
-                                    <strong>${item.title || '(ไม่มีชื่อ)'}</strong>
-                                </div>
-                                <div class="item-move-actions">
-                                    <button onclick="moveItem(${item.rowIndex}, 'up')" class="move-btn" ${idx === 0 ? 'disabled' : ''} title="ย้ายขึ้น">▲</button>
-                                    <button onclick="moveItem(${item.rowIndex}, 'down')" class="move-btn" ${idx === grouped[type].length - 1 ? 'disabled' : ''} title="ย้ายลง">▼</button>
-                                </div>
-                                <div class="item-actions">
-                                    <button onclick="editItem(${item.rowIndex})" class="btn-outline-pink small">แก้ไข</button>
-                                    <button onclick="deleteItem(${item.rowIndex})" class="btn-outline-pink small danger">ลบ</button>
-                                </div>
-                            </div>
-                        `).join('')}
-                    </div>
-                </div>
-            `).join('');
-
+        renderItemsList();
     } catch (err) {
         list.innerHTML = `<p class="error-text">เกิดข้อผิดพลาด: ${err.message}</p>`;
+    }
+}
+
+// วาดรายการใหม่จาก currentItems ในหน่วยความจำ (ไม่ยิง fetch) ใช้ตอนอัปเดตสถานะแบบทันที เช่น toggleFeatured
+function renderItemsList() {
+    const list = document.getElementById('itemsList');
+
+    if (currentItems.length === 0) {
+        list.innerHTML = '<p class="loading-text">ยังไม่มีรายการเนื้อหา ลองกด "+ เพิ่มรายการใหม่" ได้เลย</p>';
+        return;
+    }
+
+    // จัดกลุ่มตามประเภท เรียงหมวดตามลำดับที่กำหนดไว้ (บทความ, วิดีโอ, กิจกรรม, อาหารบำบัด)
+    const typeOrder = ['article', 'video', 'activity', 'food'];
+    const grouped = {};
+    typeOrder.forEach(t => grouped[t] = []);
+    currentItems.forEach(item => {
+        if (!grouped[item.type]) grouped[item.type] = []; // เผื่อมี type แปลกๆ ที่ไม่รู้จัก
+        grouped[item.type].push(item);
+    });
+
+    // เรียงแต่ละหมวดตามคอลัมน์ order (แปลงเป็นตัวเลขก่อน เผื่อ backend คืนเป็นสตริง)
+    Object.keys(grouped).forEach(t => grouped[t].sort((a, b) => parseInt(a.order || 0) - parseInt(b.order || 0)));
+
+    const sectionIcons = { article: '📄', video: '🎬', activity: '🧘', food: '🍽️' };
+
+    list.innerHTML = typeOrder
+        .filter(t => grouped[t] && grouped[t].length > 0)
+        .map(type => `
+            <div class="type-section">
+                <div class="type-section-header type-${type}">
+                    <span class="type-section-title">${sectionIcons[type] || ''} ${TYPE_LABELS[type] || type}</span>
+                    <span class="type-section-count">${grouped[type].length} รายการ</span>
+                    <button onclick="openForm('${type}')" class="btn-outline-pink small">+ เพิ่มในหมวดนี้</button>
+                </div>
+                <div class="type-section-items">
+                    ${grouped[type].map((item, idx) => `
+                        <div class="item-row type-${type}">
+                            <div class="item-order-num ${isFeaturedValue(item.featured) ? 'is-featured' : ''}">
+                                ${idx + 1}
+                                <span class="featured-star ${isFeaturedValue(item.featured) ? '' : 'not-featured'}" onclick="toggleFeatured(${item.rowIndex}, event)" title="${isFeaturedValue(item.featured) ? 'คลิกเพื่อเอาออกจากแถบเลื่อนหน้าแรก' : 'คลิกเพื่อแสดงในแถบเลื่อนหน้าแรก'}">⭐</span>
+                            </div>
+                            <div class="item-info">
+                                <strong>${item.title || '(ไม่มีชื่อ)'}</strong>
+                            </div>
+                            <div class="item-move-actions">
+                                <button onclick="moveItem(${item.rowIndex}, 'up')" class="move-btn" ${idx === 0 ? 'disabled' : ''} title="ย้ายขึ้น">▲</button>
+                                <button onclick="moveItem(${item.rowIndex}, 'down')" class="move-btn" ${idx === grouped[type].length - 1 ? 'disabled' : ''} title="ย้ายลง">▼</button>
+                            </div>
+                            <div class="item-actions">
+                                <button onclick="editItem(${item.rowIndex})" class="btn-outline-pink small">แก้ไข</button>
+                                <button onclick="deleteItem(${item.rowIndex})" class="btn-outline-pink small danger">ลบ</button>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        `).join('');
+}
+
+// ==========================================
+// คลิกดาวตรงเลขลำดับ เพื่อติ๊ก/ยกเลิก "แสดงในแถบเลื่อนหน้าแรก" ทันที ไม่ต้องเปิดฟอร์มแก้ไข
+// ==========================================
+async function toggleFeatured(rowIndex, event) {
+    if (event) event.stopPropagation();
+    const item = currentItems.find(i => i.rowIndex === rowIndex);
+    if (!item) return;
+
+    const previousValue = item.featured;
+    item.featured = !isFeaturedValue(item.featured);
+    renderItemsList(); // อัปเดตหน้าจอทันที ไม่ต้องรอ network
+
+    try {
+        await persistItem(item);
+    } catch (err) {
+        item.featured = previousValue; // rollback ถ้าบันทึกไม่สำเร็จ
+        renderItemsList();
+        alert('อัปเดตไม่สำเร็จ: ' + err.message);
     }
 }
 
@@ -170,14 +199,17 @@ async function persistItem(item) {
         reference_label: item.reference_label,
         reference_text: item.reference_text,
         link: item.link,
-        featured: item.featured ? 'yes' : 'no'
+        // ส่งเป็น boolean เพื่อให้ backend เก็บค่าได้ตรงกว่า (รองรับทั้ง boolean และ 'yes'/'no')
+        featured: !!item.featured
     };
+    console.log('persistItem payload', payload);
     const res = await fetch(ADMIN_API_URL, {
         method: 'POST',
         body: JSON.stringify(payload),
         headers: { 'Content-Type': 'text/plain;charset=utf-8' }
     });
     const result = await res.json();
+    console.log('persistItem result', result);
     if (result.status !== 'success') throw new Error(result.message || 'บันทึกไม่สำเร็จ');
 }
 
@@ -220,7 +252,7 @@ function editItem(rowIndex) {
     document.getElementById('f_reference_label').value = item.reference_label || '';
     document.getElementById('f_reference_text').value = item.reference_text || '';
     document.getElementById('f_link').value = item.link || '';
-    document.getElementById('f_featured').checked = !!item.featured;
+    document.getElementById('f_featured').checked = isFeaturedValue(item.featured);
     document.getElementById('formError').innerText = '';
     document.getElementById('formModal').style.display = 'flex';
 }
@@ -245,7 +277,8 @@ async function saveItem() {
         reference_label: document.getElementById('f_reference_label').value,
         reference_text: document.getElementById('f_reference_text').value,
         link: document.getElementById('f_link').value,
-        featured: document.getElementById('f_featured').checked ? 'yes' : 'no'
+        // ส่งเป็น boolean (true/false)
+        featured: document.getElementById('f_featured').checked
     };
 
     if (!payload.title) {
@@ -254,12 +287,14 @@ async function saveItem() {
     }
 
     try {
+        console.log('saveItem payload', payload);
         const res = await fetch(ADMIN_API_URL, {
             method: 'POST',
             body: JSON.stringify(payload),
             headers: { 'Content-Type': 'text/plain;charset=utf-8' }
         });
         const result = await res.json();
+        console.log('saveItem result', result);
 
         if (result.status === 'success') {
             closeForm();

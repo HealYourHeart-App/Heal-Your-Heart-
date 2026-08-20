@@ -27,13 +27,11 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
     // แปลงค่าให้เป็นภาษาไทยเพื่อลงตารางสวยๆ
     const genderMap = { "male": "ชาย", "female": "หญิง", "lgbtq": "เพศทางเลือก", "not_specified": "ไม่ระบุ" };
     const ageMap = { "under18": "ต่ำกว่า 18 ปี", "18-24": "18 - 24 ปี", "25-34": "25 - 34 ปี", "35-44": "35 - 44 ปี", "45up": "45 ปีขึ้นไป" };
-    const occMap = { "student": "นักเรียน / นักศึกษา", "employee": "พนักงานบริษัท / ลูกจ้าง", "government": "ข้าราชการ / รัฐวิสาหกิจ", "freelance": "ธุรกิจส่วนตัว / ฟรีแลนซ์", "unemployed": "ว่างงาน", "other": "อื่นๆ" };
+    const occMap = { "student": "นักเรียน / นักศึกษา", "employee": "พนักงานบริษัท / ลูกจ้าง", "government": "ข้าราชการ / รัฐวิสาหกิจ", "freelance": "ธุรกิจส่วนตัว / ค้าขาย / ฟรีแลนซ์", "unemployed": "ว่างงาน / พ่อบ้านแม่บ้าน", "other": "อื่นๆ" };
 
-    // ✅ แก้ไข URL ให้ถูกต้อง 100% แล้ว (ระวังห้ามเว้นวรรคนะครับ)
-   const scriptURL = 'https://script.google.com/macros/s/AKfycbymjqhA1WkWF5Sc0m4M2ziItq0d1luMtLdt_mSMNxcJz1fi-NeRPwK3d6F8U6KcCJ4RFw/exec';
-
-    // ⚠️ ต้องตรงกับ SECRET_TOKEN ใน Apps Script (Code.gs) เป๊ะๆ และตรงกับ token ใน result.js ด้วย
-    const SECRET_TOKEN = "MQLkPm6QkD79LbcAt8kpTQ6Yxz-p5lTI1WoxmR-VfMc";
+    // URL และ Token ใช้จาก js/config.js ไฟล์เดียว (ต้องโหลด config.js ก่อนไฟล์นี้ในหน้า .html)
+    const scriptURL = APP_CONFIG.SCRIPT_URL;
+    const SECRET_TOKEN = APP_CONFIG.SECRET_TOKEN;
     
     const visitData = {
         action: "create", 

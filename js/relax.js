@@ -28,8 +28,8 @@ function closeModal(event) {
 // กรองด้วย item.type === 'activity' หรือ 'food'
 // ==========================================
 
-// ⚠️ URL เดียวกับที่ใช้ทั้งเว็บ (Apps Script เดียวกัน)
-const RELAX_API_URL = 'https://script.google.com/macros/s/AKfycbymjqhA1WkWF5Sc0m4M2ziItq0d1luMtLdt_mSMNxcJz1fi-NeRPwK3d6F8U6KcCJ4RFw/exec?type=knowledge';
+// URL ใช้จาก js/config.js ไฟล์เดียว (ต้องโหลด config.js ก่อนไฟล์นี้ในหน้า .html)
+const RELAX_API_URL = APP_CONFIG.SCRIPT_URL + '?type=knowledge';
 
 function resolveRelaxImagePath(image) {
     if (!image) return 'photo/logo01.png';
