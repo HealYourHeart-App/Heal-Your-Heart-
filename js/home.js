@@ -5,14 +5,18 @@ const HOME_BADGE_LABELS = { article: 'บทความ', video: 'วิดี�
 const HOME_LINK_TARGET = { article: 'knowledge.html', video: 'knowledge.html', activity: 'relax.html', food: 'relax.html' };
 const HOME_READMORE_LABEL = { article: 'อ่านรายละเอียด', video: 'รับชมวิดีโอ', activity: 'อ่านรายละเอียด', food: 'อ่านรายละเอียด' };
 
-function resolveHomeImagePath(image) {
+// โฟลเดอร์ย่อยของ photo/ แยกตามประเภทเนื้อหา (photo/articles, photo/videos, photo/activities, photo/food)
+const HOME_IMAGE_TYPE_FOLDER = { article: 'articles', video: 'videos', activity: 'activities', food: 'food' };
+
+function resolveHomeImagePath(image, type) {
     if (!image) return 'photo/logo01.png';
     if (image.indexOf('http') === 0) return image;
-    return 'photo/' + image;
+    const folder = HOME_IMAGE_TYPE_FOLDER[type];
+    return folder ? 'photo/' + folder + '/' + image : 'photo/' + image;
 }
 
 function renderHomeCard(item) {
-    const imgSrc = resolveHomeImagePath(item.image);
+    const imgSrc = resolveHomeImagePath(item.image, item.type);
     const badgeClass = 'badge-' + item.type;
     const linkTarget = HOME_LINK_TARGET[item.type] || 'knowledge.html';
         return `

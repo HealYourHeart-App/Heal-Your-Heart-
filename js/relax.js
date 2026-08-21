@@ -31,14 +31,18 @@ function closeModal(event) {
 // URL ใช้จาก js/config.js ไฟล์เดียว (ต้องโหลด config.js ก่อนไฟล์นี้ในหน้า .html)
 const RELAX_API_URL = APP_CONFIG.SCRIPT_URL + '?type=knowledge';
 
-function resolveRelaxImagePath(image) {
+// โฟลเดอร์ย่อยของ photo/ แยกตามประเภทเนื้อหา (photo/activities, photo/food)
+const RELAX_IMAGE_TYPE_FOLDER = { activity: 'activities', food: 'food' };
+
+function resolveRelaxImagePath(image, type) {
     if (!image) return 'photo/logo01.png';
     if (image.indexOf('http') === 0) return image;
-    return 'photo/' + image;
+    const folder = RELAX_IMAGE_TYPE_FOLDER[type];
+    return folder ? 'photo/' + folder + '/' + image : 'photo/' + image;
 }
 
 function renderRelaxCard(item, number) {
-    const imgSrc = resolveRelaxImagePath(item.image);
+    const imgSrc = resolveRelaxImagePath(item.image, item.type);
     return `
     <div class="content-card">
         <div class="card-img-container">

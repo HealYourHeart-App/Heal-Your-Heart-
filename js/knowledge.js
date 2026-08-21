@@ -28,17 +28,21 @@ function closeModal(event) {
 // URL ใช้จาก js/config.js ไฟล์เดียว (ต้องโหลด config.js ก่อนไฟล์นี้ในหน้า .html)
 const KNOWLEDGE_API_URL = APP_CONFIG.SCRIPT_URL + '?type=knowledge';
 
+// โฟลเดอร์ย่อยของ photo/ แยกตามประเภทเนื้อหา (photo/articles, photo/videos, ...)
+const IMAGE_TYPE_FOLDER = { article: 'articles', video: 'videos', activity: 'activities', food: 'food' };
+
 // รองรับทั้ง 2 แบบ: ถ้ากรอกเป็น URL เต็ม (ขึ้นต้นด้วย http) ใช้ตรงๆ
-// ถ้ากรอกแค่ชื่อไฟล์ (เช่น A11.jpg) จะไปหาในโฟลเดอร์ photo/ ให้อัตโนมัติ
-function resolveImagePath(image) {
+// ถ้ากรอกแค่ชื่อไฟล์ (เช่น A11.jpg) จะไปหาในโฟลเดอร์ photo/<ประเภท>/ ให้อัตโนมัติ ตามที่วางไฟล์จริงไว้
+function resolveImagePath(image, type) {
     if (!image) return 'photo/logo01.png'; // รูป fallback เผื่อไม่มีรูป
     if (image.indexOf('http') === 0) return image;
-    return 'photo/' + image;
+    const folder = IMAGE_TYPE_FOLDER[type];
+    return folder ? 'photo/' + folder + '/' + image : 'photo/' + image;
 }
 
 // สร้าง HTML การ์ด 1 อัน จากข้อมูล 1 แถว
 function renderContentCard(item, number) {
-    const imgSrc = resolveImagePath(item.image);
+    const imgSrc = resolveImagePath(item.image, item.type);
 
     if (item.type === 'article') {
         return `
