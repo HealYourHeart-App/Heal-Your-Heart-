@@ -9,14 +9,6 @@
     padding-bottom: 40px;
 }
 
-.admin-page-label {
-    text-align: center;
-    color: #D84B6B;
-    font-weight: 700;
-    font-size: 18px;
-    margin: 10px 0 25px;
-}
-
 /* ================= หน้าประตูรหัสผ่าน (ก่อนล็อกอิน) =================
    ตั้งใจให้เห็นแค่โลโก้เล็กๆ + ช่องรหัสผ่าน ไม่โชว์เมนู/โครงสร้างเว็บ ================= */
 .admin-gate-container {
@@ -178,16 +170,6 @@
 .admin-card h2 {
     color: #D84B6B;
     margin-bottom: 20px;
-}
-
-.admin-card input[type="password"] {
-    width: 100%;
-    padding: 12px 16px;
-    border-radius: 10px;
-    border: 2px solid #FFC6D3;
-    font-family: 'Prompt', sans-serif;
-    font-size: 15px;
-    margin-bottom: 15px;
 }
 
 /* หน้าจอหลัก (หลังใส่รหัสแล้ว) กว้างเต็มพื้นที่ ไม่ใช่กล่องแคบเหมือนหน้า login */

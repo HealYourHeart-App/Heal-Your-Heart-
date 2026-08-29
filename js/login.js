@@ -1,3 +1,31 @@
+// Dropdown อาชีพแบบกำหนดเอง: บังคับให้เมนูเปิดลงล่างเสมอ (select ปกติจะพลิกขึ้นเองถ้าที่ด้านล่างไม่พอ)
+(function () {
+    const wrapper = document.getElementById('occupationSelect');
+    if (!wrapper) return;
+
+    const nativeSelect = document.getElementById('occupation');
+    const trigger = wrapper.querySelector('.custom-select-trigger');
+    const items = wrapper.querySelectorAll('.custom-select-options li');
+
+    trigger.addEventListener('click', function () {
+        wrapper.classList.toggle('open');
+    });
+
+    items.forEach(function (li) {
+        li.addEventListener('click', function () {
+            nativeSelect.value = li.dataset.value;
+            trigger.textContent = li.textContent;
+            items.forEach(function (i) { i.classList.remove('active'); });
+            li.classList.add('active');
+            wrapper.classList.remove('open');
+        });
+    });
+
+    document.addEventListener('click', function (e) {
+        if (!wrapper.contains(e.target)) wrapper.classList.remove('open');
+    });
+})();
+
 document.getElementById('loginForm').addEventListener('submit', function(e) {
     e.preventDefault(); // หยุดการเปลี่ยนหน้าไว้ก่อน
 
@@ -33,7 +61,7 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
     // แปลงค่าให้เป็นภาษาไทยเพื่อลงตารางสวยๆ
     const genderMap = { "male": "ชาย", "female": "หญิง", "lgbtq": "เพศทางเลือก", "not_specified": "ไม่ระบุ" };
     const ageMap = { "under18": "ต่ำกว่า 18 ปี", "18-24": "18 - 24 ปี", "25-34": "25 - 34 ปี", "35-44": "35 - 44 ปี", "45up": "45 ปีขึ้นไป" };
-    const occMap = { "student": "นักเรียน / นักศึกษา", "employee": "พนักงานบริษัท / ลูกจ้าง", "government": "ข้าราชการ / รัฐวิสาหกิจ", "freelance": "ธุรกิจส่วนตัว / ค้าขาย / ฟรีแลนซ์", "unemployed": "ว่างงาน / พ่อบ้านแม่บ้าน", "other": "อื่นๆ" };
+    const occMap = { "student": "นักเรียน / นักศึกษา", "teacher": "ครู / อาจารย์มหาวิทยาลัย", "staff": "บุคลากรในมหาวิทยาลัย", "government": "ข้าราชการ / รัฐวิสาหกิจ / พนักงานของรัฐ / พนักงานรัฐวิสาหกิจ", "business": "ธุรกิจส่วนตัว", "housewife": "พ่อบ้านแม่บ้าน", "farmer": "เกษตรกร", "other": "อื่นๆ" };
 
     // URL และ Token ใช้จาก js/config.js ไฟล์เดียว (ต้องโหลด config.js ก่อนไฟล์นี้ในหน้า .html)
     const scriptURL = APP_CONFIG.SCRIPT_URL;

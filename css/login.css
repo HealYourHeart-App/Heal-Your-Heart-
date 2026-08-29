@@ -119,6 +119,86 @@ select:focus {
     box-shadow: 0 0 10px rgba(216, 75, 107, 0.2);
 }
 
+/* ================= Dropdown อาชีพแบบกำหนดเอง (เปิดลงล่างเสมอ) ================= */
+/* select ปกติของเบราว์เซอร์จะพลิกเมนูขึ้นด้านบนเองถ้าเนื้อที่ด้านล่างไม่พอ
+   (ตัวเลือกอาชีพมีจำนวนมากและมีข้อความยาว) จึงทำเป็นเมนูกำหนดเองเพื่อบังคับให้เปิดลงล่างเสมอ */
+.custom-select {
+    position: relative;
+    width: 100%;
+}
+
+.custom-select-trigger {
+    width: 100%;
+    padding: 15px;
+    font-family: 'Prompt', sans-serif;
+    font-size: 15px;
+    color: var(--text-main);
+    border: 2px solid var(--secondary-color);
+    border-radius: 12px;
+    outline: none;
+    transition: 0.3s;
+    background-color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    text-align: left;
+}
+
+.custom-select-trigger::after {
+    content: '▾';
+    color: var(--primary-color);
+    flex-shrink: 0;
+    transition: transform 0.2s;
+}
+
+.custom-select.open .custom-select-trigger::after {
+    transform: rotate(180deg);
+}
+
+.custom-select-trigger:focus,
+.custom-select.open .custom-select-trigger {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 10px rgba(216, 75, 107, 0.2);
+}
+
+.custom-select-options {
+    list-style: none;
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    right: 0;
+    background-color: #fff;
+    border: 2px solid var(--secondary-color);
+    border-radius: 12px;
+    max-height: 220px;
+    overflow-y: auto;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
+    padding: 6px;
+    z-index: 50;
+    display: none;
+}
+
+.custom-select.open .custom-select-options {
+    display: block;
+}
+
+.custom-select-options li {
+    padding: 10px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    text-align: left;
+    transition: 0.15s;
+}
+
+.custom-select-options li:hover,
+.custom-select-options li.active {
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+}
+
 .submit-btn {
     width: 100%; 
     background-color: var(--primary-color); 

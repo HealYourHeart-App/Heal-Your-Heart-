@@ -46,15 +46,33 @@
                             <option value="45up">45 ปีขึ้นไป</option>
                         </select>
 
-                        <select id="occupation" required>
-                            <option value="" disabled selected>-- กรุณาเลือกอาชีพ --</option>
-                            <option value="student">นักเรียน / นักศึกษา</option>
-                            <option value="employee">พนักงานบริษัท / ลูกจ้าง</option>
-                            <option value="government">ข้าราชการ / รัฐวิสาหกิจ</option>
-                            <option value="freelance">ธุรกิจส่วนตัว / ค้าขาย / ฟรีแลนซ์</option>
-                            <option value="unemployed">ว่างงาน / พ่อบ้านแม่บ้าน</option>
-                            <option value="other">อื่นๆ</option>
-                        </select>
+                        <div class="custom-select" id="occupationSelect">
+                            <!-- ไม่ใส่ required ตรงนี้เพราะ select นี้ถูกซ่อนไว้ (display:none) เบราว์เซอร์จะโฟกัสช่องที่ซ่อนไม่ได้
+                                 เวลากด submit จึงทำให้ฟอร์มค้างเงียบๆ ไม่ขึ้น alert เตือนอะไรเลย
+                                 ตรวจสอบว่าเลือกอาชีพแล้วหรือยังด้วย JS ใน js/login.js (if (!occupation) ...) แทน -->
+                            <select id="occupation" style="display:none">
+                                <option value="" disabled selected>-- กรุณาเลือกอาชีพ --</option>
+                                <option value="student">นักเรียน / นักศึกษา</option>
+                                <option value="teacher">ครู / อาจารย์มหาวิทยาลัย</option>
+                                <option value="staff">บุคลากรในมหาวิทยาลัย</option>
+                                <option value="government">ข้าราชการ / รัฐวิสาหกิจ / พนักงานของรัฐ / พนักงานรัฐวิสาหกิจ</option>
+                                <option value="business">ธุรกิจส่วนตัว</option>
+                                <option value="housewife">พ่อบ้านแม่บ้าน</option>
+                                <option value="farmer">เกษตรกร</option>
+                                <option value="other">อื่นๆ</option>
+                            </select>
+                            <div class="custom-select-trigger" tabindex="0">-- กรุณาเลือกอาชีพ --</div>
+                            <ul class="custom-select-options">
+                                <li data-value="student">นักเรียน / นักศึกษา</li>
+                                <li data-value="teacher">ครู / อาจารย์มหาวิทยาลัย</li>
+                                <li data-value="staff">บุคลากรในมหาวิทยาลัย</li>
+                                <li data-value="government">ข้าราชการ / รัฐวิสาหกิจ / พนักงานของรัฐ / พนักงานรัฐวิสาหกิจ</li>
+                                <li data-value="business">ธุรกิจส่วนตัว</li>
+                                <li data-value="housewife">พ่อบ้านแม่บ้าน</li>
+                                <li data-value="farmer">เกษตรกร</li>
+                                <li data-value="other">อื่นๆ</li>
+                            </ul>
+                        </div>
                     </div>
 
                     <button type="submit" class="submit-btn">เข้าสู่ระบบ »</button>

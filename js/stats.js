@@ -72,10 +72,10 @@ async function fetchAndRenderStatistics() {
             new Chart(ctxOcc, {
                 type: 'bar',
                 data: {
-                    labels: ['นักเรียน/นักศึกษา', 'พนักงานบริษัท', 'ข้าราชการ/รัฐวิสาหกิจ', 'ธุรกิจส่วนตัว/ฟรีแลนซ์', 'ว่างงาน/พ่อบ้านแม่บ้าน', 'อื่นๆ'],
+                    labels: ['นักเรียน/นักศึกษา', 'ครู/อาจารย์มหาวิทยาลัย', 'บุคลากรในมหาวิทยาลัย', 'ข้าราชการ/รัฐวิสาหกิจ', 'ธุรกิจส่วนตัว', 'พ่อบ้านแม่บ้าน', 'เกษตรกร', 'อื่นๆ'],
                     datasets: [{
                         label: 'จำนวนคน',
-                        data: [occCounts.student, occCounts.employee, occCounts.government, occCounts.freelance, occCounts.unemployed, occCounts.other],
+                        data: [occCounts.student, occCounts.teacher, occCounts.staff, occCounts.government, occCounts.business, occCounts.housewife, occCounts.farmer, occCounts.other],
                         backgroundColor: '#d84b6b',
                         borderRadius: 6
                     }]

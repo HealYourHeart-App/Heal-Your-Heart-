@@ -53,7 +53,10 @@
                     <div class="question-row">
                         <div class="q-text">1.) ท่านรู้สึก หดหู่ เศร้า หรือท้อแท้สิ้นหวัง หรือไม่ ?</div>
                         <div class="q-options opts-2">
-                            <label><input type="radio" name="q1" value="0" class="hidden-radio" required><span class="opt-btn btn-blue-outline">ไม่ใช่</span></label>
+                            <!-- ไม่ใส่ required เพราะ input นี้ถูกซ่อนด้วย .hidden-radio (display:none) เบราว์เซอร์โฟกัสช่องที่ซ่อนไม่ได้
+                                 ถ้าใส่ required ไว้ พอกด submit ทั้งที่ยังตอบไม่ครบ ฟอร์มจะค้างเงียบๆ ไม่มี alert เตือนเลย
+                                 (ดูการตรวจสอบว่าตอบครบหรือยังใน js/questionnaire-2q.js แทน) -->
+                            <label><input type="radio" name="q1" value="0" class="hidden-radio"><span class="opt-btn btn-blue-outline">ไม่ใช่</span></label>
                             <label><input type="radio" name="q1" value="1" class="hidden-radio"><span class="opt-btn btn-red-outline">ใช่</span></label>
                         </div>
                     </div>
@@ -62,7 +65,7 @@
                     <div class="question-row">
                         <div class="q-text">2.) ท่านรู้สึก เบื่อ ทำอะไรก็ไม่เพลิดเพลิน หรือไม่ ?</div>
                         <div class="q-options opts-2">
-                            <label><input type="radio" name="q2" value="0" class="hidden-radio" required><span class="opt-btn btn-blue-outline">ไม่ใช่</span></label>
+                            <label><input type="radio" name="q2" value="0" class="hidden-radio"><span class="opt-btn btn-blue-outline">ไม่ใช่</span></label>
                             <label><input type="radio" name="q2" value="1" class="hidden-radio"><span class="opt-btn btn-red-outline">ใช่</span></label>
                         </div>
                     </div>
@@ -76,7 +79,7 @@
                     <div class="question-row" style="border-bottom: none;">
                         <div class="q-text">3.) ใน 1 เดือนที่ผ่านมา รวมวันนี้ ท่านมีความรู้สึกทุกข์ใจจนไม่อยากมีชีวิตอยู่ หรือไม่ ?</div>
                         <div class="q-options opts-2">
-                            <label><input type="radio" name="q3" value="0" class="hidden-radio" required><span class="opt-btn btn-blue-outline">ไม่ใช่</span></label>
+                            <label><input type="radio" name="q3" value="0" class="hidden-radio"><span class="opt-btn btn-blue-outline">ไม่ใช่</span></label>
                             <label><input type="radio" name="q3" value="1" class="hidden-radio"><span class="opt-btn btn-red-outline">ใช่</span></label>
                         </div>
                     </div>

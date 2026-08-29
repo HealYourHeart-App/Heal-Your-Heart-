@@ -23,7 +23,6 @@
                 <h1>“ เว็บแอปพลิเคชันสำหรับการประเมินความเครียดและสุขภาวะทางอารมณ์ ”</h1>
                 <nav class="top-nav">
                     <a href="home.html" class="nav-btn">หน้าแรก</a>
-                    <a href="about.html" class="nav-btn">เกี่ยวกับเรา</a>
                     <a href="assessment.html" class="nav-btn">แบบประเมิน</a>
                     <a href="knowledge.html" class="nav-btn">สาระความรู้เกี่ยวกับสุขภาพจิต</a>
                     <a href="relax.html" class="nav-btn">แนะนำกิจกรรมผ่อนคลายและพัฒนาตนเอง</a>
@@ -47,11 +46,31 @@
                     </div>
 
                     <!-- กล่องอีเมล/แอดมิน -->
-                    <div class="contact-box">
+                    <div class="contact-box contact-form-box">
                         <div class="contact-icon">📧</div>
                         <h3>ติดต่อผู้ดูแลระบบ</h3>
                         <p>สำหรับแจ้งปัญหาการใช้งานเว็บไซต์ หรือให้ข้อเสนอแนะเพิ่มเติมเกี่ยวกับการประเมิน</p>
-                        <a href="mailto:admin@heal-your-heart.com" class="contact-link">ส่งอีเมลถึงเรา</a>
+
+                        <form id="contactForm" class="contact-form">
+                            <div class="form-group">
+                                <label for="contactName">ชื่อของคุณ (ไม่บังคับ)</label>
+                                <input type="text" id="contactName" placeholder="เช่น สมชาย ใจดี">
+                            </div>
+                            <div class="form-group">
+                                <label for="contactEmail">อีเมลของคุณ (ไม่บังคับ — กรอกถ้าต้องการให้เราตอบกลับ)</label>
+                                <input type="email" id="contactEmail" placeholder="สำหรับให้เราติดต่อกลับ">
+                            </div>
+                            <div class="form-group">
+                                <label for="contactMessage">ข้อความ</label>
+                                <!-- ไม่ใส่ required ตรงนี้ เพราะเบราว์เซอร์จะบล็อกการ submit ด้วย tooltip ของตัวเอง
+                                     ทำให้ข้อความแจ้งเตือนภาษาไทยที่ตั้งใจไว้ใน js/contact.js (if (!message) ...) ไม่มีวันได้แสดงผล -->
+                                <textarea id="contactMessage" placeholder="พิมพ์ข้อความที่ต้องการแจ้งที่นี่..." rows="4"></textarea>
+                            </div>
+                            <button type="submit" class="contact-submit-btn">ส่งข้อความถึงเรา</button>
+                            <p id="contactFormStatus" class="contact-form-status"></p>
+                        </form>
+
+                        <p class="contact-email-fallback">หรือส่งอีเมลโดยตรงที่: <span id="contactEmailText">Josakssm05@gmail.com</span></p>
                     </div>
                 </div>
             </div>
@@ -68,5 +87,9 @@
         </footer>
 
     </div>
+
+    <script src="js/config.js?v=1"></script>
+    <script src="js/contact.js"></script>
+    <script src="js/admin-badge.js"></script>
 </body>
 </html>

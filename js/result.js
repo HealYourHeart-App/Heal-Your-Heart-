@@ -16,13 +16,15 @@ const genderMap = {
     "lgbtq": "เพศทางเลือก", 
     "not_specified": "ไม่ระบุ" 
 };
-const occMap = { 
-    "student": "นักเรียน / นักศึกษา", 
-    "employee": "พนักงานบริษัท / ลูกจ้าง", 
-    "government": "ข้าราชการ / รัฐวิสาหกิจ", 
-    "freelance": "ธุรกิจส่วนตัว / ค้าขาย / ฟรีแลนซ์", 
-    "unemployed": "ว่างงาน / พ่อบ้านแม่บ้าน", 
-    "other": "อื่นๆ" 
+const occMap = {
+    "student": "นักเรียน / นักศึกษา",
+    "teacher": "ครู / อาจารย์มหาวิทยาลัย",
+    "staff": "บุคลากรในมหาวิทยาลัย",
+    "government": "ข้าราชการ / รัฐวิสาหกิจ / พนักงานของรัฐ / พนักงานรัฐวิสาหกิจ",
+    "business": "ธุรกิจส่วนตัว",
+    "housewife": "พ่อบ้านแม่บ้าน",
+    "farmer": "เกษตรกร",
+    "other": "อื่นๆ"
 };
 
 // ฐานข้อมูลคำแนะนำ
@@ -177,7 +179,11 @@ document.addEventListener('DOMContentLoaded', function() {
     // ⚠️ เช็คธงเสี่ยงทำร้ายตัวเอง/ฆ่าตัวตายก่อนเป็นอันดับแรก
     // ธงนี้ถูกตั้งไว้จากคำตอบข้อเฉพาะ (2Q ข้อ 3 และ 9Q ข้อ 9) แยกต่างหากจากคะแนนรวม
     // เพราะคะแนนรวมเพียงอย่างเดียวอาจไม่สูงพอจะเข้าเกณฑ์ "รุนแรง" ทั้งที่มีความเสี่ยงจริง
-    const hasSuicideRiskFlag = sessionStorage.getItem('suicideRisk') === '1' || localStorage.getItem('suicideRisk') === '1';
+    // ใช้คีย์แยกกัน (suicideRisk2Q / suicideRisk9Q) เพราะแต่ละหน้าอาจล้างธงของตัวเองทิ้งเมื่อผู้ใช้แก้คำตอบ
+    // ถ้าใช้คีย์เดียวร่วมกัน การล้างธงจากหน้าหนึ่งจะไปลบธงเสี่ยงจริงที่มาจากอีกหน้าโดยไม่ได้ตั้งใจ
+    const hasSuicideRiskFlag =
+        sessionStorage.getItem('suicideRisk2Q') === '1' || localStorage.getItem('suicideRisk2Q') === '1' ||
+        sessionStorage.getItem('suicideRisk9Q') === '1' || localStorage.getItem('suicideRisk9Q') === '1';
     if (hasSuicideRiskFlag) {
         hasSevereRisk = true;
     }
@@ -447,7 +453,7 @@ function clearDataAndGoHome() {
     // ห้ามล้าง sheetRowId / gender / age / occupation
     // เพราะถ้าล้างไปด้วย ระบบจะลืมว่าเคยจองแถวไว้แล้ว
     // แล้วพอทำแบบทดสอบตัวถัดไปเสร็จ จะไปสร้างแถวใหม่ใน Google Sheets แทนการอัปเดตแถวเดิม
-    const scoreKeys = ['scoreST5', 'score2Q', 'score9Q', 'happinessScore', 'rqScore', 'burnoutScore', 'lastSavedData', 'suicideRisk'];
+    const scoreKeys = ['scoreST5', 'score2Q', 'score9Q', 'happinessScore', 'rqScore', 'burnoutScore', 'lastSavedData', 'suicideRisk2Q', 'suicideRisk9Q'];
 
     scoreKeys.forEach(key => {
         localStorage.removeItem(key);

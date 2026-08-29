@@ -9,10 +9,13 @@ if (!sessionStorage.getItem('sheetRowId')) {
 function generateScale(containerId, inputName) {
     let container = document.getElementById(containerId);
     let html = '';
+    // ไม่ใส่ required เพราะ input นี้ถูกซ่อนด้วย .rq-radio (display:none) เบราว์เซอร์โฟกัสช่องที่ซ่อนไม่ได้
+    // ถ้าใส่ required ไว้ พอกด submit ทั้งที่ยังตอบไม่ครบ ฟอร์มจะค้างเงียบๆ ไม่มี alert เตือนเลย
+    // (ดูการตรวจสอบว่าตอบครบหรือยังในตัว submit handler ด้านล่างแทน)
     for(let i=1; i<=10; i++) {
         html += `
         <label>
-            <input type="radio" name="${inputName}" value="${i}" class="rq-radio" required>
+            <input type="radio" name="${inputName}" value="${i}" class="rq-radio">
             <span class="rq-lbl c-${i}">${i}</span>
         </label>`;
     }
@@ -27,12 +30,23 @@ generateScale('scale-q3', 'rq3');
 // จัดการเมื่อกดปุ่มบันทึก
 document.getElementById('rqForm').addEventListener('submit', function(e) {
     e.preventDefault();
-    
-    // ดึงค่าที่ผู้ใช้เลือก (คำสั่ง required จะบังคับให้เลือกครบก่อนถึงจะผ่านได้)
-    const rq1 = parseInt(document.querySelector('input[name="rq1"]:checked').value);
-    const rq2 = parseInt(document.querySelector('input[name="rq2"]:checked').value);
-    const rq3 = parseInt(document.querySelector('input[name="rq3"]:checked').value);
-    
+
+    // ดึงค่าที่ผู้ใช้เลือก
+    const checked1 = document.querySelector('input[name="rq1"]:checked');
+    const checked2 = document.querySelector('input[name="rq2"]:checked');
+    const checked3 = document.querySelector('input[name="rq3"]:checked');
+
+    // ⚠️ ตรวจเองด้วย JS เพราะช่องตอบ (radio) ถูกซ่อนไว้ด้วย CSS (.rq-radio)
+    // ใส่ required ไว้ตรงๆ ไม่ได้ เบราว์เซอร์โฟกัสช่องที่ซ่อนไม่ได้ ฟอร์มจะค้างเงียบๆ ไม่มีคำเตือนเลย
+    if (!checked1 || !checked2 || !checked3) {
+        alert('กรุณาตอบคำถามให้ครบทุกข้อก่อนไปต่อครับ 💖');
+        return;
+    }
+
+    const rq1 = parseInt(checked1.value);
+    const rq2 = parseInt(checked2.value);
+    const rq3 = parseInt(checked3.value);
+
     // รวมคะแนน
     const totalScore = rq1 + rq2 + rq3;
 

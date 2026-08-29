@@ -9,7 +9,7 @@
     function exitAdminTestMode() {
         var keys = ['adminTestMode', 'sheetRowId', 'gender', 'age', 'occupation',
             'scoreST5', 'score2Q', 'score9Q', 'happinessScore', 'rqScore', 'burnoutScore',
-            'lastSavedData', 'suicideRisk'];
+            'lastSavedData', 'suicideRisk2Q', 'suicideRisk9Q'];
         keys.forEach(function (k) {
             sessionStorage.removeItem(k);
             localStorage.removeItem(k);
@@ -39,6 +39,9 @@
             '&nbsp;&nbsp;<a href="#" onclick="exitAdminTestMode();return false;" ' +
             'style="color:#fff;text-decoration:underline;">ออกจากโหมดทดสอบ →</a>';
         document.body.prepend(bar);
-        document.body.style.paddingTop = (20 + bar.offsetHeight) + 'px';
+        // อ่าน padding-top เดิมของ body จริงๆ ก่อนทับ เพราะแต่ละหน้าตั้งค่าไม่เท่ากัน
+        // (เช่น css/privacy.css ตั้ง body padding เป็น 0 ต่างจากหน้าอื่นที่ใช้ 20px จาก home.css)
+        const basePaddingTop = parseFloat(window.getComputedStyle(document.body).paddingTop) || 0;
+        document.body.style.paddingTop = (basePaddingTop + bar.offsetHeight) + 'px';
     });
 })();
